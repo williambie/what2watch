@@ -5,7 +5,7 @@ import ProfileButton from './ProfileButton';
 
 const Navbar = () => {
   return (
-    <HStack padding="20px" bgColor="lightgray">
+    <HStack padding="20px">
       <Image src={logo} marginRight="20px"boxSize="80px" border="white solid 1px"></Image>
       <SearchInput />
       <ProfileButton />
