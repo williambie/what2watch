@@ -17,7 +17,7 @@ function App() {
         <Navbar></Navbar>
       </GridItem>
       <GridItem area="main">
-        <h1>main</h1>
+        <HStack justifyContent="space-evenly"><Paginator /></HStack>
       </GridItem>
     </Grid>
     
