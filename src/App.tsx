@@ -1,10 +1,11 @@
-import { Box, Grid, GridItem, HStack } from "@chakra-ui/react";
-import Navbar from "./components/Navbar/Navbar";
-import Paginator from "./components/Main/Paginator";
+import { Box, Grid, GridItem, Show } from '@chakra-ui/react';
+import Navbar from './components/Navbar';
+import { MovieGrid } from './components/Main/MovieGrid/MovieGrid';
+import movies from './movies.json';
 
 function App() {
   return (
-    <Grid
+    <><Grid
       templateAreas={{
         base: `"nav" "main"`,
       }}
@@ -19,6 +20,10 @@ function App() {
         <HStack justifyContent="space-evenly"><Paginator /></HStack>
       </GridItem>
     </Grid>
+    
+    <Box padding="5">
+      <MovieGrid movies={movies} />
+    </Box></>
   );
 }
 
