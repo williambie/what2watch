@@ -1,5 +1,6 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack } from "@chakra-ui/react";
 import Navbar from "./components/Navbar/Navbar";
+import Paginator from "./components/Main/Paginator";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Navbar></Navbar>
       </GridItem>
       <GridItem area="main">
-        <h1>main</h1>
+        <HStack justifyContent="space-evenly"><Paginator /></HStack>
       </GridItem>
     </Grid>
   );
