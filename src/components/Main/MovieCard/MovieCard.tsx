@@ -1,14 +1,19 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Card, CardBody, HStack, Heading, Image } from "@chakra-ui/react";
 import { MovieCardProps } from "../../../Types";
+import UserVoteAverage from "./UserVoteAverage";
 
 const poster_base_url = "https://image.tmdb.org/t/p/w300";
-export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
-  <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
+  <Card borderRadius={10} overflow="hidden">
     <Image src={poster_base_url + movie.poster_path} alt={movie.title} />
-    <Box p="6">
-      <Text fontWeight="bold" fontSize="xl" mb="2">
-        {movie.title}
-      </Text>
-    </Box>
-  </Box>
+    <CardBody>
+      <HStack justifyContent="space-between">
+        <Heading fontSize="2xl">{movie.title}</Heading>
+        <UserVoteAverage vote_average={movie.vote_average} />
+      </HStack>
+    </CardBody>
+  </Card>
 );
+
+export default MovieCard;
