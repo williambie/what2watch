@@ -1,4 +1,4 @@
-import { Button, Center, HStack, Text } from '@chakra-ui/react'
+import { Button, HStack } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 
 const Paginator = () => {
