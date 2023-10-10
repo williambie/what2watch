@@ -1,9 +1,11 @@
-import { Grid, GridItem, Show } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Show } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
+import { MovieGrid } from './components/Main/MovieGrid/MovieGrid';
+import movies from './movies.json';
 
 function App() {
   return (
-    <Grid
+    <><Grid
       templateAreas={{
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
@@ -25,6 +27,10 @@ function App() {
         <h1>main</h1>
       </GridItem>
     </Grid>
+    
+    <Box padding="5">
+      <MovieGrid movies={movies} />
+    </Box></>
   );
 }
 
