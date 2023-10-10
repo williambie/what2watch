@@ -5,13 +5,13 @@ const Paginator = () => {
   return (
     <HStack>
         <Button><ChevronLeftIcon /></Button>
-        <Text>1</Text>
-        <Text>2</Text>
-        <Text>3</Text>
-        <Text>4</Text>
-        <Text>5</Text>
-        <Text>6</Text>
-        <Text>7</Text>
+        <Button>1</Button>
+        <Button>2</Button>
+        <Button>3</Button>
+        <Button>4</Button>
+        <Button>5</Button>
+        <Button>6</Button>
+        <Button>7</Button>
         <Button><ChevronRightIcon /></Button>
     </HStack>
   )
