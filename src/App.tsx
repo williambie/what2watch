@@ -1,17 +1,17 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
-import Navbar from "./components/Navbar";
+import { Grid, GridItem, Show } from '@chakra-ui/react';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <Grid
-    templateAreas={{
-      base: `"nav" "main"`,
-      lg: `"nav nav" "aside main"`,
-    }}
-    templateColumns={{
-      base: "1fr",
-      lg: "150px 1fr",
-    }}
+      templateAreas={{
+        base: `"nav" "main"`,
+        lg: `"nav nav" "aside main"`,
+      }}
+      templateColumns={{
+        base: '1fr',
+        lg: '150px 1fr',
+      }}
     >
       <GridItem area="nav" bgColor="yellow">
         <Navbar></Navbar>
@@ -25,7 +25,7 @@ function App() {
         <h1>main</h1>
       </GridItem>
     </Grid>
-  )
+  );
 }
 
-export default App
+export default App;
