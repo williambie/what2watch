@@ -1,10 +1,4 @@
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Button,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import ColorModeSwitch from "./ColorModeSwitch";
 
@@ -17,7 +11,9 @@ const ProfileButton = () => {
       <MenuList>
         <MenuItem>Favourites</MenuItem>
         <MenuItem>Logout</MenuItem>
-        <MenuItem><ColorModeSwitch /></MenuItem>
+        <MenuItem>
+          <ColorModeSwitch />
+        </MenuItem>
       </MenuList>
     </Menu>
   );
