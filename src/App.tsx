@@ -3,6 +3,8 @@ import Navbar from "./components//Navbar/Navbar";
 import { MovieGrid } from "./components/Main/MovieGrid/MovieGrid";
 import movies from "./movies.json";
 import Paginator from "./components/Main/Paginator";
+import SortingButton from "./components/Main/SortingFiltering/SortingButton";
+import GenreFilter from "./components/Main/SortingFiltering/GenreFilter";
 
 function App() {
   return (
@@ -19,6 +21,11 @@ function App() {
           <Navbar></Navbar>
         </GridItem>
         <GridItem area="main">
+          <HStack paddingLeft="30px">
+            <GenreFilter />
+            <SortingButton />
+          </HStack>
+
           <Box padding="5">
             <MovieGrid movies={movies} />
           </Box>
