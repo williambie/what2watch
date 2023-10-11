@@ -3,7 +3,6 @@ import Navbar from "./components//Navbar/Navbar";
 import Home from "./components/Main/Home";
 import { Routes, Route } from "react-router-dom";
 import Favourites from "./components/Main/Favourites/Favourites";
-import MovieDetails from "./components/Main/MovieDetails/MovieDetails";
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/favourites" element={<Favourites />}></Route>
-            <Route path="/movie/:id" element={<MovieDetails />}></Route>
           </Routes>
         </GridItem>
       </Grid>
