@@ -1,7 +1,7 @@
 import { Grid, GridItem } from "@chakra-ui/react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components//Navbar/Navbar";
 import Home from "./components/Main/Home";
-import { Routes, Route } from "react-router-dom";
 import Favourites from "./components/Main/Favourites/Favourites";
 
 function App() {
