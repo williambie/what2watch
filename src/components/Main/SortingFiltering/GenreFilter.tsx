@@ -14,6 +14,7 @@ interface Props {
   onSelectGenre: (genre: number) => void;
 }
 
+// GenreFilter is a dropdown menu that allows the user to filter movies by genre
 const GenreFilter = ({ onSelectGenre }: Props) => {
   const [selectedGenreName, setSelectedGenreName] = useState<string>("Genres");
 

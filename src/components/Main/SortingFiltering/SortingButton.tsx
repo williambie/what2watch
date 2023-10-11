@@ -6,6 +6,7 @@ interface Props {
   onSortChange: (sortBy: string) => void;
 }
 
+// SortingButton is a dropdown menu that allows the user to sort movies by popularity, user score, or title
 const SortingButton = ({ onSortChange }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Popularity");
 
@@ -14,6 +15,7 @@ const SortingButton = ({ onSortChange }: Props) => {
     onSortChange(sortBy);
   };
 
+  // The dropdown menu is displayed on the main page
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>

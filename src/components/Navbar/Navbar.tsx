@@ -8,6 +8,7 @@ interface NavbarProps {
   onSearchChange: (value: string) => void;
 }
 
+// Navbar is the top bar of the application
 const Navbar = ({ onSearchChange }: NavbarProps) => {
   return (
     <HStack px={{ base: 2, lg: "30px" }} py={3}>

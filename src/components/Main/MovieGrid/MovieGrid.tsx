@@ -8,11 +8,13 @@ interface Props {
   movies: Movie[];
 }
 
+// MovieGrid is a grid that displays all movies
 const MovieGrid = ({ movies, genre, sortBy }: Props) => {
   const filteredMovies = genre
     ? movies.filter((movie) => movie.genre_ids.includes(genre))
     : movies;
 
+  // Sorts movies by vote average, title or popularity
   const sortMovies = (movies: Movie[], sortBy: string) => {
     return movies.sort((a: Movie, b: Movie) => {
       if (sortBy === "vote_average") {
@@ -30,6 +32,7 @@ const MovieGrid = ({ movies, genre, sortBy }: Props) => {
     ? sortMovies(filteredMovies, sortBy)
     : filteredMovies;
 
+  // The grid is displayed on the main page
   return (
     <SimpleGrid
       columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}

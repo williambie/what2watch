@@ -9,6 +9,7 @@ interface Props {
   movie: Movie;
 }
 
+// MovieCard is a card that displays a movie's title, poster and vote average
 const MovieCard = ({ movie }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,6 +22,8 @@ const MovieCard = ({ movie }: Props) => {
   const onClose = () => {
     setIsOpen(false);
   };
+
+  // The card is displayed on the main page and is clickable
   return (
     <>
       <Card
@@ -39,6 +42,7 @@ const MovieCard = ({ movie }: Props) => {
         <FavouriteButton />
       </Card>
 
+      {/* The modal is displayed when the card is clicked */}
       <MovieModal movie={movie} isOpen={isOpen} onClose={onClose} />
     </>
   );
