@@ -70,7 +70,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const reviewBg = useColorModeValue("gray.300", "gray.700");
 
   // Return the modal
-  return (  
+  return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
@@ -111,9 +111,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             </Box>
           </Flex>
           <Stack spacing={4} bg={bg} padding={5} mt={3} borderRadius={20}>
-          <Heading fontSize="lg">
-              User Reviews
-            </Heading>
+            <Heading fontSize="lg">User Reviews</Heading>
             <Divider />
             <Input
               placeholder="Write your review here..."
@@ -132,7 +130,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             </Stack>
             {/* Map over the submitted reviews to display them */}
             {submittedReviews.map((reviewText, index) => (
-              <HStack key={index} bg={reviewBg} p={3} borderRadius="md" justifyContent={"space-between"}>
+              <HStack
+                key={index}
+                bg={reviewBg}
+                p={3}
+                borderRadius="md"
+                justifyContent={"space-between"}
+              >
                 <Text>{reviewText}</Text>
                 <DeleteIcon
                   as={DeleteIcon}
@@ -142,7 +146,6 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               </HStack>
             ))}
           </Stack>
-          
         </ModalBody>
       </ModalContent>
     </Modal>
