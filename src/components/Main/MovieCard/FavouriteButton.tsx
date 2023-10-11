@@ -2,17 +2,12 @@ import { Button, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-interface Props {
-  movieId: number;
-  onToggle: (movieId: number) => void;
-}
-
-const FavouriteButton = ({ movieId, onToggle }: Props) => {
+const FavouriteButton = () => {
   const [isActive, setIsActive] = useState(false);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = (e: any) => {
     setIsActive(!isActive);
-    onToggle(movieId);
+    e.stopPropagation();
   };
 
   const buttonColor = useColorModeValue("gray.100", "gray.800");
@@ -31,7 +26,7 @@ const FavouriteButton = ({ movieId, onToggle }: Props) => {
       width="40px"
       padding={0}
     >
-      {isActive ? <AiFillStar size={30}/> : <AiOutlineStar size={30}/>}
+      {isActive ? <AiFillStar size={30} /> : <AiOutlineStar size={30} />}
     </Button>
   );
 };
