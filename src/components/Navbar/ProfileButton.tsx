@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import ColorModeSwitch from "./ColorModeSwitch";
+import { Link } from "react-router-dom";
 
 const ProfileButton = () => {
   return (
@@ -25,7 +26,7 @@ const ProfileButton = () => {
         </HStack>
       </MenuButton>
       <MenuList>
-        <MenuItem>My Favourites</MenuItem>
+      <Link to={"/favourites"}><MenuItem >My Favourites</MenuItem></Link>
         <MenuItem>
           <ColorModeSwitch />
         </MenuItem>
