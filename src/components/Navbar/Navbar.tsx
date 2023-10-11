@@ -1,9 +1,13 @@
 import { HStack, Image, Show } from "@chakra-ui/react";
-import SearchInput from "./SearchInput";
+import SearchBar from "./SearchBar";
 import logo from "../../assets/logo.png";
 import ProfileButton from "./ProfileButton";
 
-const Navbar = () => {
+interface NavbarProps {
+  onSearchChange: (value: string) => void;
+}
+
+const Navbar = ({ onSearchChange }: NavbarProps) => {
   return (
     <HStack padding="20px">
       <Show above="lg">
@@ -14,7 +18,7 @@ const Navbar = () => {
           border="white solid 1px"
         ></Image>
       </Show>
-      <SearchInput />
+      <SearchBar onSearchChange={onSearchChange} />
       <ProfileButton />
     </HStack>
   );

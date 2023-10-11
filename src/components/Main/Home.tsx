@@ -5,13 +5,18 @@ import GenreFilter from "./SortingFiltering/GenreFilter";
 import SortingButton from "./SortingFiltering/SortingButton";
 import movies from "../../data/movies.json";
 import { useState } from "react";
+import SearchFilter from "./SortingFiltering/SearchFilter";
 
 export interface MovieQuery {
   genre: number | null;
   sortBy: string;
 }
 
-function Home() {
+interface HomeProps {
+  searchTerm: string;
+}
+
+function Home({ searchTerm }: HomeProps) {
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({
     genre: null,
     sortBy: "popularity",
@@ -30,11 +35,15 @@ function Home() {
         <SortingButton onSortChange={handleSortChange} />
       </HStack>
       <Box padding="5">
-        <MovieGrid
-          sortBy={movieQuery.sortBy}
-          genre={movieQuery.genre}
-          movies={movies}
-        />
+        {searchTerm ? (
+          <SearchFilter movies={movies} searchTerm={searchTerm} />
+        ) : (
+          <MovieGrid
+            sortBy={movieQuery.sortBy}
+            genre={movieQuery.genre}
+            movies={movies}
+          />
+        )}
       </Box>
       <HStack justifyContent="space-evenly">
         <Paginator />
