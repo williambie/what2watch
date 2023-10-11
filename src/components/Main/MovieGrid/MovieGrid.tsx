@@ -4,13 +4,29 @@ import { Movie } from "../../../Types";
 
 interface Props {
   genre: number | null;
+  sortBy: string;
   movies: Movie[];
 }
 
-const MovieGrid = ({ movies, genre }: Props) => {
+const MovieGrid = ({ movies, genre, sortBy }: Props) => {
   const filteredMovies = genre
     ? movies.filter((movie) => movie.genre_ids.includes(genre))
     : movies;
+
+    const sortMovies = (movies: Movie[], sortBy: string) => {
+      return movies.sort((a: Movie, b: Movie) => {
+        if (sortBy === "vote_average") {
+          return b.vote_average - a.vote_average;
+        } else if (sortBy === "title") {
+          return a.title.localeCompare(b.title);
+        } else if (sortBy === "popularity") {
+          return b.popularity - a.popularity;
+        }
+        return 0;
+      });
+    };
+  
+    const sortedMovies = sortMovies(filteredMovies, sortBy);
 
   return (
     <SimpleGrid
@@ -18,7 +34,7 @@ const MovieGrid = ({ movies, genre }: Props) => {
       padding="10px"
       spacing={10}
     >
-      {filteredMovies.map((movie: Movie) => (
+      {sortedMovies.map((movie: Movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}
     </SimpleGrid>

@@ -8,22 +8,28 @@ import { useState } from "react";
 
 export interface MovieQuery {
   genre: number | null;
+  sortBy: string;
 } 
 
 function Home() {
 
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({
-    genre: null
+    genre: null,
+    sortBy: "popularity"
   });
+
+  const handleSortChange = (sortBy: string) => {
+    setMovieQuery({ ...movieQuery, sortBy });
+  };
 
   return (
     <>
       <HStack paddingLeft="30px">
         <GenreFilter onSelectGenre={(genre) => setMovieQuery({...movieQuery, genre})} />
-        <SortingButton />
+        <SortingButton onSortChange={handleSortChange}/>
       </HStack>
       <Box padding="5">
-        <MovieGrid genre={movieQuery.genre} movies={movies} />
+        <MovieGrid sortBy={movieQuery.sortBy} genre={movieQuery.genre} movies={movies} />
       </Box>
       <HStack justifyContent="space-evenly">
         <Paginator />
