@@ -3,8 +3,8 @@ import MovieCard from "../MovieCard/MovieCard";
 import { Movie } from "../../../types/types";
 
 interface Props {
-  genre: number | null;
-  sortBy: string;
+  genre?: number | null;
+  sortBy?: string;
   movies: Movie[];
 }
 
@@ -26,7 +26,7 @@ const MovieGrid = ({ movies, genre, sortBy }: Props) => {
     });
   };
 
-  const sortedMovies = sortMovies(filteredMovies, sortBy);
+  const sortedMovies = sortBy ? sortMovies(filteredMovies, sortBy) : filteredMovies;
 
   return (
     <SimpleGrid
