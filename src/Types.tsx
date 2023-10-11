@@ -1,4 +1,4 @@
-export type Movie = {
+export interface Movie {
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -13,13 +13,5 @@ export type Movie = {
     video: boolean;
     vote_average: number;
     vote_count: number;
-  };
-  
-  export type MovieCardProps = {
-    movie: Movie;
-  };
-  
-  export type MovieGridProps = {
-    movies: Movie[];
   };
   
