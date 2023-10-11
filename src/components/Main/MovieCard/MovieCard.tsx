@@ -6,7 +6,7 @@ import {
   Image,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Movie } from "../../../Types";
+import { Movie } from "../../../types/types";
 import UserVoteAverage from "./UserVoteAverage";
 import MovieModal from "../MovieModal/MovieModal";
 
@@ -14,7 +14,7 @@ interface Props {
   movie: Movie;
 }
 
-const MovieCard = ({ movie }: Props) => (
+const MovieCard = ({ movie }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;

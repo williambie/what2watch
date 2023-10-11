@@ -6,7 +6,7 @@ interface Props {
   onSortChange: (sortBy: string) => void;
 }
 
-const SortingButton = ({onSortChange}: Props) => {
+const SortingButton = ({ onSortChange }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Popularity");
 
   const handleMenuItemClick = (sortBy: string, label: string) => {
@@ -20,11 +20,13 @@ const SortingButton = ({onSortChange}: Props) => {
         Order by: {selectedMenuItem}
       </MenuButton>
       <MenuList>
-      <MenuItem onClick={() => handleMenuItemClick("popularity", "Popularity")}
+        <MenuItem
+          onClick={() => handleMenuItemClick("popularity", "Popularity")}
         >
           Popularity
         </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick("vote_average", "User Score")}
+        <MenuItem
+          onClick={() => handleMenuItemClick("vote_average", "User Score")}
         >
           User Score
         </MenuItem>
