@@ -13,6 +13,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import ColorModeSwitch from "./ColorModeSwitch";
 import { Link } from "react-router-dom";
 
+// ProfileButton is a dropdown menu that allows the user to navigate to their favourites page or switch between light and dark mode
 const ProfileButton = () => {
   return (
     <Menu>

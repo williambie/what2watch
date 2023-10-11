@@ -7,6 +7,7 @@ interface Props {
   movies: Movie[];
 }
 
+// SearchFilter is a grid that displays all movies that match the search term
 const SearchFilter = ({ movies, searchTerm }: Props) => {
   // Filter by search term
   const filteredMovies = movies.filter((movie) =>

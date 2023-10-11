@@ -4,6 +4,7 @@ interface Props {
   vote_average: number;
 }
 
+// UserVoteAverage is a badge that displays the vote average of a movie
 const UserVoteAverage = ({ vote_average }: Props) => {
   const color =
     vote_average > 7.5 ? "green" : vote_average > 6 ? "yellow" : "red";

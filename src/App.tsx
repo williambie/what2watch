@@ -5,9 +5,11 @@ import Home from "./components/Main/Home";
 import Favourites from "./components/Main/Favourites/Favourites";
 import { useState } from "react";
 
+// App is the main component of the application
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
+  // The main page is displayed
   return (
     <>
       <Grid

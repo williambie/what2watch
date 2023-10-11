@@ -1,6 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
+// Paginator is a component that allows the user to navigate between pages of movies (Not functional yet)
 const Paginator = () => {
   return (
     <HStack>

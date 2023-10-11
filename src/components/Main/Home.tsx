@@ -16,6 +16,7 @@ interface HomeProps {
   searchTerm: string;
 }
 
+// Home is the main page of the application
 function Home({ searchTerm }: HomeProps) {
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({
     genre: null,
@@ -26,6 +27,7 @@ function Home({ searchTerm }: HomeProps) {
     setMovieQuery({ ...movieQuery, sortBy });
   };
 
+  // The main page is displayed
   return (
     <>
       <HStack paddingLeft={"30px"}>

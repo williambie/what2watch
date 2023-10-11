@@ -5,6 +5,7 @@ interface SearchInputProps {
   onSearchChange: (value: string) => void;
 }
 
+// SearchInput is the search bar that allows the user to search for movies
 const SearchInput = ({ onSearchChange }: SearchInputProps) => {
   return (
     <InputGroup size="lg">
