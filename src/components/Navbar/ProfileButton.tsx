@@ -26,7 +26,9 @@ const ProfileButton = () => {
         </HStack>
       </MenuButton>
       <MenuList>
-      <Link to={"/favourites"}><MenuItem >My Favourites</MenuItem></Link>
+        <Link to={"/favourites"}>
+          <MenuItem>My Favourites</MenuItem>
+        </Link>
         <MenuItem>
           <ColorModeSwitch />
         </MenuItem>

@@ -26,7 +26,9 @@ const MovieGrid = ({ movies, genre, sortBy }: Props) => {
     });
   };
 
-  const sortedMovies = sortBy ? sortMovies(filteredMovies, sortBy) : filteredMovies;
+  const sortedMovies = sortBy
+    ? sortMovies(filteredMovies, sortBy)
+    : filteredMovies;
 
   return (
     <SimpleGrid

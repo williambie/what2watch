@@ -5,7 +5,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const FavouriteButton = () => {
   const [isActive, setIsActive] = useState(false);
 
-  const toggleFavorite = (e: any) => {
+  const toggleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsActive(!isActive);
     e.stopPropagation();
   };
