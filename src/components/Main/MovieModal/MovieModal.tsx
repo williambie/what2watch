@@ -13,6 +13,10 @@ import {
   Button,
   Input,
   Stack,
+  Heading,
+  Divider,
+  HStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import genres from "../../../data/genres.json";
 import { useState } from "react";
@@ -62,8 +66,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     });
   };
 
+  const bg = useColorModeValue("gray.100", "gray.800");
+  const reviewBg = useColorModeValue("gray.300", "gray.700");
+
   // Return the modal
-  return (
+  return (  
     <Modal
       isOpen={isOpen}
       onClose={onClose}
@@ -80,7 +87,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               alt={movie.title}
               width={["100%", "30%"]}
               mx="auto"
-              mb="4"
+              paddingBottom={2}
             />
             <Box ml="3">
               {/* Map over the genres to display them as tags */}
@@ -103,7 +110,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               </Text>
             </Box>
           </Flex>
-          <Stack spacing={4} mt={6}>
+          <Stack spacing={4} bg={bg} padding={5} mt={3} borderRadius={20}>
+          <Heading fontSize="lg">
+              User Reviews
+            </Heading>
+            <Divider />
             <Input
               placeholder="Write your review here..."
               value={review} // Ensure the input's value is tied to the 'review' state
@@ -116,24 +127,22 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                 onClick={handleSubmitReview}
                 isDisabled={!review.trim()} // Disable the button if the input is empty
               >
-                Submit
-              </Button>
-              <Button colorScheme="gray" variant="outline" onClick={onClose}>
-                Cancel
+                Add review
               </Button>
             </Stack>
             {/* Map over the submitted reviews to display them */}
             {submittedReviews.map((reviewText, index) => (
-              <Box key={index} bg="gray.600" p={3} borderRadius="md">
+              <HStack key={index} bg={reviewBg} p={3} borderRadius="md" justifyContent={"space-between"}>
                 <Text>{reviewText}</Text>
                 <DeleteIcon
                   as={DeleteIcon}
                   cursor="pointer"
                   onClick={() => handleDeleteReview(index)}
                 />
-              </Box>
+              </HStack>
             ))}
           </Stack>
+          
         </ModalBody>
       </ModalContent>
     </Modal>

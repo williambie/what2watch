@@ -18,10 +18,10 @@ function App() {
           base: "1fr",
         }}
       >
-        <GridItem area="nav">
+        <GridItem area="nav" maxW="100vw">
           <Navbar onSearchChange={(term) => setSearchTerm(term)}></Navbar>
         </GridItem>
-        <GridItem area="main">
+        <GridItem area="main" maxW="100vw">
           <Routes>
             <Route path="/" element={<Home searchTerm={searchTerm} />}></Route>
             <Route path="/favourites" element={<Favourites />}></Route>

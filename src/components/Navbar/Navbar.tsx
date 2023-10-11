@@ -9,7 +9,7 @@ interface NavbarProps {
 
 const Navbar = ({ onSearchChange }: NavbarProps) => {
   return (
-    <HStack padding="20px">
+    <HStack px={{base: 2, lg: "30px"}} py={3}>
       <Show above="lg">
         <Image
           src={logo}

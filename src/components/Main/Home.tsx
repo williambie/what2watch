@@ -28,7 +28,7 @@ function Home({ searchTerm }: HomeProps) {
 
   return (
     <>
-      <HStack paddingLeft="30px">
+      <HStack paddingLeft={"30px"}>
         <GenreFilter
           onSelectGenre={(genre) => setMovieQuery({ ...movieQuery, genre })}
         />

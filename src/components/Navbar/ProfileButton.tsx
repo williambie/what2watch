@@ -16,17 +16,16 @@ const ProfileButton = () => {
   return (
     <Menu>
       <MenuButton as={Button} width="auto" height="48px" borderRadius={20}>
-        <HStack justifyContent={"space-evenly"} padding={10}>
+        <HStack justifyContent={"space-evenly"}>
           <Avatar size="sm"></Avatar>
           <Show above="lg">
-            <Text>Username</Text>
+            <Text paddingX={1}>Martha</Text>
           </Show>
           <ChevronDownIcon />
         </HStack>
       </MenuButton>
       <MenuList>
-        <MenuItem>Favourites</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem>My Favourites</MenuItem>
         <MenuItem>
           <ColorModeSwitch />
         </MenuItem>
