@@ -15,10 +15,10 @@ function App() {
           base: "1fr",
         }}
       >
-        <GridItem area="nav">
-          <Navbar></Navbar>
+        <GridItem area="nav" maxW="100vw">
+          <Navbar />
         </GridItem>
-        <GridItem area="main">
+        <GridItem area="main" maxW="100vw">
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/favourites" element={<Favourites />}></Route>
