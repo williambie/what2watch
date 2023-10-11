@@ -7,6 +7,7 @@ import {
   Avatar,
   Text,
   HStack,
+  Show,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import ColorModeSwitch from "./ColorModeSwitch";
@@ -14,14 +15,15 @@ import ColorModeSwitch from "./ColorModeSwitch";
 const ProfileButton = () => {
   return (
     <Menu>
-          <MenuButton as={Button} width="auto" height="48px" borderRadius={20}>
-            <HStack justifyContent={"space-evenly"} padding={10}>
-            <Avatar size="sm" ></Avatar>
+      <MenuButton as={Button} width="auto" height="48px" borderRadius={20}>
+        <HStack justifyContent={"space-evenly"} padding={10}>
+          <Avatar size="sm"></Avatar>
+          <Show above="lg">
             <Text>Username</Text>
-            <ChevronDownIcon />
-            </HStack>
-            
-          </MenuButton>
+          </Show>
+          <ChevronDownIcon />
+        </HStack>
+      </MenuButton>
       <MenuList>
         <MenuItem>Favourites</MenuItem>
         <MenuItem>Logout</MenuItem>

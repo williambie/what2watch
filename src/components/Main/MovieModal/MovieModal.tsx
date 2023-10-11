@@ -18,7 +18,7 @@ import genres from "../../../data/genres.json";
 import { useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Movie } from "../../../Types";
+import { Movie } from "../../../types/types";
 
 interface MovieModalProps {
   movie: Movie;
