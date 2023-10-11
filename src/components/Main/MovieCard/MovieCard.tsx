@@ -11,7 +11,6 @@ interface Props {
 
 const MovieCard = ({ movie }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeMovies, setActiveMovies] = useState<Movie[]>([]);
 
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
@@ -22,18 +21,14 @@ const MovieCard = ({ movie }: Props) => {
   const onClose = () => {
     setIsOpen(false);
   };
-
-  const handleFavouriteToggle = (movie: Movie) => {
-    if (activeMovies.some((activeMovie) => activeMovie.id === movie.id)) {
-      setActiveMovies(activeMovies.filter((activeMovie) => activeMovie.id !== movie.id));
-    } else {
-      setActiveMovies([...activeMovies, movie]);
-    }
-  };
-
   return (
     <>
-      <Card borderRadius={10} overflow="hidden" onClick={onOpen} position="relative">
+      <Card
+        borderRadius={10}
+        overflow="hidden"
+        onClick={onOpen}
+        position="relative"
+      >
         <Image src={imageUrl} alt={movie.title} />
         <CardBody>
           <HStack justifyContent="space-between">
@@ -41,7 +36,7 @@ const MovieCard = ({ movie }: Props) => {
             <UserVoteAverage vote_average={movie.vote_average} />
           </HStack>
         </CardBody>
-        <FavouriteButton onToggle={() => handleFavouriteToggle(movie)} movieId={movie.id} />
+        <FavouriteButton />
       </Card>
 
       <MovieModal movie={movie} isOpen={isOpen} onClose={onClose} />
