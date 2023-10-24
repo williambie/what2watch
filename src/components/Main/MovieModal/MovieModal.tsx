@@ -122,7 +122,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               mx="auto"
               paddingBottom={useBreakpointValue({ base: 2, md: 0 })}
             />
-            <Box pl="3" flexGrow={1}>
+            <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
                 {/* Map over the genres to display them as tags */}
                 <Box>
