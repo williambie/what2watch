@@ -1,7 +1,6 @@
 import { Card, CardBody, Heading, HStack, Image } from "@chakra-ui/react";
 import { useState } from "react";
 import { Movie } from "../../../types/types";
-import FavouriteButton from "./FavouriteButton";
 import MovieModal from "../MovieModal/MovieModal";
 import UserVoteAverage from "./UserVoteAverage";
 
@@ -39,7 +38,6 @@ const MovieCard = ({ movie }: Props) => {
             <UserVoteAverage vote_average={movie.vote_average} />
           </HStack>
         </CardBody>
-        <FavouriteButton />
       </Card>
 
       {/* The modal is displayed when the card is clicked */}
