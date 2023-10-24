@@ -30,6 +30,8 @@ const MovieCard = ({ movie }: Props) => {
         overflow="hidden"
         onClick={onOpen}
         position="relative"
+        _hover={{ cursor: "pointer", transform: "scale(1.05)" }}
+        transition="transform 0.2s ease-in-out"
       >
         <Image src={imageUrl} alt={movie.title} />
         <CardBody>
