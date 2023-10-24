@@ -67,11 +67,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     }
     const now = new Date();
     const options = {
-      hour: "numeric",
-      minute: "numeric",
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
+      year: "numeric" as const,
+      month: "long" as const,
+      day: "numeric" as const,
+      hour: "numeric" as const,
+      minute: "numeric" as const,
     };
     const timestamp = now.toLocaleString("en-US", options);
     const newReview = {

@@ -6,7 +6,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 const FavouriteButton = () => {
   const [isActive, setIsActive] = useState(false);
   // toggleFavorite toggles the state of the button
-  const toggleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const toggleFavorite = () => {
     setIsActive(!isActive);
   };
 

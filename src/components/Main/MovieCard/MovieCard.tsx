@@ -1,7 +1,6 @@
 import { Card, CardBody, Heading, HStack, Image } from "@chakra-ui/react";
 import { useState } from "react";
 import { Movie } from "../../../types/types";
-import FavouriteButton from "../MovieModal/FavouriteButton";
 import MovieModal from "../MovieModal/MovieModal";
 import UserVoteAverage from "./UserVoteAverage";
 
