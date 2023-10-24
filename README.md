@@ -14,7 +14,7 @@ Deretter installeres avhengighetene med:
 
 Til slutt kan prosjektet kjøres med:
 
-    npm run build
+    npm run dev
 
 ## Teknisk informasjon
 
