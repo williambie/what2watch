@@ -35,7 +35,7 @@ const MovieGrid = ({ movies, genre, sortBy }: Props) => {
   // The grid is displayed on the main page
   return (
     <SimpleGrid
-      columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 6 }}
+      columns={{ base: 1, sm: 2, md: 3, lg: 4, xl: 5, "2xl": 6 }}
       padding="10px"
       spacing={10}
     >

@@ -1,4 +1,4 @@
-import { Button, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
@@ -10,6 +10,7 @@ const FavouriteButton = () => {
     setIsActive(!isActive);
   };
 
+  
   return (
     <Button
       borderWidth={2}
