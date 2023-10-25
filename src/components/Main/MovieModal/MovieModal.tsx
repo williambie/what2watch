@@ -133,7 +133,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                     </Tag>
                   ))}
                 </Box>
-                <FavouriteButton />
+                <FavouriteButton movieName={movie.title}/>
               </Flex>
 
               <Text fontSize="md" color="gray.500">
