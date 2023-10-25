@@ -36,6 +36,7 @@ const FavouriteButton = ({ movieName }: FavouriteButtonProps) => {
       {alertMessage && (
         <Alert
           status={isActive ? "success" : "error"}
+          variant={"solid"}
           mb={4}
           borderRadius="md"
           position="fixed"
