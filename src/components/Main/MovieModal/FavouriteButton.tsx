@@ -1,4 +1,4 @@
-import { Button, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
+import { Button, Text, background, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
@@ -20,6 +20,7 @@ const FavouriteButton = () => {
       variant="solid"
       onClick={toggleFavorite}
       paddingX={2}
+      _hover={{ bg: isActive ? "orange.400" : "gray.700" }}
     >
       {isActive ? <AiFillHeart /> : <AiOutlineHeart />}
       {useBreakpointValue({ base: null, lg: <Text paddingLeft={2}>{isActive ? "Favourited" : "Add to Favourites"}</Text> })}
