@@ -24,13 +24,13 @@ Til slutt kan prosjektet kjøres med:
 
 ## Funksjonelle krav
 
-> Løsningen skal presentere søk i liste, lagt  opp til håndtering av store resultatsett.
+> Løsningen skal presentere søk i liste, lagt opp til håndtering av store resultatsett.
 
 Denne applikasjonen løser dette ved å vise en grid med et gitt antall filmer fra katalogen. Nederst på siden finner brukeren en paginator for å bla til neste side med resultater. Løsningen vi har valgt presenterer mange filmer til brukeren først, noe som gjør det enklere å finne en film som brukeren er interessert i.
 
 > Brukeren skal kunne søke i en katalog ved å formulere et søk og få presentert et søkeresultat. Brukeren skal kunne lese mer detaljer om hvert objekt i resultatet og ha en interaksjon med de.
 
- Brukeren kan så søke fritt i søkefeltet, og vil få opp alle treff i samme grid hvor man kan bla i sidene på resultatet. Deretter kan bruker selv gå inn på en og en film for å se flere detaljer. Der vil brukeren kunne markere en film som favoritt, for å huske den til senere eller legge igjen en skriftlig review for andre dersom hen har sett den. Her kan man også lese andre brukere sine reviews før man velger å favorisere eller se filmen.
+Brukeren kan så søke fritt i søkefeltet, og vil få opp alle treff i samme grid hvor man kan bla i sidene på resultatet. Deretter kan bruker selv gå inn på en og en film for å se flere detaljer. Der vil brukeren kunne markere en film som favoritt, for å huske den til senere eller legge igjen en skriftlig review for andre dersom hen har sett den. Her kan man også lese andre brukere sine reviews før man velger å favorisere eller se filmen.
 
 > En bruker skal kunne gjøre et valg (ala filtrering eller sortering) som påvirker utvalget av det som presenteres og hvordan det presenteres. Disse valgene skal huskes selv om siden reloades.
 

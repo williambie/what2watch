@@ -30,7 +30,7 @@ const ProfileButton = () => {
         <Link to={"/favourites"}>
           <MenuItem>My Favourites</MenuItem>
         </Link>
-        <MenuItem _hover={{cursor: "auto"}}>
+        <MenuItem _hover={{ cursor: "auto" }}>
           <ColorModeSwitch />
         </MenuItem>
       </MenuList>
