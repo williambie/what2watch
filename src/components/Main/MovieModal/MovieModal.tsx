@@ -56,6 +56,10 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     }[]
   >([]);
   const [starRating, setStarRating] = useState<number>(0);
+  const textColor = useColorModeValue("gray.600", "gray.400");
+  const borderColor = useColorModeValue("black", "white");
+  const bgColor = useColorModeValue("gray.100", "gray.600");
+  const bg = useColorModeValue("gray.300", "gray.700");
 
   const handleStarClick = (rating: number) => {
     setStarRating(rating);
@@ -134,7 +138,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                     </Tag>
                   ))}
                 </Box>
-                <FavouriteButton movieName={movie.title}/>
+                <FavouriteButton movieName={movie.title} />
               </Flex>
 
               <Text fontSize="md" color="gray.500">
@@ -167,7 +171,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                 <Flex
                   flexDirection={"column"}
                   key={index}
-                  bg={useColorModeValue("gray.300", "gray.700")}
+                  bg={bg}
                   p={3}
                   borderRadius="md"
                 >
@@ -176,19 +180,14 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                       <Avatar size="xs"></Avatar>
                       <Text>{review.author}</Text>
                     </HStack>
-                    <Text color={useColorModeValue("gray.600", "gray.400")}>
-                      {review.created_at}
-                    </Text>
+                    <Text color={textColor}>{review.created_at}</Text>
                   </HStack>
-                  <Divider
-                    paddingBottom={2}
-                    borderColor={useColorModeValue("black", "white")}
-                  />
+                  <Divider paddingBottom={2} borderColor={borderColor} />
 
                   <HStack
                     marginTop={1}
                     padding={1}
-                    bgColor={useColorModeValue("gray.100", "gray.600")}
+                    bgColor={bgColor}
                     width={"min-content"}
                     borderRadius={"5px"}
                   >
@@ -213,13 +212,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             )}
             <Divider borderColor={useColorModeValue("black", "white")} />
             <HStack>
-            <Avatar size="sm"></Avatar>
-            <Input
-              placeholder="Write your review here..."
-              value={review} // Ensure the input's value is tied to the 'review' state
-              onChange={(e) => setReview(e.target.value)}
-              borderColor="gray.500"
-            />
+              <Avatar size="sm"></Avatar>
+              <Input
+                placeholder="Write your review here..."
+                value={review} // Ensure the input's value is tied to the 'review' state
+                onChange={(e) => setReview(e.target.value)}
+                borderColor="gray.500"
+              />
             </HStack>
 
             <HStack
@@ -233,7 +232,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               {[...Array(5)].map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i <= hoverIndex ? "orange.500" : i <= starRating - 1 ? "yellow.400" : "gray.500"}
+                  color={
+                    i <= hoverIndex
+                      ? "orange.500"
+                      : i <= starRating - 1
+                      ? "yellow.400"
+                      : "gray.500"
+                  }
                   onClick={() => handleStarClick(i + 1)}
                   onMouseEnter={() => setHoverIndex(i)}
                   onMouseLeave={() => setHoverIndex(-1)}
