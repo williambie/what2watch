@@ -107,18 +107,18 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={["full", "sm", "lg", "xl", "5xl"]}
+      size={["full", "lg", "xl", "5xl"]}
     >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontSize={"2xl"}>{movie.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody paddingBottom={6} paddingTop={0}>
-          <Flex direction={["column", "row"]}>
+          <Flex direction={useBreakpointValue({ base: "column", md: "row" })}>
             <Image
               src={imageUrl}
               alt={movie.title}
-              width={["100%", "30%"]}
+              width={{ base: "100%", md: "40%" }}
               mx="auto"
               paddingBottom={useBreakpointValue({ base: 2, md: 0 })}
             />

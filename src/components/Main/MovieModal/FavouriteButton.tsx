@@ -21,7 +21,7 @@ const FavouriteButton = () => {
       paddingX={2}
     >
       {isActive ? <AiFillHeart /> : <AiOutlineHeart />}
-      {useBreakpointValue({ base: null, md: <Text paddingLeft={2}>{isActive ? "Favourited" : "Add to Favourites"}</Text> })}
+      {useBreakpointValue({ base: null, lg: <Text paddingLeft={2}>{isActive ? "Favourited" : "Add to Favourites"}</Text> })}
     </Button>
   );
 };

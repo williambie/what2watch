@@ -44,8 +44,8 @@ const MovieCard = ({ movie }: Props) => {
       >
         <Image src={imageUrl} alt={movie.title} />
         <CardBody>
-          <HStack justifyContent="space-between">
-            <Heading fontSize="2xl">{movie.title}</Heading>
+          <HStack justifyContent="space-between" flex={1}>
+            <Heading fontSize={{base: "md", md: "lg"}}>{movie.title}</Heading>
             <UserVoteAverage vote_average={movie.vote_average} />
           </HStack>
         </CardBody>
