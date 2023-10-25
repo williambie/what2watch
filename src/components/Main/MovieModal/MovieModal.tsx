@@ -38,6 +38,7 @@ interface MovieModalProps {
 const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
+  const [hoverIndex, setHoverIndex] = useState(-1);
 
   // Get the genre names for the movie
   const movieGenres = movie.genre_ids.map((genreId) =>
@@ -232,9 +233,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               {[...Array(5)].map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < starRating ? "yellow.400" : "gray.500"}
+                  color={i <= hoverIndex ? "orange.500" : i <= starRating - 1 ? "yellow.400" : "gray.500"}
                   onClick={() => handleStarClick(i + 1)}
-                  _hover={{ color: "green.400", cursor: "pointer" }}
+                  onMouseEnter={() => setHoverIndex(i)}
+                  onMouseLeave={() => setHoverIndex(-1)}
+                  _hover={{ cursor: "pointer" }}
                 />
               ))}
             </HStack>
