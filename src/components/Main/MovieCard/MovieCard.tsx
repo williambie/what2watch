@@ -1,4 +1,11 @@
-import { Card, CardBody, Heading, HStack, Image } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Heading,
+  HStack,
+  Image,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { Movie } from "../../../types/types";
 import MovieModal from "../MovieModal/MovieModal";
@@ -11,6 +18,7 @@ interface Props {
 // MovieCard is a card that displays a movie's title, poster and vote average
 const MovieCard = ({ movie }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const bg = useColorModeValue("gray.300", "gray.700");
 
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
@@ -26,6 +34,7 @@ const MovieCard = ({ movie }: Props) => {
   return (
     <>
       <Card
+        bg={bg}
         borderRadius={10}
         overflow="hidden"
         onClick={onOpen}
@@ -35,8 +44,8 @@ const MovieCard = ({ movie }: Props) => {
       >
         <Image src={imageUrl} alt={movie.title} />
         <CardBody>
-          <HStack justifyContent="space-between">
-            <Heading fontSize="2xl">{movie.title}</Heading>
+          <HStack justifyContent="space-between" flex={1}>
+            <Heading fontSize={{ base: "md", md: "lg" }}>{movie.title}</Heading>
             <UserVoteAverage vote_average={movie.vote_average} />
           </HStack>
         </CardBody>

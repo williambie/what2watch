@@ -38,6 +38,7 @@ interface MovieModalProps {
 const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
+  const [hoverIndex, setHoverIndex] = useState(-1);
 
   // Get the genre names for the movie
   const movieGenres = movie.genre_ids.map((genreId) =>
@@ -55,6 +56,10 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     }[]
   >([]);
   const [starRating, setStarRating] = useState<number>(0);
+  const textColor = useColorModeValue("gray.600", "gray.400");
+  const borderColor = useColorModeValue("black", "white");
+  const bgColor = useColorModeValue("gray.100", "gray.600");
+  const bg = useColorModeValue("gray.300", "gray.700");
 
   const handleStarClick = (rating: number) => {
     setStarRating(rating);
@@ -80,6 +85,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
       created_at: timestamp,
       star_rating: starRating,
     };
+
     setSubmittedReviews([...submittedReviews, newReview]);
     setReview("");
     setStarRating(0);
@@ -99,26 +105,26 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     year: "numeric",
   });
 
-  const bg = useColorModeValue("gray.100", "gray.800");
-  const reviewBg = useColorModeValue("gray.300", "gray.700");
-
   // Return the modal
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
-      size={["full", "sm", "lg", "xl", "5xl"]}
+      onClose={() => {
+        onClose();
+        setStarRating(0);
+      }}
+      size={["full", "lg", "xl", "5xl"]}
     >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontSize={"2xl"}>{movie.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody paddingBottom={6} paddingTop={0}>
-          <Flex direction={["column", "row"]}>
+          <Flex direction={useBreakpointValue({ base: "column", md: "row" })}>
             <Image
               src={imageUrl}
               alt={movie.title}
-              width={["100%", "30%"]}
+              width={{ base: "100%", md: "40%" }}
               mx="auto"
               paddingBottom={useBreakpointValue({ base: 2, md: 0 })}
             />
@@ -132,7 +138,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                     </Tag>
                   ))}
                 </Box>
-                <FavouriteButton />
+                <FavouriteButton movieName={movie.title} />
               </Flex>
 
               <Text fontSize="md" color="gray.500">
@@ -148,68 +154,105 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             </Box>
           </Flex>
 
-          <Divider py={2} borderColor="white" />
-          <Stack spacing={4} bg={bg} padding={5} mt={3} borderRadius={5}>
+          <Divider py={2} borderColor={useColorModeValue("black", "white")} />
+          <Stack
+            spacing={4}
+            bg={useColorModeValue("gray.200", "gray.800")}
+            padding={5}
+            mt={3}
+            borderRadius={5}
+          >
             <Heading fontSize="lg">User Reviews</Heading>
-            <Divider />
-            {submittedReviews.map((review, index) => (
-              <Flex
-                flexDirection={"column"}
-                key={index}
-                bg={reviewBg}
-                p={3}
-                borderRadius="md"
-              >
-                <HStack justifyContent={"space-between"}>
-                  <HStack>
-                    <Avatar size="xs"></Avatar>
-                    <Text>{review.author}</Text>
+            <Divider borderColor={useColorModeValue("black", "white")} />
+            {submittedReviews.length === 0 ? (
+              <Text padding={2}>Be the first to review this movie!</Text>
+            ) : (
+              submittedReviews.map((review, index) => (
+                <Flex
+                  flexDirection={"column"}
+                  key={index}
+                  bg={bg}
+                  p={3}
+                  borderRadius="md"
+                >
+                  <HStack justifyContent={"space-between"}>
+                    <HStack>
+                      <Avatar size="xs"></Avatar>
+                      <Text>{review.author}</Text>
+                    </HStack>
+                    <Text color={textColor}>{review.created_at}</Text>
                   </HStack>
-                  <Text color={"gray.400"}>{review.created_at}</Text>
-                </HStack>
-                <Divider paddingBottom={2} />
+                  <Divider paddingBottom={2} borderColor={borderColor} />
 
-                <HStack paddingTop={2}>
-                  {[...Array(review.star_rating)].map((_, i) => (
-                    <StarIcon key={i} color={"yellow.400"} fontSize={12} />
-                  ))}
-                </HStack>
-
-                <HStack justifyContent={"space-between"} paddingTop={2}>
-                  <Text>{review.content}</Text>
-                  <Button
-                    cursor="pointer"
-                    size={"xs"}
-                    bg={"red.600"}
-                    onClick={() => handleDeleteReview(index)}
+                  <HStack
+                    marginTop={1}
+                    padding={1}
+                    bgColor={bgColor}
+                    width={"min-content"}
+                    borderRadius={"5px"}
                   >
-                    <DeleteIcon color={"white"} />
-                  </Button>
-                </HStack>
-              </Flex>
-            ))}
-            <Divider />
+                    {[...Array(review.star_rating)].map((_, i) => (
+                      <StarIcon key={i} color={"yellow.400"} fontSize={12} />
+                    ))}
+                  </HStack>
 
-            <Input
-              placeholder="Write your review here..."
-              value={review} // Ensure the input's value is tied to the 'review' state
-              onChange={(e) => setReview(e.target.value)}
-            />
+                  <HStack justifyContent={"space-between"} paddingTop={2}>
+                    <Text>{review.content}</Text>
+                    <Button
+                      cursor="pointer"
+                      size={"xs"}
+                      bg={"red.600"}
+                      onClick={() => handleDeleteReview(index)}
+                    >
+                      <DeleteIcon color={"white"} />
+                    </Button>
+                  </HStack>
+                </Flex>
+              ))
+            )}
+            <Divider borderColor={useColorModeValue("black", "white")} />
             <HStack>
+              <Avatar size="sm"></Avatar>
+              <Input
+                placeholder="Write your review here..."
+                value={review} // Ensure the input's value is tied to the 'review' state
+                onChange={(e) => setReview(e.target.value)}
+                borderColor="gray.500"
+              />
+            </HStack>
+
+            <HStack
+              padding={2}
+              width={"min-content"}
+              border={"solid 1px"}
+              borderColor={useColorModeValue("gray.500", "gray.400")}
+              borderRadius={"20px"}
+              bgColor={useColorModeValue("gray.300", "gray.600")}
+            >
               {[...Array(5)].map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < starRating ? "yellow.400" : "gray.500"}
+                  color={
+                    i <= hoverIndex
+                      ? "orange.500"
+                      : i <= starRating - 1
+                      ? "yellow.400"
+                      : "gray.500"
+                  }
                   onClick={() => handleStarClick(i + 1)}
+                  onMouseEnter={() => setHoverIndex(i)}
+                  onMouseLeave={() => setHoverIndex(-1)}
+                  _hover={{ cursor: "pointer" }}
                 />
               ))}
             </HStack>
             <Stack direction={["column", "row"]} spacing={2}>
               <Button
-                colorScheme="blue"
+                bgColor="green"
                 variant="solid"
                 onClick={handleSubmitReview}
-                isDisabled={!review.trim()} // Disable the button if the input is empty
+                isDisabled={!review.trim() || starRating == 0} // Disable the button if the input is empty or no star rating is selected
+                _hover={{ bg: "green.500" }}
               >
                 Add review
               </Button>
