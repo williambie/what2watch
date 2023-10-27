@@ -8,4 +8,13 @@ const GET_USER = gql`
   }
 `;
 
-export { GET_USER };
+const GET_GENRES  = gql`
+  query getGenres {
+    genres {
+      name
+      id
+    }
+  }
+`;
+
+export { GET_USER, GET_GENRES };
