@@ -8,7 +8,8 @@ export const typeDefs = `#graphql
     release_date: String
     popularity: Float
     genres: [Genre!]
-    reviews: [Review!]
+    reviews: [Review!],
+    favourite: Boolean,
   }
   type Genre {
     id: Int
