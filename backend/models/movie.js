@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
 
-const movieSchema = new Schema({
+const movieSchema = new mongoose.Schema({
   adult: Boolean,
   backdrop_path: String,
   genre_ids: Array,
@@ -18,4 +17,6 @@ const movieSchema = new Schema({
   vote_count: Number
 });
 
-module.exports = mongoose.model("Movie", movieSchema);
+const Movie = mongoose.model("Movie", movieSchema);
+
+export default Movie;

@@ -1,3 +1,56 @@
+export const typeDefs = `#graphql
+  type Movie {
+    id: Int
+    title: String
+    poster_path: String
+    vote_average: Float
+    overview: String
+    release_date: String
+    popularity: Float
+    genres: [Genre!]
+    reviews: [Review!]
+  }
+  type Genre {
+    id: Int
+    name: String
+    movies: [Movie!]
+  }
+  type User {
+    id: Int!
+    username: String!
+  }
+  type Review {
+    id: Int!
+    content: String!
+    timestamp: String!
+    movieid: Movie!
+    userid: User!
+  }
+  type Favourite {
+    movieid: Movie!
+    userid: User!
+  }
+  type Query {
+    genre(id: Int!): Genre
+    genres: [Genre]
+    movie(id: Int!): Movie
+    movies: [Movie]
+    user(id: Int!): User
+    users: [User]
+    reviews(movieid: Int!): [Review]
+    favourites(userid: Int!): [Favourite]
+  }
+  type Mutation {
+    addFavourite(movieid: Int!, userid: Int!): Favourite!
+    deleteFavourite(movieid: Int!, userid: Int!): Boolean
+    addUser(username: String!): User!
+    addReview(content: String!, timestamp: String!, movieid: Int!, userid: Int!): Review!
+    deleteReview(id: Int!): Boolean
+  }
+`
+
+/* 
+
 const graphql = require("graphql");
 const _ = require("lodash");
 const mongoose = require('mongoose');
@@ -223,4 +276,4 @@ const Mutation = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
   query: RootQuery,
   mutation: Mutation,
-});
+}); */
