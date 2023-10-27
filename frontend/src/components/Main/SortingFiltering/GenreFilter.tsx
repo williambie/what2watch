@@ -7,8 +7,10 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
-import genres from "../../../data/genres.json";
 import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_GENRES } from "../../queries/queries";
+import { Genre } from "../../../types/types";
 
 interface Props {
   onSelectGenre: (genre: number) => void;
@@ -17,6 +19,7 @@ interface Props {
 // GenreFilter is a dropdown menu that allows the user to filter movies by genre
 const GenreFilter = ({ onSelectGenre }: Props) => {
   const [selectedGenreName, setSelectedGenreName] = useState<string>("Genres");
+  const { loading, data } = useQuery(GET_GENRES);
 
   return (
     <Menu>
@@ -34,18 +37,19 @@ const GenreFilter = ({ onSelectGenre }: Props) => {
           All Genres
         </MenuItem>
         <MenuDivider />
-        {genres.genres.map((genre) => (
-          <MenuItem
-            key={genre.id}
-            marginRight={2}
-            onClick={() => {
-              onSelectGenre(genre.id);
-              setSelectedGenreName(genre.name);
-            }}
-          >
-            {genre.name}
-          </MenuItem>
-        ))}
+        {!loading &&
+          data.genres.map((genre: Genre) => (
+            <MenuItem
+              key={genre.id}
+              marginRight={2}
+              onClick={() => {
+                onSelectGenre(genre.id);
+                setSelectedGenreName(genre.name);
+              }}
+            >
+              {genre.name}
+            </MenuItem>
+          ))}
       </MenuList>
     </Menu>
   );
