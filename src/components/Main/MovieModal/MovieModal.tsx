@@ -27,6 +27,8 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../../queries/queries";
 
 interface MovieModalProps {
   movie: Movie;
@@ -39,6 +41,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
+  const { data } = useQuery(GET_USER);
 
   // Get the genre names for the movie
   const movieGenres = movie.genre_ids.map((genreId) =>
@@ -56,6 +59,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     }[]
   >([]);
   const [starRating, setStarRating] = useState<number>(0);
+
+  
+
   const textColor = useColorModeValue("gray.600", "gray.400");
   const borderColor = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("gray.100", "gray.600");
@@ -67,9 +73,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
 
   // Function to handle submitting a review
   const handleSubmitReview = () => {
+
     if (review.trim() === "") {
       return;
     }
+    
     const now = new Date();
     const options = {
       year: "numeric" as const,
@@ -80,7 +88,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
     };
     const timestamp = now.toLocaleString("en-US", options);
     const newReview = {
-      author: "Martha",
+      author: data.user.username,
       content: review,
       created_at: timestamp,
       star_rating: starRating,
