@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components//Navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Main/Home";
 import Favourites from "./components/Main/Favourites/Favourites";
 import { useState } from "react";
