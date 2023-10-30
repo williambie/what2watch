@@ -12,7 +12,7 @@ import {
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import ColorModeSwitch from "./ColorModeSwitch";
 import { Link } from "react-router-dom";
-import { GET_USER } from "../queries/queries";
+import { GET_USER } from "../../queries/queries";
 import { useQuery } from "@apollo/client";
 
 // ProfileButton is a dropdown menu that allows the user to navigate to their favourites page or switch between light and dark mode

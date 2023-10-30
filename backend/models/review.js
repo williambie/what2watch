@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
-  id: { type: Number, required: true },
+  id: { type: Number },
   content: { type: String, required : true },
+  rating: { type: Number, required : true },
   timestamp: { type: String, required : true },
   movieid: { type: Number, required : true },
   userid: { type: Number, required : true }
