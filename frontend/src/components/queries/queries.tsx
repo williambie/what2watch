@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 const GET_USER = gql`
   query getUser {
@@ -8,7 +8,7 @@ const GET_USER = gql`
   }
 `;
 
-const GET_GENRES  = gql`
+const GET_GENRES = gql`
   query getGenres {
     genres {
       name
@@ -17,4 +17,21 @@ const GET_GENRES  = gql`
   }
 `;
 
-export { GET_USER, GET_GENRES };
+const GET_MOVIES = gql`
+  query getMovies {
+    movies {
+      id
+      title
+      overview
+      poster_path
+      vote_average
+      popularity
+      genres {
+        name
+        id
+      }
+    }
+  }
+`;
+
+export { GET_USER, GET_GENRES, GET_MOVIES };

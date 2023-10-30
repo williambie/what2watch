@@ -20,11 +20,10 @@ import {
   useBreakpointValue,
   Avatar,
 } from "@chakra-ui/react";
-import genres from "../../../data/genres.json";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Movie } from "../../../types/types";
+import { Genre, Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery } from "@apollo/client";
@@ -43,10 +42,8 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const [hoverIndex, setHoverIndex] = useState(-1);
   const { loading, data } = useQuery(GET_USER);
 
-  // Get the genre names for the movie
-  const movieGenres = movie.genre_ids.map((genreId) =>
-    genres.genres.find((genre) => genre.id === genreId),
-  );
+  // find genre names for the specific movie that is clicked on
+  const genreNames = movie.genres.map((genre: Genre) => genre.name);
 
   // State for the review input
   const [review, setReview] = useState<string>("");
@@ -135,11 +132,10 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             />
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
-                {/* Map over the genres to display them as tags */}
                 <Box>
-                  {movieGenres.map((genre) => (
-                    <Tag key={genre?.id} mr={2}>
-                      <Text paddingX={1}>{genre?.name}</Text>
+                  {genreNames.map((genreName: string, index: number) => (
+                    <Tag key={index} mr={1} mb={1}>
+                      {genreName}
                     </Tag>
                   ))}
                 </Box>
@@ -225,7 +221,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               <Input
                 placeholder="Write your review here..."
                 value={review} // Ensure the input's value is tied to the 'review' state
-                onChange={(e) => setReview(e.target.value)}
+                onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  setReview(e.target.value)
+                }
                 borderColor="gray.500"
               />
             </HStack>

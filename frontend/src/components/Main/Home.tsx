@@ -3,9 +3,10 @@ import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter";
 import SortingButton from "./SortingFiltering/SortingButton";
-import movies from "../../data/movies.json";
 import { useState } from "react";
 import SearchFilter from "./SortingFiltering/SearchFilter";
+import { useQuery } from "@apollo/client";
+import { GET_MOVIES } from "../queries/queries";
 
 export interface MovieQuery {
   genre: number | null;
@@ -22,6 +23,12 @@ function Home({ searchTerm }: HomeProps) {
     genre: null,
     sortBy: "popularity",
   });
+
+  const { loading, data } = useQuery(GET_MOVIES);
+
+  if (loading) return <p>Loading...</p>;
+
+  const movies = data.movies;
 
   const handleSortChange = (sortBy: string) => {
     setMovieQuery({ ...movieQuery, sortBy });
