@@ -21,7 +21,7 @@ import {
   Avatar,
   Spinner,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Movie, Review } from "../../../types/types";
@@ -34,6 +34,7 @@ import {
   GET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
+  CHECK_FAVOURITE,
 } from "../../../queries/queries";
 
 interface MovieModalProps {
@@ -47,13 +48,27 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const { loading, data: userData } = useQuery(GET_USER);
+  const { loading: userLoading, data: userData } = useQuery(GET_USER);
   const { loading: genreLoading, data: genreData } = useQuery(
     GET_MOVIE_GENRES,
     {
       variables: { id: movie.id },
     },
   );
+  const {
+    loading: favouriteLoading,
+    data: favouriteData,
+    refetch: refetchFavourite,
+  } = useQuery(CHECK_FAVOURITE, {
+    variables: { id: movie.id },
+  });
+
+  useEffect(() => {
+    if (isOpen || !isOpen) {
+      refetchFavourite();
+    }
+  }, [isOpen, refetchFavourite]);
+
   const {
     loading: reviewLoading,
     data: reviewData,
@@ -124,7 +139,6 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
 
   // Function to handle deleting a review
   const handleDeleteReview = async (id: number) => {
-
     setIsRefetching(true);
 
     try {
@@ -134,10 +148,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
           id: id,
         },
       });
-  
+
       // Set the isRefetching state to true to show the spinner
-      
-  
+
       // Refetch the reviews
       await reviewRefetch();
     } catch (error) {
@@ -192,8 +205,16 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                     )}
                   </Box>
                 )}
-
-                <FavouriteButton movieName={movie.title} />
+                {favouriteLoading ? (
+                  <Spinner />
+                ) : (
+                  favouriteData && (
+                    <FavouriteButton
+                      movie={movie}
+                      isFavourite={favouriteData.movie.favourite}
+                    />
+                  )
+                )}
               </Flex>
 
               <Text fontSize="md" color="gray.500">
@@ -217,8 +238,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             mt={3}
             borderRadius={5}
           >
-            <Heading fontSize="lg">User Reviews
-            {isRefetching && <Spinner size="sm" ml={2}/>}
+            <Heading fontSize="lg">
+              User Reviews
+              {isRefetching && <Spinner size="sm" ml={2} />}
             </Heading>
             <Divider borderColor={useColorModeValue("black", "white")} />
             {reviewLoading ? (
@@ -240,7 +262,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                         <HStack justifyContent={"space-between"}>
                           <HStack>
                             <Avatar size="xs"></Avatar>
-                            {loading ? (
+                            {userLoading ? (
                               <Text>Fetching user...</Text>
                             ) : (
                               <Text>{userData.user.username}</Text>

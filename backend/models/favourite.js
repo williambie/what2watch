@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const favouriteSchema = new mongoose.Schema({
-  movieid: { type: Number, required: true },
+  movieid: { type: Number, required: true, unique: true },
   userid:{ type: Number, required: true }
 });
 

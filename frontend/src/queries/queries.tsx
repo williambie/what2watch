@@ -29,6 +29,16 @@ const GET_MOVIE_GENRES = gql`
   }
 `;
 
+const CHECK_FAVOURITE = gql`
+  query checkFavourite($id: Int!) {
+    movie(id: $id) {
+      favourite
+      id
+      title
+    }
+  }
+`;
+
 const GET_REVIEWS = gql`
   query Reviews($id: Int!) {
     movie(id: $id) {
@@ -68,9 +78,68 @@ const ADD_REVIEW = gql`
 `;
 
 const DELETE_REVIEW = gql`
-mutation deleteReview($id: Int!) {
-  deleteReview(id: $id)
+  mutation deleteReview($id: Int!) {
+    deleteReview(id: $id)
+  }
+`;
+
+const ADD_FAVOURITE = gql`
+  mutation addFavourite($movieid: Int!, $userid: Int!) {
+  addFavourite(movieid: $movieid, userid: $userid) {
+    movieid
+    userid
+  }
 }
 `;
 
-export { GET_USER, GET_GENRES, GET_MOVIE_GENRES, ADD_REVIEW, GET_REVIEWS, DELETE_REVIEW };
+const REMOVE_FAVOURITE = gql`
+mutation Mutation($movieid: Int!, $userid: Int!) {
+  deleteFavourite(movieid: $movieid, userid: $userid)
+}
+`;
+
+const TOGGLE_FAVOURITE = gql`
+  mutation ToggleFavourite($movieid: Int!) {
+    toggleFavourite(movieid: $movieid)
+  }
+`;
+
+const GET_FAVOURITES = gql`
+query getFavourites($userid: Int!) {
+  favourites(userid: $userid) {
+    id
+    title
+    poster_path
+    vote_average
+    overview
+    release_date
+    popularity
+    genres {
+      name
+      id
+    }
+    reviews {
+      id
+      content
+      timestamp
+      rating
+      movieid
+      userid
+    }
+  }
+}
+`;
+
+export {
+  GET_USER,
+  GET_GENRES,
+  GET_MOVIE_GENRES,
+  ADD_REVIEW,
+  GET_REVIEWS,
+  DELETE_REVIEW,
+  ADD_FAVOURITE,
+  REMOVE_FAVOURITE,
+  TOGGLE_FAVOURITE,
+  CHECK_FAVOURITE,
+  GET_FAVOURITES
+};
