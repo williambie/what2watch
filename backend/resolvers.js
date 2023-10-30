@@ -41,7 +41,7 @@ export const resolvers = {
     },
     favourites: async (_, args) => {
       return await Favourite.find({ userid: args.userid });
-    }
+    },
   },
   Mutation: {
     addFavourite: async (_, args) => {
@@ -55,26 +55,38 @@ export const resolvers = {
       return {
         id: res.id,
         ...res._doc,
-      }
+      };
     },
     deleteFavourite: async (_, args) => {
-      const wasDeleted = (await Favourite.deleteOne({ movieid: args.movieid, userid: args.userid })).deletedCount;
+      const wasDeleted = (
+        await Favourite.deleteOne({
+          movieid: args.movieid,
+          userid: args.userid,
+        })
+      ).deletedCount;
       return wasDeleted;
     },
     addUser: async (_, args) => {
-      const maxId = await User.findOne().sort({ id: -1 }).limit(1).then(user => user ? user.id : 0);
+      const maxId = await User.findOne()
+        .sort({ id: -1 })
+        .limit(1)
+        .then((user) => (user ? user.id : 0));
       const user = new User({
         username: args.username,
         id: maxId + 1,
       });
       return user.save();
     },
-    
-    
+
     addReview: async (_, args) => {
+      const maxId = await Review.findOne()
+        .sort({ id: -1 })
+        .limit(1)
+        .then((review) => (review ? review.id : 0));
       const review = new Review({
-        id: args.id,
+        id: maxId + 1,
         content: args.content,
+        rating: args.rating,
         timestamp: args.timestamp,
         movieid: args.movieid,
         userid: args.userid,
@@ -85,11 +97,11 @@ export const resolvers = {
       return {
         id: res.id,
         ...res._doc,
-      }
+      };
     },
     deleteReview: async (_, args) => {
       const wasDeleted = (await Review.deleteOne({ id: args.id })).deletedCount;
       return wasDeleted;
-    }
-  }
-}
+    },
+  },
+};
