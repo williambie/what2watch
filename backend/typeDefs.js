@@ -23,6 +23,7 @@ export const typeDefs = `#graphql
   type Review {
     id: Int!
     content: String!
+    rating: Int!
     timestamp: String!
     movieid: Movie!
     userid: User!

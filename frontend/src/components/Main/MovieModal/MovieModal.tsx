@@ -28,7 +28,7 @@ import { Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery } from "@apollo/client";
-import { GET_USER } from "../../queries/queries";
+import { GET_USER } from "../../../queries/queries";
 
 interface MovieModalProps {
   movie: Movie;

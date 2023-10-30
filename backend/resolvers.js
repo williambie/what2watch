@@ -75,6 +75,7 @@ export const resolvers = {
       const review = new Review({
         id: args.id,
         content: args.content,
+        rating: args.rating,
         timestamp: args.timestamp,
         movieid: args.movieid,
         userid: args.userid,

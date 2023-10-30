@@ -14,7 +14,8 @@ const movieSchema = new mongoose.Schema({
   title: String,
   video: Boolean,
   vote_average: Number,
-  vote_count: Number
+  vote_count: Number,
+  reviews: Array
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
