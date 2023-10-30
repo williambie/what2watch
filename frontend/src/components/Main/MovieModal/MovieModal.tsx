@@ -21,16 +21,15 @@ import {
   Avatar,
   Spinner,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Movie, Review } from "../../../types/types";
+import { Genre, Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   GET_USER,
-  GET_MOVIE_GENRES,
   GET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
@@ -48,12 +47,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
   const { loading, data: userData } = useQuery(GET_USER);
-  const { loading: genreLoading, data: genreData } = useQuery(
-    GET_MOVIE_GENRES,
-    {
-      variables: { id: movie.id },
-    },
-  );
+
+  const genreName = movie.genres.map((genre: Genre) => genre.name);
+
   const {
     loading: reviewLoading,
     data: reviewData,
@@ -61,6 +57,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   } = useQuery(GET_REVIEWS, {
     variables: { id: movie.id },
   });
+
   const [isRefetching, setIsRefetching] = useState(false);
 
   const [addReview] = useMutation(ADD_REVIEW);
@@ -124,7 +121,6 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
 
   // Function to handle deleting a review
   const handleDeleteReview = async (id: number) => {
-
     setIsRefetching(true);
 
     try {
@@ -134,10 +130,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
           id: id,
         },
       });
-  
+
       // Set the isRefetching state to true to show the spinner
-      
-  
+
       // Refetch the reviews
       await reviewRefetch();
     } catch (error) {
@@ -181,17 +176,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
                 {/* Map over the genres to display them as tags */}
-                {!genreLoading && (
-                  <Box>
-                    {genreData.movie.genres.map(
-                      (genre: { name: string; id: number }) => (
-                        <Tag key={genre?.id} mr={2}>
-                          <Text paddingX={1}>{genre?.name}</Text>
-                        </Tag>
-                      ),
-                    )}
-                  </Box>
-                )}
+                <Box>
+                  {genreName.map((genreName, index) => (
+                    <Tag key={index} mr={2}>
+                      <Text paddingX={1}>{genreName}</Text>
+                    </Tag>
+                  ))}
+                </Box>
 
                 <FavouriteButton movieName={movie.title} />
               </Flex>
@@ -217,8 +208,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             mt={3}
             borderRadius={5}
           >
-            <Heading fontSize="lg">User Reviews
-            {isRefetching && <Spinner size="sm" ml={2}/>}
+            <Heading fontSize="lg">
+              User Reviews
+              {isRefetching && <Spinner size="sm" ml={2} />}
             </Heading>
             <Divider borderColor={useColorModeValue("black", "white")} />
             {reviewLoading ? (
@@ -289,7 +281,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               <Input
                 placeholder="Write your review here..."
                 value={review} // Ensure the input's value is tied to the 'review' state
-                onChange={(e) => setReview(e.target.value)}
+                onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  setReview(e.target.value)
+                }
                 borderColor="gray.500"
               />
             </HStack>

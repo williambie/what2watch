@@ -16,7 +16,9 @@ const MovieGrid = ({ movies, genre, sortBy }: Props) => {
 
   // Sorts movies by vote average, title or popularity
   const sortMovies = (movies: Movie[], sortBy: string) => {
-    return movies.sort((a: Movie, b: Movie) => {
+    const moviesCopy = [...movies];
+
+    return moviesCopy.sort((a: Movie, b: Movie) => {
       if (sortBy === "vote_average") {
         return b.vote_average - a.vote_average;
       } else if (sortBy === "title") {
