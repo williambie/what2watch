@@ -30,7 +30,6 @@ import { StarIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   GET_USER,
-  GET_MOVIE_GENRES,
   GET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
@@ -48,12 +47,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
   const { loading, data: userData } = useQuery(GET_USER);
-  const { loading: genreLoading, data: genreData } = useQuery(
-    GET_MOVIE_GENRES,
-    {
-      variables: { id: movie.id },
-    },
-  );
+
+  const genreName = movie.genres.map((genre: Genre) => genre.name);
+
   const {
     loading: reviewLoading,
     data: reviewData,
@@ -61,6 +57,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   } = useQuery(GET_REVIEWS, {
     variables: { id: movie.id },
   });
+
   const [isRefetching, setIsRefetching] = useState(false);
 
   const [addReview] = useMutation(ADD_REVIEW);
@@ -179,17 +176,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
                 {/* Map over the genres to display them as tags */}
-                {!genreLoading && (
-                  <Box>
-                    {genreData.movie.genres.map(
-                      (genre: { name: string; id: number }) => (
-                        <Tag key={genre?.id} mr={2}>
-                          <Text paddingX={1}>{genre?.name}</Text>
-                        </Tag>
-                      ),
-                    )}
-                  </Box>
-                )}
+                <Box>
+                  {genreName.map((genreName, index) => (
+                    <Tag key={index} mr={2}>
+                      <Text paddingX={1}>{genreName}</Text>
+                    </Tag>
+                  ))}
+                </Box>
 
                 <FavouriteButton movieName={movie.title} />
               </Flex>
