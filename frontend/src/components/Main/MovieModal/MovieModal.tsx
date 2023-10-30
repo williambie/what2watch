@@ -33,6 +33,7 @@ import {
   GET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
+  CHECK_FAVOURITE,
 } from "../../../queries/queries";
 
 interface MovieModalProps {
@@ -49,6 +50,20 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const { loading, data: userData } = useQuery(GET_USER);
 
   const genreName = movie.genres.map((genre: Genre) => genre.name);
+
+  const {
+    loading: favouriteLoading,
+    data: favouriteData,
+    refetch: refetchFavourite,
+  } = useQuery(CHECK_FAVOURITE, {
+    variables: { id: movie.id },
+  });
+
+  useEffect(() => {
+    if (isOpen || !isOpen) {
+      refetchFavourite();
+    }
+  }, [isOpen, refetchFavourite]);
 
   const {
     loading: reviewLoading,
@@ -176,15 +191,27 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
                 {/* Map over the genres to display them as tags */}
-                <Box>
-                  {genreName.map((genreName, index) => (
-                    <Tag key={index} mr={2}>
-                      <Text paddingX={1}>{genreName}</Text>
-                    </Tag>
-                  ))}
-                </Box>
-
-                <FavouriteButton movieName={movie.title} />
+                {!genreLoading && (
+                  <Box>
+                    {genreData.movie.genres.map(
+                      (genre: { name: string; id: number }) => (
+                        <Tag key={genre?.id} mr={2}>
+                          <Text paddingX={1}>{genre?.name}</Text>
+                        </Tag>
+                      ),
+                    )}
+                  </Box>
+                )}
+                {favouriteLoading ? (
+                  <Spinner />
+                ) : (
+                  favouriteData && (
+                    <FavouriteButton
+                      movie={movie}
+                      isFavourite={favouriteData.movie.favourite}
+                    />
+                  )
+                )}
               </Flex>
 
               <Text fontSize="md" color="gray.500">
@@ -232,7 +259,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                         <HStack justifyContent={"space-between"}>
                           <HStack>
                             <Avatar size="xs"></Avatar>
-                            {loading ? (
+                            {userLoading ? (
                               <Text>Fetching user...</Text>
                             ) : (
                               <Text>{userData.user.username}</Text>

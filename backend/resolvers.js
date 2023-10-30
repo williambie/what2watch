@@ -40,7 +40,17 @@ export const resolvers = {
       return await Review.find({ movieid: args.movieid });
     },
     favourites: async (_, args) => {
-      return await Favourite.find({ userid: args.userid });
+      const movies = await Favourite.find({ userid: args.userid });
+      const movieIds = movies.map((movie) => movie.movieid);
+      const fullMovies = await Promise.all(
+        movieIds.map(async (id) => {
+          const movie = await Movie.findOne({ id });
+          const genres = await Genre.find({ id: { $in: movie.genre_ids } });
+          const reviews = await Review.find({ movieid: movie.id });
+          return { ...movie.toObject(), genres, reviews };
+        })
+      );
+      return fullMovies;
     },
   },
   Mutation: {
@@ -99,6 +109,17 @@ export const resolvers = {
         ...res._doc,
       };
     },
+
+    toggleFavourite: async (_, args) => {
+      const movie = await Movie.findOne({ id: args.movieid });
+      if (!movie) {
+        throw new Error(`Movie with id ${args.movieid} not found`);
+      }
+      movie.favourite = !movie.favourite;
+      await movie.save();
+      return movie.favourite;
+    },
+
     deleteReview: async (_, args) => {
       const wasDeleted = (await Review.deleteOne({ id: args.id })).deletedCount;
       return wasDeleted;

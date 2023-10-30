@@ -1,6 +1,6 @@
 export const typeDefs = `#graphql
   type Movie {
-    id: Int
+    id: Int!
     title: String
     poster_path: String
     vote_average: Float
@@ -9,8 +9,9 @@ export const typeDefs = `#graphql
     popularity: Float
     genres: [Genre!]
     reviews: [Review!],
-    favourite: Boolean,
+    favourite: Boolean!,
   }
+  
   type Genre {
     id: Int
     name: String
@@ -30,9 +31,10 @@ export const typeDefs = `#graphql
   }
   
   type Favourite {
-    movieid: Movie!
-    userid: User!
+    movieid: Int!
+    userid: Int!
   }
+
   type Query {
     genre(id: Int!): Genre
     genres: [Genre]
@@ -41,14 +43,15 @@ export const typeDefs = `#graphql
     user(id: Int!): User
     users: [User]
     reviews(movieid: Int!): [Review]
-    favourites(userid: Int!): [Favourite]
+    favourites(userid: Int!): [Movie]
   }
   type Mutation {
-    addFavourite(movieid: Int!, userid: Int!): Favourite!
-    deleteFavourite(movieid: Int!, userid: Int!): Boolean
     addUser(username: String!): User!
+    addFavourite(movieid: Int!, userid: Int!): Favourite!
+    toggleFavourite(movieid: Int!): Boolean
+    deleteFavourite(movieid: Int!, userid: Int!): Boolean
     addReview(content: String!, rating: Int!, timestamp: String!, movieid: Int!, userid: Int!): Review!
-    deleteReview(id: Int!): Boolean
+    deleteReview(id: Int!): Boolean,
   }
 `
 
