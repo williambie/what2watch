@@ -1,4 +1,5 @@
 export interface Movie {
+  genres: Genre[];
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];

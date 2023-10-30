@@ -21,16 +21,15 @@ import {
   Avatar,
   Spinner,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { SetStateAction, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Movie, Review } from "../../../types/types";
+import { Genre, Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   GET_USER,
-  GET_MOVIE_GENRES,
   GET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
@@ -48,13 +47,10 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const { loading: userLoading, data: userData } = useQuery(GET_USER);
-  const { loading: genreLoading, data: genreData } = useQuery(
-    GET_MOVIE_GENRES,
-    {
-      variables: { id: movie.id },
-    },
-  );
+  const { loading, data: userData } = useQuery(GET_USER);
+
+  const genreName = movie.genres.map((genre: Genre) => genre.name);
+
   const {
     loading: favouriteLoading,
     data: favouriteData,
@@ -76,6 +72,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   } = useQuery(GET_REVIEWS, {
     variables: { id: movie.id },
   });
+
   const [isRefetching, setIsRefetching] = useState(false);
 
   const [addReview] = useMutation(ADD_REVIEW);
@@ -311,7 +308,9 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
               <Input
                 placeholder="Write your review here..."
                 value={review} // Ensure the input's value is tied to the 'review' state
-                onChange={(e) => setReview(e.target.value)}
+                onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  setReview(e.target.value)
+                }
                 borderColor="gray.500"
               />
             </HStack>
