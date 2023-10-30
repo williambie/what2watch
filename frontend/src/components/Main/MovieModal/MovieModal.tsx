@@ -21,10 +21,10 @@ import {
   Avatar,
   Spinner,
 } from "@chakra-ui/react";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Genre, Movie } from "../../../types/types";
+import { Genre, Movie, Review } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation } from "@apollo/client";
@@ -47,7 +47,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const { loading, data: userData } = useQuery(GET_USER);
+  const { loading: userLoading, data: userData } = useQuery(GET_USER);
 
   const genreName = movie.genres.map((genre: Genre) => genre.name);
 
@@ -191,17 +191,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
                 {/* Map over the genres to display them as tags */}
-                {!genreLoading && (
-                  <Box>
-                    {genreData.movie.genres.map(
-                      (genre: { name: string; id: number }) => (
-                        <Tag key={genre?.id} mr={2}>
-                          <Text paddingX={1}>{genre?.name}</Text>
-                        </Tag>
-                      ),
-                    )}
-                  </Box>
-                )}
+                <Box>
+                  {genreName.map((genreName, index) => (
+                    <Tag key={index} mr={2}>
+                      <Text paddingX={1}>{genreName}</Text>
+                    </Tag>
+                  ))}
+                </Box>
                 {favouriteLoading ? (
                   <Spinner />
                 ) : (
