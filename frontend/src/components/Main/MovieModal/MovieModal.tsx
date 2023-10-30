@@ -126,7 +126,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const handleDeleteReview = async (id: number) => {
 
     setIsRefetching(true);
-    
+
     try {
       // Call the deleteReview mutation with the review id
       await deleteReview({
@@ -217,9 +217,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             mt={3}
             borderRadius={5}
           >
-            <Heading fontSize="lg">User Reviews</Heading>
+            <Heading fontSize="lg">User Reviews
+            {isRefetching && <Spinner size="sm" ml={2}/>}
+            </Heading>
             <Divider borderColor={useColorModeValue("black", "white")} />
-            {isRefetching ? (
+            {reviewLoading ? (
               <Spinner />
             ) : (
               <>
