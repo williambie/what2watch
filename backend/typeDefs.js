@@ -23,10 +23,12 @@ export const typeDefs = `#graphql
   type Review {
     id: Int!
     content: String!
+    rating: Int!
     timestamp: String!
-    movieid: Movie!
-    userid: User!
+    movieid: Int!
+    userid: Int!
   }
+  
   type Favourite {
     movieid: Movie!
     userid: User!
@@ -45,7 +47,7 @@ export const typeDefs = `#graphql
     addFavourite(movieid: Int!, userid: Int!): Favourite!
     deleteFavourite(movieid: Int!, userid: Int!): Boolean
     addUser(username: String!): User!
-    addReview(content: String!, timestamp: String!, movieid: Int!, userid: Int!): Review!
+    addReview(content: String!, rating: Int!, timestamp: String!, movieid: Int!, userid: Int!): Review!
     deleteReview(id: Int!): Boolean
   }
 `

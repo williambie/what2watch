@@ -20,3 +20,12 @@ export interface Genre {
   id: number;
   name: string;
 }
+
+export interface Review {
+  id: number;
+  content: string;
+  rating: number;
+  timestamp: string;
+  movieid: number;
+  userid: number;
+}

@@ -9,7 +9,7 @@ import {
 import { BsChevronDown } from "react-icons/bs";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_GENRES } from "../../queries/queries";
+import { GET_GENRES } from "../../../queries/queries";
 import { Genre } from "../../../types/types";
 
 interface Props {

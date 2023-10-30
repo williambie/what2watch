@@ -19,6 +19,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   Avatar,
+  Spinner,
 } from "@chakra-ui/react";
 import { SetStateAction, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
@@ -26,8 +27,14 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { Genre, Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "../../queries/queries";
+import { useQuery, useMutation } from "@apollo/client";
+import {
+  GET_USER,
+  GET_MOVIE_GENRES,
+  GET_REVIEWS,
+  ADD_REVIEW,
+  DELETE_REVIEW,
+} from "../../../queries/queries";
 
 interface MovieModalProps {
   movie: Movie;
@@ -40,21 +47,27 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const { loading, data } = useQuery(GET_USER);
+  const { loading, data: userData } = useQuery(GET_USER);
+  const { loading: genreLoading, data: genreData } = useQuery(
+    GET_MOVIE_GENRES,
+    {
+      variables: { id: movie.id },
+    },
+  );
+  const {
+    loading: reviewLoading,
+    data: reviewData,
+    refetch: reviewRefetch,
+  } = useQuery(GET_REVIEWS, {
+    variables: { id: movie.id },
+  });
+  const [isRefetching, setIsRefetching] = useState(false);
 
-  // find genre names for the specific movie that is clicked on
-  const genreNames = movie.genres.map((genre: Genre) => genre.name);
+  const [addReview] = useMutation(ADD_REVIEW);
+  const [deleteReview] = useMutation(DELETE_REVIEW);
 
   // State for the review input
   const [review, setReview] = useState<string>("");
-  const [submittedReviews, setSubmittedReviews] = useState<
-    {
-      author: string;
-      content: string;
-      created_at: string;
-      star_rating: number;
-    }[]
-  >([]);
   const [starRating, setStarRating] = useState<number>(0);
 
   const textColor = useColorModeValue("gray.600", "gray.400");
@@ -67,10 +80,12 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   };
 
   // Function to handle submitting a review
-  const handleSubmitReview = () => {
+  const handleSubmitReview = async () => {
     if (review.trim() === "") {
       return;
     }
+
+    setIsRefetching(true);
 
     const now = new Date();
     const options = {
@@ -81,23 +96,54 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
       minute: "numeric" as const,
     };
     const timestamp = now.toLocaleString("en-US", options);
-    const newReview = {
-      author: data.user.username,
-      content: review,
-      created_at: timestamp,
-      star_rating: starRating,
-    };
 
-    setSubmittedReviews([...submittedReviews, newReview]);
-    setReview("");
-    setStarRating(0);
+    try {
+      // Call the addReview mutation with the review data
+      await addReview({
+        variables: {
+          content: review,
+          rating: starRating,
+          timestamp: timestamp,
+          movieid: movie.id,
+          userid: userData?.user.id,
+        },
+      });
+
+      await reviewRefetch();
+
+      // Reset the form state
+      setReview("");
+      setStarRating(0);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // Set the isRefetching state to false to hide the spinner
+      setIsRefetching(false);
+    }
   };
 
   // Function to handle deleting a review
-  const handleDeleteReview = (index: number) => {
-    const newReviews = [...submittedReviews];
-    newReviews.splice(index, 1);
-    setSubmittedReviews(newReviews);
+  const handleDeleteReview = async (id: number) => {
+    setIsRefetching(true);
+
+    try {
+      // Call the deleteReview mutation with the review id
+      await deleteReview({
+        variables: {
+          id: id,
+        },
+      });
+
+      // Set the isRefetching state to true to show the spinner
+
+      // Refetch the reviews
+      await reviewRefetch();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // Set the isRefetching state to false to hide the spinner
+      setIsRefetching(false);
+    }
   };
 
   const releaseDate = new Date(movie.release_date);
@@ -132,13 +178,19 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             />
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
-                <Box>
-                  {genreNames.map((genreName: string, index: number) => (
-                    <Tag key={index} mr={1} mb={1}>
-                      {genreName}
-                    </Tag>
-                  ))}
-                </Box>
+                {/* Map over the genres to display them as tags */}
+                {!genreLoading && (
+                  <Box>
+                    {genreData.movie.genres.map(
+                      (genre: { name: string; id: number }) => (
+                        <Tag key={genre?.id} mr={2}>
+                          <Text paddingX={1}>{genre?.name}</Text>
+                        </Tag>
+                      ),
+                    )}
+                  </Box>
+                )}
+
                 <FavouriteButton movieName={movie.title} />
               </Flex>
 
@@ -163,57 +215,72 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             mt={3}
             borderRadius={5}
           >
-            <Heading fontSize="lg">User Reviews</Heading>
+            <Heading fontSize="lg">
+              User Reviews
+              {isRefetching && <Spinner size="sm" ml={2} />}
+            </Heading>
             <Divider borderColor={useColorModeValue("black", "white")} />
-            {submittedReviews.length === 0 ? (
-              <Text padding={2}>Be the first to review this movie!</Text>
+            {reviewLoading ? (
+              <Spinner />
             ) : (
-              submittedReviews.map((review, index) => (
-                <Flex
-                  flexDirection={"column"}
-                  key={index}
-                  bg={bg}
-                  p={3}
-                  borderRadius="md"
-                >
-                  <HStack justifyContent={"space-between"}>
-                    <HStack>
-                      <Avatar size="xs"></Avatar>
-                      {loading ? (
-                        <Text>Fetching user...</Text>
-                      ) : (
-                        <Text>{review.author}</Text>
-                      )}
-                    </HStack>
-                    <Text color={textColor}>{review.created_at}</Text>
-                  </HStack>
-                  <Divider paddingBottom={2} borderColor={borderColor} />
+              <>
+                {reviewData?.movie.reviews.length === 0 ? (
+                  <Text padding={2}>Be the first to review this movie!</Text>
+                ) : (
+                  reviewData?.movie.reviews.map(
+                    (review: Review, index: number) => (
+                      <Flex
+                        flexDirection={"column"}
+                        key={index}
+                        bg={bg}
+                        p={3}
+                        borderRadius="md"
+                      >
+                        <HStack justifyContent={"space-between"}>
+                          <HStack>
+                            <Avatar size="xs"></Avatar>
+                            {loading ? (
+                              <Text>Fetching user...</Text>
+                            ) : (
+                              <Text>{userData.user.username}</Text>
+                            )}
+                          </HStack>
+                          <Text color={textColor}>{review.timestamp}</Text>
+                        </HStack>
+                        <Divider paddingBottom={2} borderColor={borderColor} />
 
-                  <HStack
-                    marginTop={1}
-                    padding={1}
-                    bgColor={bgColor}
-                    width={"min-content"}
-                    borderRadius={"5px"}
-                  >
-                    {[...Array(review.star_rating)].map((_, i) => (
-                      <StarIcon key={i} color={"yellow.400"} fontSize={12} />
-                    ))}
-                  </HStack>
+                        <HStack
+                          marginTop={1}
+                          padding={1}
+                          bgColor={bgColor}
+                          width={"min-content"}
+                          borderRadius={"5px"}
+                        >
+                          {[...Array(review.rating)].map((_, i) => (
+                            <StarIcon
+                              key={i}
+                              color={"yellow.400"}
+                              fontSize={12}
+                            />
+                          ))}
+                        </HStack>
 
-                  <HStack justifyContent={"space-between"} paddingTop={2}>
-                    <Text>{review.content}</Text>
-                    <Button
-                      cursor="pointer"
-                      size={"xs"}
-                      bg={"red.600"}
-                      onClick={() => handleDeleteReview(index)}
-                    >
-                      <DeleteIcon color={"white"} />
-                    </Button>
-                  </HStack>
-                </Flex>
-              ))
+                        <HStack justifyContent={"space-between"} paddingTop={2}>
+                          <Text>{review.content}</Text>
+                          <Button
+                            cursor="pointer"
+                            size={"xs"}
+                            bg={"red.600"}
+                            onClick={() => handleDeleteReview(review.id)}
+                          >
+                            <DeleteIcon color={"white"} />
+                          </Button>
+                        </HStack>
+                      </Flex>
+                    ),
+                  )
+                )}
+              </>
             )}
             <Divider borderColor={useColorModeValue("black", "white")} />
             <HStack>
