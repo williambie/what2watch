@@ -1,15 +1,17 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import MovieCard from "../MovieCard/MovieCard";
 import { Movie } from "../../../types/types";
+import LoadingCard from "../LoadingCard/LoadingCard";
 
 interface Props {
   genre?: number | null;
   sortBy?: string;
   movies: Movie[];
+  loading: boolean;
 }
 
 // MovieGrid is a grid that displays all movies
-const MovieGrid = ({ movies, genre, sortBy }: Props) => {
+const MovieGrid = ({ movies, genre, sortBy, loading }: Props) => {
   const filteredMovies = genre
     ? movies.filter((movie) => movie.genre_ids.includes(genre))
     : movies;
@@ -34,16 +36,19 @@ const MovieGrid = ({ movies, genre, sortBy }: Props) => {
     ? sortMovies(filteredMovies, sortBy)
     : filteredMovies;
 
-  // The grid is displayed on the main page
   return (
     <SimpleGrid
       columns={{ base: 1, sm: 2, md: 3, lg: 4, xl: 5, "2xl": 6 }}
       padding="10px"
       spacing={10}
     >
-      {sortedMovies.map((movie: Movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
+      {loading
+        ? Array(12)
+            .fill(0)
+            .map((_, idx) => <LoadingCard key={idx} />)
+        : sortedMovies.map((movie: Movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
     </SimpleGrid>
   );
 };
