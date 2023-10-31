@@ -14,7 +14,7 @@ import {
   TOGGLE_FAVOURITE,
   GET_USER,
   ADD_FAVOURITE,
-  REMOVE_FAVOURITE
+  REMOVE_FAVOURITE,
 } from "../../../queries/queries";
 import { useQuery } from "@apollo/client";
 
@@ -51,9 +51,7 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
           variables: { movieid: movie.id, userid: data.user.id },
         });
       } else {
-        setAlertMessage(
-          `"${movie.title}" added to favourites`,
-        );
+        setAlertMessage(`"${movie.title}" added to favourites`);
         await toggleFavourite();
         await addFavourite({
           variables: { movieid: movie.id, userid: data.user.id },

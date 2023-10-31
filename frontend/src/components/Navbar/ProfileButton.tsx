@@ -25,7 +25,7 @@ export const ProfileButton = () => {
         <HStack justifyContent={"space-evenly"}>
           <Avatar size="sm"></Avatar>
           <Show above="lg">
-          {loading ? (
+            {loading ? (
               <Text paddingX={1}>Loading...</Text>
             ) : (
               <Text paddingX={1}>{data.user.username}</Text>

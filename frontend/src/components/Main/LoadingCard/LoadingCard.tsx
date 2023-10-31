@@ -18,7 +18,7 @@ const LoadingCard = () => {
       transition="transform 0.2s ease-in-out"
     >
       <Skeleton
-        height="300px"
+        height="330px"
         width="100%"
         startColor={bg}
         endColor="gray.400"

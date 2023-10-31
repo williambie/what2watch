@@ -8,8 +8,8 @@ export const typeDefs = `#graphql
     release_date: String
     popularity: Float
     genres: [Genre!]
-    reviews: [Review!],
-    favourite: Boolean!,
+    reviews: [Review!]
+    favourite: Boolean!
   }
   
   type Genre {
@@ -39,7 +39,8 @@ export const typeDefs = `#graphql
     genre(id: Int!): Genre
     genres: [Genre]
     movie(id: Int!): Movie
-    movies: [Movie]
+    movies(limit: Int, offset: Int): [Movie]
+    moviesCount: Int
     user(id: Int!): User
     users: [User]
     reviews(movieid: Int!): [Review]
@@ -51,9 +52,9 @@ export const typeDefs = `#graphql
     toggleFavourite(movieid: Int!): Boolean
     deleteFavourite(movieid: Int!, userid: Int!): Boolean
     addReview(content: String!, rating: Int!, timestamp: String!, movieid: Int!, userid: Int!): Review!
-    deleteReview(id: Int!): Boolean,
+    deleteReview(id: Int!): Boolean
   }
-`
+`;
 
 /* 
 

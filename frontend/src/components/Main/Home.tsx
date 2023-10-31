@@ -6,7 +6,7 @@ import SortingButton from "./SortingFiltering/SortingButton";
 import { useState } from "react";
 import SearchFilter from "./SortingFiltering/SearchFilter";
 import { useQuery } from "@apollo/client";
-import { GET_MOVIES } from "../queries/queries";
+import { GET_MOVIES, GET_MOVIE_COUNT } from "../queries/queries";
 
 export interface MovieQuery {
   genre: number | null;
@@ -17,16 +17,31 @@ interface HomeProps {
   searchTerm: string;
 }
 
+const pageSize = 15;
+
 // Home is the main page of the application
 function Home({ searchTerm }: HomeProps) {
+  const [page, setPage] = useState(1);
+
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({
     genre: null,
     sortBy: "popularity",
   });
 
-  const { loading, data } = useQuery(GET_MOVIES);
+  const { loading, data } = useQuery(GET_MOVIES, {
+    variables: {
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    },
+  });
+
+  const { data: countData } = useQuery(GET_MOVIE_COUNT);
 
   const movies = data?.movies || [];
+  const moviesCount = countData?.moviesCount || 0;
+
+  const totalPages = Math.ceil(moviesCount / pageSize);
+  console.log("Total pages", totalPages);
 
   const handleSortChange = (sortBy: string) => {
     setMovieQuery({ ...movieQuery, sortBy });
@@ -53,8 +68,8 @@ function Home({ searchTerm }: HomeProps) {
           />
         )}
       </Box>
-      <HStack justifyContent="space-evenly">
-        <Paginator />
+      <HStack justifyContent="space-evenly" marginBottom="50px">
+        <Paginator page={page} setPage={setPage} totalPages={totalPages} />
       </HStack>
     </>
   );
