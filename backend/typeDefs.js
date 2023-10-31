@@ -39,7 +39,7 @@ export const typeDefs = `#graphql
     genre(id: Int!): Genre
     genres: [Genre]
     movie(id: Int!): Movie
-    movies(limit: Int, offset: Int): [Movie]
+    movies(limit: Int, offset: Int, sortField: String, sortOrder: Int): [Movie]
     moviesCount: Int
     user(id: Int!): User
     users: [User]

@@ -26,8 +26,8 @@ export const resolvers = {
       const movie = await Movie.findOne({ id: args.id });
       return movie;
     },
-    movies: async (_, { limit, offset }) => {
-      return await Movie.find({}).limit(limit).skip(offset);
+    movies: async (_, { limit, offset, sortField, sortOrder}) => {
+      return await Movie.find({}).sort({ [sortField]: sortOrder }).limit(limit).skip(offset);
     },
     moviesCount: async () => {
       return await Movie.countDocuments({});
