@@ -85,17 +85,17 @@ const DELETE_REVIEW = gql`
 
 const ADD_FAVOURITE = gql`
   mutation addFavourite($movieid: Int!, $userid: Int!) {
-  addFavourite(movieid: $movieid, userid: $userid) {
-    movieid
-    userid
+    addFavourite(movieid: $movieid, userid: $userid) {
+      movieid
+      userid
+    }
   }
-}
 `;
 
 const REMOVE_FAVOURITE = gql`
-mutation Mutation($movieid: Int!, $userid: Int!) {
-  deleteFavourite(movieid: $movieid, userid: $userid)
-}
+  mutation Mutation($movieid: Int!, $userid: Int!) {
+    deleteFavourite(movieid: $movieid, userid: $userid)
+  }
 `;
 
 const TOGGLE_FAVOURITE = gql`
@@ -105,29 +105,29 @@ const TOGGLE_FAVOURITE = gql`
 `;
 
 const GET_FAVOURITES = gql`
-query getFavourites($userid: Int!) {
-  favourites(userid: $userid) {
-    id
-    title
-    poster_path
-    vote_average
-    overview
-    release_date
-    popularity
-    genres {
-      name
+  query getFavourites($userid: Int!) {
+    favourites(userid: $userid) {
       id
-    }
-    reviews {
-      id
-      content
-      timestamp
-      rating
-      movieid
-      userid
+      title
+      poster_path
+      vote_average
+      overview
+      release_date
+      popularity
+      genres {
+        name
+        id
+      }
+      reviews {
+        id
+        content
+        timestamp
+        rating
+        movieid
+        userid
+      }
     }
   }
-}
 `;
 
 export {
@@ -141,5 +141,5 @@ export {
   REMOVE_FAVOURITE,
   TOGGLE_FAVOURITE,
   CHECK_FAVOURITE,
-  GET_FAVOURITES
+  GET_FAVOURITES,
 };

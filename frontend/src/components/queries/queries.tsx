@@ -18,8 +18,8 @@ const GET_GENRES = gql`
 `;
 
 const GET_MOVIES = gql`
-  query getMovies {
-    movies {
+  query getMovies($limit: Int!, $offset: Int!) {
+    movies(limit: $limit, offset: $offset) {
       id
       title
       overview
@@ -31,7 +31,14 @@ const GET_MOVIES = gql`
         id
       }
     }
+    moviesCount
   }
 `;
 
-export { GET_USER, GET_GENRES, GET_MOVIES };
+const GET_MOVIE_COUNT = gql`
+  query getMovieCount {
+    moviesCount
+  }
+`;
+
+export { GET_USER, GET_GENRES, GET_MOVIES, GET_MOVIE_COUNT };

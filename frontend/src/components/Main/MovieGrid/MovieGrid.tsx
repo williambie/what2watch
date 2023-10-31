@@ -43,7 +43,7 @@ const MovieGrid = ({ movies, genre, sortBy, loading }: Props) => {
       spacing={10}
     >
       {loading
-        ? Array(12)
+        ? Array(15)
             .fill(0)
             .map((_, idx) => <LoadingCard key={idx} />)
         : sortedMovies.map((movie: Movie) => (

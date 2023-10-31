@@ -10,16 +10,18 @@ const Favourites = () => {
 
   const [favourites, setFavourites] = useState([]);
 
-  const { loading: favouritesLoading, data: favouritesData } = useQuery(GET_FAVOURITES, {
-    variables: { userid: userData?.user.id },
-  });
+  const { loading: favouritesLoading, data: favouritesData } = useQuery(
+    GET_FAVOURITES,
+    {
+      variables: { userid: userData?.user.id },
+    },
+  );
 
   useEffect(() => {
     if (favouritesData) {
       setFavourites(favouritesData.favourites);
     }
   }, [favouritesData]);
-  
 
   if (userLoading || favouritesLoading) {
     return <Spinner />;
