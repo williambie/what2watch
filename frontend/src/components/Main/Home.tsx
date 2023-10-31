@@ -37,12 +37,7 @@ function Home({ searchTerm }: HomeProps) {
       sortField: movieQuery.sortBy,
       sortOrder: movieQuery.sortOrder,
     },
-    fetchPolicy: 'no-cache',
   });
-
-  useEffect(() => {
-    console.log(movieQuery);
-  }, [movieQuery]);
   
   const { data: countData } = useQuery(GET_MOVIE_COUNT);
 

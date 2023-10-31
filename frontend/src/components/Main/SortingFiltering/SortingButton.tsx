@@ -33,7 +33,10 @@ const SortingButton = ({ onSortChange }: Props) => {
           User Score
         </MenuItem>
         <MenuItem onClick={() => handleMenuItemClick("title", 1, "Title")}>
-          Title
+          Title (A-Z)
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick("title", -1, "Title")}>
+          Title (Z-A)
         </MenuItem>
       </MenuList>
     </Menu>
