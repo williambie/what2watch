@@ -10,22 +10,37 @@ interface PaginatorProps {
 const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
   const getPageNumbers = () => {
     const pageNumbers = [];
-    const numPagesToShow = Math.min(totalPages, 5); // Number of page buttons to show
+    const numPagesToShow = 5;
 
-    // Calculate the starting page number based on the current page
-    let startPage = Math.max(page - 2, 1);
-    let endPage = startPage + numPagesToShow - 1;
-
-    // Ensure that the last page button doesn't go beyond the total pages
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = Math.max(endPage - numPagesToShow + 1, 1);
+    if (totalPages <= numPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else if (page <= Math.ceil(numPagesToShow / 2)) {
+      for (let i = 1; i <= numPagesToShow - 1; i++) {
+        pageNumbers.push(i);
+      }
+      pageNumbers.push("...");
+      pageNumbers.push(totalPages);
+    } else if (page >= totalPages - Math.floor(numPagesToShow / 2)) {
+      pageNumbers.push(1);
+      pageNumbers.push("...");
+      for (let i = totalPages - numPagesToShow + 2; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1);
+      pageNumbers.push("...");
+      for (
+        let i = page - Math.floor(numPagesToShow / 2);
+        i <= page + Math.floor(numPagesToShow / 2);
+        i++
+      ) {
+        pageNumbers.push(i);
+      }
+      pageNumbers.push("...");
+      pageNumbers.push(totalPages);
     }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-    console.log("Page: ", page, "Total pages: ", totalPages);
 
     return pageNumbers;
   };
