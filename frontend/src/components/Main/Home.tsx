@@ -3,7 +3,7 @@ import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter";
 import SortingButton from "./SortingFiltering/SortingButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchFilter from "./SortingFiltering/SearchFilter";
 import { useQuery } from "@apollo/client";
 import { GET_MOVIES, GET_MOVIE_COUNT } from "../../queries/queries";
