@@ -62,7 +62,7 @@ const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
         <ChevronLeftIcon />
       </Button>
 
-      <Box display={["none", "none", "flex"]} spacing={2}>
+      <Box display={["none", "none", "flex"]}>
         <HStack spacing={2}>
           {getPageNumbers().map((pageNum, index) => (
             <Button
@@ -78,7 +78,7 @@ const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
         </HStack>
       </Box>
 
-      <Box display={["flex", "flex", "none"]} flexDirection="row" spacing={2}>
+      <Box display={["flex", "flex", "none"]} flexDirection="row">
         <HStack spacing={1}>
           {page > 2 && <Button onClick={() => setPage(1)}>1</Button>}
           {page > 1 && (
