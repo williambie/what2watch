@@ -26,9 +26,7 @@ function Home({ searchTerm }: HomeProps) {
 
   const { loading, data } = useQuery(GET_MOVIES);
 
-  if (loading) return <p>Loading...</p>;
-
-  const movies = data.movies;
+  const movies = data?.movies || [];
 
   const handleSortChange = (sortBy: string) => {
     setMovieQuery({ ...movieQuery, sortBy });
@@ -51,6 +49,7 @@ function Home({ searchTerm }: HomeProps) {
             sortBy={movieQuery.sortBy}
             genre={movieQuery.genre}
             movies={movies}
+            loading={loading}
           />
         )}
       </Box>
