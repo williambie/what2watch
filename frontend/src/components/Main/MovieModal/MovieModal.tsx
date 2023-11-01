@@ -28,7 +28,12 @@ import { Genre, Movie, Review } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_USER, ADD_REVIEW, DELETE_REVIEW } from "../../../queries/queries";
+import {
+  GET_USER,
+  ADD_REVIEW,
+  DELETE_REVIEW,
+  GET_REVIEWS,
+} from "../../../queries/queries";
 
 interface MovieModalProps {
   movie: Movie;
@@ -65,6 +70,10 @@ const MovieModal: React.FC<MovieModalProps> = ({
   const bgColor = useColorModeValue("gray.100", "gray.600");
   const bg = useColorModeValue("gray.300", "gray.700");
 
+  const { loading: reviewsLoading, data: reviewsData } = useQuery(GET_REVIEWS, {
+    variables: { id: movie.id },
+  });
+
   const handleStarClick = (rating: number) => {
     setStarRating(rating);
   };
@@ -97,6 +106,12 @@ const MovieModal: React.FC<MovieModalProps> = ({
           movieid: movie.id,
           userid: userData?.user.id,
         },
+        refetchQueries: [
+          {
+            query: GET_REVIEWS,
+            variables: { id: movie.id },
+          },
+        ],
       });
 
       // Reset the form state
@@ -120,6 +135,12 @@ const MovieModal: React.FC<MovieModalProps> = ({
         variables: {
           id: id,
         },
+        refetchQueries: [
+          {
+            query: GET_REVIEWS,
+            variables: { id: movie.id },
+          },
+        ],
       });
 
       // Set the isRefetching state to true to show the spinner
@@ -204,63 +225,69 @@ const MovieModal: React.FC<MovieModalProps> = ({
               {isRefetching && <Spinner size="sm" ml={2} />}
             </Heading>
             <Divider borderColor={useColorModeValue("black", "white")} />
-            {!movie.reviews ? (
-              <Spinner />
+            {!reviewsData ? (
+              reviewsLoading ? (
+                <Spinner />
+              ) : (
+                <Text padding={2}>Be the first to review this movie!</Text>
+              )
             ) : (
               <>
-                {movie.reviews.length === 0 ? (
+                {reviewsData.movie.reviews.length === 0 ? (
                   <Text padding={2}>Be the first to review this movie!</Text>
                 ) : (
-                  movie.reviews.map((review: Review, index: number) => (
-                    <Flex
-                      flexDirection={"column"}
-                      key={index}
-                      bg={bg}
-                      p={3}
-                      borderRadius="md"
-                    >
-                      <HStack justifyContent={"space-between"}>
-                        <HStack>
-                          <Avatar size="xs"></Avatar>
-                          {userLoading ? (
-                            <Text>Fetching user...</Text>
-                          ) : (
-                            <Text>{userData.user.username}</Text>
-                          )}
-                        </HStack>
-                        <Text color={textColor}>{review.timestamp}</Text>
-                      </HStack>
-                      <Divider paddingBottom={2} borderColor={borderColor} />
-
-                      <HStack
-                        marginTop={1}
-                        padding={1}
-                        bgColor={bgColor}
-                        width={"min-content"}
-                        borderRadius={"5px"}
+                  reviewsData.movie.reviews.map(
+                    (review: Review, index: number) => (
+                      <Flex
+                        flexDirection={"column"}
+                        key={index}
+                        bg={bg}
+                        p={3}
+                        borderRadius="md"
                       >
-                        {[...Array(review.rating)].map((_, i) => (
-                          <StarIcon
-                            key={i}
-                            color={"yellow.400"}
-                            fontSize={12}
-                          />
-                        ))}
-                      </HStack>
+                        <HStack justifyContent={"space-between"}>
+                          <HStack>
+                            <Avatar size="xs"></Avatar>
+                            {userLoading ? (
+                              <Text>Fetching user...</Text>
+                            ) : (
+                              <Text>{userData.user.username}</Text>
+                            )}
+                          </HStack>
+                          <Text color={textColor}>{review.timestamp}</Text>
+                        </HStack>
+                        <Divider paddingBottom={2} borderColor={borderColor} />
 
-                      <HStack justifyContent={"space-between"} paddingTop={2}>
-                        <Text>{review.content}</Text>
-                        <Button
-                          cursor="pointer"
-                          size={"xs"}
-                          bg={"red.600"}
-                          onClick={() => handleDeleteReview(review.id)}
+                        <HStack
+                          marginTop={1}
+                          padding={1}
+                          bgColor={bgColor}
+                          width={"min-content"}
+                          borderRadius={"5px"}
                         >
-                          <DeleteIcon color={"white"} />
-                        </Button>
-                      </HStack>
-                    </Flex>
-                  ))
+                          {[...Array(review.rating)].map((_, i) => (
+                            <StarIcon
+                              key={i}
+                              color={"yellow.400"}
+                              fontSize={12}
+                            />
+                          ))}
+                        </HStack>
+
+                        <HStack justifyContent={"space-between"} paddingTop={2}>
+                          <Text>{review.content}</Text>
+                          <Button
+                            cursor="pointer"
+                            size={"xs"}
+                            bg={"red.600"}
+                            onClick={() => handleDeleteReview(review.id)}
+                          >
+                            <DeleteIcon color={"white"} />
+                          </Button>
+                        </HStack>
+                      </Flex>
+                    ),
+                  )
                 )}
               </>
             )}
