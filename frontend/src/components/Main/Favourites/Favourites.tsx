@@ -11,12 +11,11 @@ const Favourites = () => {
       <Heading paddingLeft="30px">My Favourite Movies</Heading>
       <Box padding="5">
         {data?.favouriteMovies.length === 0 ? (
-          <Text padding="10px">You have no favourite movies, why don't you add some?</Text>
+          <Text padding="10px">
+            You have no favourite movies, why don't you add some?
+          </Text>
         ) : (
-          <MovieGrid
-            movies={data?.favouriteMovies || []}
-            loading={loading}
-          />
+          <MovieGrid movies={data?.favouriteMovies || []} loading={loading} />
         )}
       </Box>
     </>

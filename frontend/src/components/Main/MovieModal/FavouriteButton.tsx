@@ -10,7 +10,10 @@ import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Movie } from "../../../types/types";
 import { useMutation } from "@apollo/client";
-import { TOGGLE_FAVOURITE, GET_FAVOURITE_MOVIES } from "../../../queries/queries";
+import {
+  TOGGLE_FAVOURITE,
+  GET_FAVOURITE_MOVIES,
+} from "../../../queries/queries";
 
 type FavouriteButtonProps = {
   movie: Movie;
@@ -19,7 +22,6 @@ type FavouriteButtonProps = {
 
 // FavouriteButton is a button that toggles between a filled and an empty star
 const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
-
   const [toggleFavourite] = useMutation(TOGGLE_FAVOURITE, {
     refetchQueries: [{ query: GET_FAVOURITE_MOVIES }],
   });
@@ -66,23 +68,23 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
           <AlertTitle>{alertMessage}</AlertTitle>
         </Alert>
       )}
-        <Button
-          borderWidth={2}
-          borderColor={isActive ? "gray.800" : "orange"}
-          color={isActive ? "gray.800" : "orange"}
-          bg={isActive ? "orange" : "gray.800"}
-          variant="solid"
-          onClick={handleClick}
-          paddingX={2}
-          _hover={{ bg: isActive ? "orange.400" : "gray.700" }}
-        >
-          {isActive ? <AiFillHeart /> : <AiOutlineHeart />}
-          {isLg && (
-            <Text paddingLeft={2}>
-              {isActive ? "Favourited" : "Add to Favourites"}
-            </Text>
-          )}
-        </Button>
+      <Button
+        borderWidth={2}
+        borderColor={isActive ? "gray.800" : "orange"}
+        color={isActive ? "gray.800" : "orange"}
+        bg={isActive ? "orange" : "gray.800"}
+        variant="solid"
+        onClick={handleClick}
+        paddingX={2}
+        _hover={{ bg: isActive ? "orange.400" : "gray.700" }}
+      >
+        {isActive ? <AiFillHeart /> : <AiOutlineHeart />}
+        {isLg && (
+          <Text paddingLeft={2}>
+            {isActive ? "Favourited" : "Add to Favourites"}
+          </Text>
+        )}
+      </Button>
     </>
   );
 };

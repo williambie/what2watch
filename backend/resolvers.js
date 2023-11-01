@@ -2,7 +2,6 @@ import Movie from "./models/movie.js";
 import Genre from "./models/genre.js";
 import User from "./models/user.js";
 import Review from "./models/review.js";
-import Favourite from "./models/favourite.js";
 
 export const resolvers = {
   Movie: {
@@ -31,8 +30,11 @@ export const resolvers = {
       const movie = await Movie.findOne({ id: args.id });
       return movie;
     },
-    movies: async (_, { limit, offset, sortField, sortOrder, genre }) => {
+    movies: async (_, { limit, offset, sortField, sortOrder, genre, searchTerm }) => {
       let query = {};
+      if (searchTerm) {
+        query = { title: { $regex: searchTerm, $options: 'i' } };
+      }
       if (genre) {
         const genreDoc = await Genre.findOne({ name: genre });
         if (genreDoc) {
@@ -45,6 +47,31 @@ export const resolvers = {
         .skip(offset);
       const moviesCount = await Movie.countDocuments(query);
       return { movies, moviesCount };
+    },
+    genreCounts: async (_, { searchTerm }) => {
+      let query = {};
+      if (searchTerm) {
+        query.title = { $regex: searchTerm, $options: 'i' };
+      }
+      const movies = await Movie.find(query);
+      const genreCounts = {};
+  
+      for (const movie of movies) {
+        for (const genreId of movie.genre_ids) {
+          if (genreCounts[genreId]) {
+            genreCounts[genreId]++;
+          } else {
+            genreCounts[genreId] = 1;
+          }
+        }
+      }
+  
+      const genres = await Genre.find({ id: { $in: Object.keys(genreCounts) } });
+      return genres.map((genre) => ({
+        name: genre.name,
+        id: genre.id,
+        count: genreCounts[genre.id],
+      }));
     },
     favouriteMovies: async () => {
       const favouriteMovies = await Movie.find({ favourite: true });
@@ -66,7 +93,11 @@ export const resolvers = {
     checkFavourite: async (_, args) => {
       const movie = await Movie.findOne({ id: args.movieid });
       return movie.favourite;
-    }
+    },
+    searchMovies: async (_, args) => {
+      const movies = await Movie.find({title: { $regex: args.searchTerm, $options: 'i' } })
+      return movies;
+    },
   },
   Mutation: {
     addUser: async (_, args) => {

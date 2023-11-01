@@ -1,53 +1,57 @@
 import { Box, Button, HStack } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { setPage } from "../../redux/searchSlice";
+import { RootState } from "../../redux/store";
 
 interface PaginatorProps {
-  page: number;
   totalPages: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
+const Paginator = ({ totalPages }: PaginatorProps) => {
+  const { page } = useSelector((state: RootState) => state.search);
+  const dispatch = useDispatch();
+
+  const handlePageChange = (page: number) => {
+    dispatch(setPage(page));
+  };
+
   const getPageNumbers = () => {
-    // The page numbers to be displayed are calculated
     const pageNumbers = [];
     const numPagesToShow = 5;
 
-    // If there are less than 5 pages, all pages are displayed
+    const addRange = (start: number, end: number) => {
+      for (let i = start; i <= end; i++) pageNumbers.push(i);
+    };
+
     if (totalPages <= numPagesToShow) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-      // If the current page is less than or equal 3, the first 4 pages are displayed
-    } else if (page <= Math.ceil(numPagesToShow / 2)) {
-      for (let i = 1; i <= numPagesToShow - 1; i++) {
-        pageNumbers.push(i);
-      }
-      pageNumbers.push("...");
-      pageNumbers.push(totalPages);
-      // If the current page is greater than the total number of pages minus 3, the last 4 pages are displayed
-    } else if (page >= totalPages - Math.floor(numPagesToShow / 2)) {
-      pageNumbers.push(1);
-      pageNumbers.push("...");
-      for (let i = totalPages - numPagesToShow + 2; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-      // Otherwise, the current page is in the middle of the paginator and the current page,
-      // the two pages before and the two pages after are displayed
+      // If there are less than 5 pages, all pages are displayed
+      addRange(1, totalPages);
     } else {
-      pageNumbers.push(1);
-      pageNumbers.push("...");
-      for (
-        let i = page - Math.floor(numPagesToShow / 2);
-        i <= page + Math.floor(numPagesToShow / 2);
-        i++
-      ) {
-        pageNumbers.push(i);
+      const isStart = page <= Math.ceil(numPagesToShow / 2);
+      const isEnd = page >= totalPages - Math.floor(numPagesToShow / 2);
+
+      if (isStart) {
+        // If the current page is less than or equal 3, the first 4 pages are displayed
+        addRange(1, numPagesToShow - 1);
+        pageNumbers.push("...");
+        pageNumbers.push(totalPages);
+      } else if (isEnd) {
+        // If the current page is greater than the total number of pages minus 3, the last 4 pages are displayed
+        pageNumbers.push(1, "...");
+        addRange(totalPages - numPagesToShow + 2, totalPages);
+      } else {
+        // Otherwise, the current page is in the middle of the paginator
+        pageNumbers.push(1, "...");
+        addRange(
+          page - Math.floor(numPagesToShow / 2),
+          page + Math.floor(numPagesToShow / 2),
+        );
+        pageNumbers.push("...");
+        pageNumbers.push(totalPages);
       }
-      pageNumbers.push("...");
-      pageNumbers.push(totalPages);
     }
-    // The page numbers are returned
+
     return pageNumbers;
   };
 
@@ -56,7 +60,7 @@ const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
     <HStack spacing={2} justify="center">
       <Button
         isDisabled={page === 1}
-        onClick={() => setPage((prev) => prev - 1)}
+        onClick={() => handlePageChange(page - 1)}
         size={["md", "lg"]}
       >
         <ChevronLeftIcon />
@@ -68,7 +72,9 @@ const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
             <Button
               key={index}
               colorScheme={pageNum === page ? "blue" : undefined}
-              onClick={() => typeof pageNum === "number" && setPage(pageNum)}
+              onClick={() =>
+                typeof pageNum === "number" && handlePageChange(pageNum)
+              }
               isDisabled={pageNum === "..."}
               size="lg"
             >
@@ -82,25 +88,27 @@ const Paginator = ({ page, setPage, totalPages }: PaginatorProps) => {
         <HStack spacing={1}>
           {page > 2 && <Button onClick={() => setPage(1)}>1</Button>}
           {page > 1 && (
-            <Button onClick={() => setPage((prev) => prev - 1)}>
+            <Button onClick={() => handlePageChange(page - 1)}>
               {page - 1}
             </Button>
           )}
           <Button colorScheme="blue">{page}</Button>
           {page < totalPages && (
-            <Button onClick={() => setPage((prev) => prev + 1)}>
+            <Button onClick={() => handlePageChange(page + 1)}>
               {page + 1}
             </Button>
           )}
           {page < totalPages - 1 && (
-            <Button onClick={() => setPage(totalPages)}>{totalPages}</Button>
+            <Button onClick={() => handlePageChange(totalPages)}>
+              {totalPages}
+            </Button>
           )}
         </HStack>
       </Box>
 
       <Button
         isDisabled={page === totalPages}
-        onClick={() => setPage((prev) => prev + 1)}
+        onClick={() => handlePageChange(page + 1)}
         size={["md", "lg"]}
       >
         <ChevronRightIcon />

@@ -7,51 +7,62 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
-import { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_GENRES } from "../../../queries/queries";
+import { GET_GENRE_COUNTS } from "../../../queries/queries";
 import { Genre } from "../../../types/types";
-
-interface Props {
-  onSelectGenre: (genre: string | null) => void;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedGenre } from "../../../redux/searchSlice";
+import { RootState } from "../../../redux/store";
 
 // GenreFilter is a dropdown menu that allows the user to filter movies by genre
-const GenreFilter = ({ onSelectGenre }: Props) => {
-  const [selectedGenreName, setSelectedGenreName] = useState<string>("Genres");
-  const { loading, data } = useQuery(GET_GENRES);
+const GenreFilter = () => {
+  const dispatch = useDispatch();
+  const selectedGenreName = useSelector(
+    (state: RootState) => state.search.selectedGenre,
+  );
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
+
+  const handleGenreChange = (genre: string | null) => {
+    dispatch(setSelectedGenre(genre));
+  };
+
+  const { loading, data: genreCountsData } = useQuery(GET_GENRE_COUNTS, {
+    variables: { searchTerm: searchTerm },
+  });
+
+  const genreCounts = genreCountsData?.genreCounts || [];
 
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        {selectedGenreName}
+        {selectedGenreName || "Genres"}
       </MenuButton>
       <MenuList>
         <MenuItem
           marginRight={2}
+          key={0}
           onClick={() => {
-            onSelectGenre(null);
-            setSelectedGenreName("Genres");
+            handleGenreChange(null);
           }}
         >
           All Genres
         </MenuItem>
         <MenuDivider />
         {!loading &&
-          data.genres.map((genre: Genre) => (
-            genre.moviesInGenreCount > 0 && (
-            <MenuItem
-              key={genre.id}
-              marginRight={2}
-              onClick={() => {
-                onSelectGenre(genre.name);
-                setSelectedGenreName(genre.name);
-              }}
-            >
-              {genre.name} ({genre.moviesInGenreCount})
-            </MenuItem>
-            )
-          ))}
+          genreCounts.map(
+            (genre: Genre) =>
+              genre.count > 0 && (
+                <MenuItem
+                  key={genre.id}
+                  marginRight={2}
+                  onClick={() => {
+                    handleGenreChange(genre.name);
+                  }}
+                >
+                  {genre.name} ({genre.count})
+                </MenuItem>
+              ),
+          )}
       </MenuList>
     </Menu>
   );

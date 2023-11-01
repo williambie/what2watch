@@ -10,7 +10,6 @@ interface Props {
 
 // MovieGrid is a grid that displays all movies
 const MovieGrid = ({ movies, loading }: Props) => {
-
   return (
     <SimpleGrid
       columns={{ base: 1, sm: 2, md: 3, lg: 4, xl: 5, "2xl": 6 }}

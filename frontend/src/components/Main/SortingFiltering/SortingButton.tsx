@@ -1,41 +1,58 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { setSorting } from "../../../redux/searchSlice";
+import { RootState } from "../../../redux/store";
 
-interface Props {
-  onSortChange: (sortOptions: { sortBy: string, sortOrder: number }) => void;
-}
+const SortingButton = () => {
+  const { sorting } = useSelector((state: RootState) => state.search);
+  const dispatch = useDispatch();
 
-// SortingButton is a dropdown menu that allows the user to sort movies by popularity, user score, or title
-const SortingButton = ({ onSortChange }: Props) => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState("Popularity");
-
-  const handleMenuItemClick = (sortBy: string, sortOrder: number, label: string) => {
-    onSortChange({ sortBy, sortOrder });
-    setSelectedMenuItem(label);
+  const getLabel = (sortBy: string, sortOrder: number) => {
+    if (sortBy === "popularity" && sortOrder === -1) return "Popularity";
+    if (sortBy === "vote_average" && sortOrder === -1) return "User Score";
+    if (sortBy === "title" && sortOrder === 1) return "Title (A-Z)";
+    if (sortBy === "title" && sortOrder === -1) return "Title (Z-A)";
+    return "Popularity";
   };
 
-  // The dropdown menu is displayed on the main page
+  const handleSortChange = (sortOptions: {
+    sortBy: string;
+    sortOrder: number;
+  }) => {
+    dispatch(setSorting(sortOptions));
+  };
+
+  const label = getLabel(sorting.sortBy, sorting.sortOrder);
+
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Order by: {selectedMenuItem}
+        Order by: {label}
       </MenuButton>
       <MenuList>
         <MenuItem
-          onClick={() => handleMenuItemClick("popularity", -1, "Popularity")}
+          onClick={() =>
+            handleSortChange({ sortBy: "popularity", sortOrder: -1 })
+          }
         >
           Popularity
         </MenuItem>
         <MenuItem
-          onClick={() => handleMenuItemClick("vote_average", -1, "User Score")}
+          onClick={() =>
+            handleSortChange({ sortBy: "vote_average", sortOrder: -1 })
+          }
         >
           User Score
         </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick("title", 1, "Title")}>
+        <MenuItem
+          onClick={() => handleSortChange({ sortBy: "title", sortOrder: 1 })}
+        >
           Title (A-Z)
         </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick("title", -1, "Title")}>
+        <MenuItem
+          onClick={() => handleSortChange({ sortBy: "title", sortOrder: -1 })}
+        >
           Title (Z-A)
         </MenuItem>
       </MenuList>

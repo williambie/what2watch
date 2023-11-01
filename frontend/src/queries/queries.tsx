@@ -14,7 +14,6 @@ const GET_GENRES = gql`
     genres {
       name
       id
-      moviesInGenreCount
     }
   }
 `;
@@ -108,6 +107,7 @@ const GET_MOVIES = gql`
     $sortField: String!
     $sortOrder: Int!
     $genre: String
+    $searchTerm: String
   ) {
     movies(
       limit: $limit
@@ -115,6 +115,7 @@ const GET_MOVIES = gql`
       sortField: $sortField
       sortOrder: $sortOrder
       genre: $genre
+      searchTerm: $searchTerm
     ) {
       moviesCount
       movies {
@@ -176,6 +177,43 @@ const CHECK_FAVOURITE = gql`
   }
 `;
 
+const SEARCH_MOVIES = gql`
+  query SearchMovies($searchTerm: String!, $limit: Int!, $offset: Int!) {
+    searchMovies(searchTerm: $searchTerm, limit: $limit, offset: $offset) {
+      id
+      title
+      poster_path
+      vote_average
+      overview
+      release_date
+      popularity
+      genres {
+        id
+        name
+      }
+      reviews {
+        id
+        content
+        rating
+        timestamp
+        movieid
+        userid
+      }
+      favourite
+    }
+  }
+`;
+
+const GET_GENRE_COUNTS = gql`
+  query GetGenreCounts($searchTerm: String) {
+    genreCounts(searchTerm: $searchTerm) {
+      name
+      id
+      count
+    }
+  }
+`;
+
 export {
   GET_USER,
   GET_GENRES,
@@ -187,4 +225,6 @@ export {
   GET_MOVIES,
   GET_FAVOURITE_MOVIES,
   CHECK_FAVOURITE,
+  SEARCH_MOVIES,
+  GET_GENRE_COUNTS,
 };
