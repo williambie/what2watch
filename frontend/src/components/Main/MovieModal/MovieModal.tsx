@@ -10,30 +10,14 @@ import {
   Box,
   Text,
   Tag,
-  Button,
-  Input,
-  Stack,
-  Heading,
   Divider,
-  HStack,
   useColorModeValue,
   useBreakpointValue,
-  Avatar,
-  Spinner,
 } from "@chakra-ui/react";
-import { SetStateAction, useState } from "react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { Genre, Movie, Review } from "../../../types/types";
+import { Genre, Movie } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
-import { StarIcon } from "@chakra-ui/icons";
-import { useQuery, useMutation } from "@apollo/client";
-import {
-  GET_USER,
-  ADD_REVIEW,
-  DELETE_REVIEW,
-  GET_REVIEWS,
-} from "../../../queries/queries";
+import Reviews from "../Reviews/Reviews";
 
 interface MovieModalProps {
   movie: Movie;
@@ -51,108 +35,8 @@ const MovieModal: React.FC<MovieModalProps> = ({
 }) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
-  const [hoverIndex, setHoverIndex] = useState(-1);
-
-  const { loading: userLoading, data: userData } = useQuery(GET_USER);
 
   const genreName = movie.genres.map((genre: Genre) => genre.name);
-
-  const [isRefetching, setIsRefetching] = useState(false);
-  const [addReview] = useMutation(ADD_REVIEW);
-  const [deleteReview] = useMutation(DELETE_REVIEW);
-
-  // State for the review input
-  const [review, setReview] = useState<string>("");
-  const [starRating, setStarRating] = useState<number>(0);
-
-  const textColor = useColorModeValue("gray.600", "gray.400");
-  const borderColor = useColorModeValue("black", "white");
-  const bgColor = useColorModeValue("gray.100", "gray.600");
-  const bg = useColorModeValue("gray.300", "gray.700");
-
-  const { loading: reviewsLoading, data: reviewsData } = useQuery(GET_REVIEWS, {
-    variables: { id: movie.id },
-  });
-
-  const handleStarClick = (rating: number) => {
-    setStarRating(rating);
-  };
-
-  // Function to handle submitting a review
-  const handleSubmitReview = async () => {
-    if (review.trim() === "") {
-      return;
-    }
-
-    setIsRefetching(true);
-
-    const now = new Date();
-    const options = {
-      year: "numeric" as const,
-      month: "long" as const,
-      day: "numeric" as const,
-      hour: "numeric" as const,
-      minute: "numeric" as const,
-    };
-    const timestamp = now.toLocaleString("en-US", options);
-
-    try {
-      // Call the addReview mutation with the review data
-      await addReview({
-        variables: {
-          content: review,
-          rating: starRating,
-          timestamp: timestamp,
-          movieid: movie.id,
-          userid: userData?.user.id,
-        },
-        refetchQueries: [
-          {
-            query: GET_REVIEWS,
-            variables: { id: movie.id },
-          },
-        ],
-      });
-
-      // Reset the form state
-      setReview("");
-      setStarRating(0);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      // Set the isRefetching state to false to hide the spinner
-      setIsRefetching(false);
-    }
-  };
-
-  // Function to handle deleting a review
-  const handleDeleteReview = async (id: number) => {
-    setIsRefetching(true);
-
-    try {
-      // Call the deleteReview mutation with the review id
-      await deleteReview({
-        variables: {
-          id: id,
-        },
-        refetchQueries: [
-          {
-            query: GET_REVIEWS,
-            variables: { id: movie.id },
-          },
-        ],
-      });
-
-      // Set the isRefetching state to true to show the spinner
-
-      // Refetch the reviews
-    } catch (error) {
-      console.log(error);
-    } finally {
-      // Set the isRefetching state to false to hide the spinner
-      setIsRefetching(false);
-    }
-  };
 
   const releaseDate = new Date(movie.release_date);
   const formattedDate = releaseDate.toLocaleDateString("en-US", {
@@ -167,7 +51,6 @@ const MovieModal: React.FC<MovieModalProps> = ({
       isOpen={isOpen}
       onClose={() => {
         onClose();
-        setStarRating(0);
       }}
       size={["full", "lg", "xl", "5xl"]}
     >
@@ -213,135 +96,7 @@ const MovieModal: React.FC<MovieModalProps> = ({
           </Flex>
 
           <Divider py={2} borderColor={useColorModeValue("black", "white")} />
-          <Stack
-            spacing={4}
-            bg={useColorModeValue("gray.200", "gray.800")}
-            padding={5}
-            mt={3}
-            borderRadius={5}
-          >
-            <Heading fontSize="lg">
-              User Reviews
-              {isRefetching && <Spinner size="sm" ml={2} />}
-            </Heading>
-            <Divider borderColor={useColorModeValue("black", "white")} />
-            {!reviewsData ? (
-              reviewsLoading ? (
-                <Spinner />
-              ) : (
-                <Text padding={2}>Be the first to review this movie!</Text>
-              )
-            ) : (
-              <>
-                {reviewsData.movie.reviews.length === 0 ? (
-                  <Text padding={2}>Be the first to review this movie!</Text>
-                ) : (
-                  reviewsData.movie.reviews.map(
-                    (review: Review, index: number) => (
-                      <Flex
-                        flexDirection={"column"}
-                        key={index}
-                        bg={bg}
-                        p={3}
-                        borderRadius="md"
-                      >
-                        <HStack justifyContent={"space-between"}>
-                          <HStack>
-                            <Avatar size="xs"></Avatar>
-                            {userLoading ? (
-                              <Text>Fetching user...</Text>
-                            ) : (
-                              <Text>{userData.user.username}</Text>
-                            )}
-                          </HStack>
-                          <Text color={textColor}>{review.timestamp}</Text>
-                        </HStack>
-                        <Divider paddingBottom={2} borderColor={borderColor} />
-
-                        <HStack
-                          marginTop={1}
-                          padding={1}
-                          bgColor={bgColor}
-                          width={"min-content"}
-                          borderRadius={"5px"}
-                        >
-                          {[...Array(review.rating)].map((_, i) => (
-                            <StarIcon
-                              key={i}
-                              color={"yellow.400"}
-                              fontSize={12}
-                            />
-                          ))}
-                        </HStack>
-
-                        <HStack justifyContent={"space-between"} paddingTop={2}>
-                          <Text>{review.content}</Text>
-                          <Button
-                            cursor="pointer"
-                            size={"xs"}
-                            bg={"red.600"}
-                            onClick={() => handleDeleteReview(review.id)}
-                          >
-                            <DeleteIcon color={"white"} />
-                          </Button>
-                        </HStack>
-                      </Flex>
-                    ),
-                  )
-                )}
-              </>
-            )}
-            <Divider borderColor={useColorModeValue("black", "white")} />
-            <HStack>
-              <Avatar size="sm"></Avatar>
-              <Input
-                placeholder="Write your review here..."
-                value={review} // Ensure the input's value is tied to the 'review' state
-                onChange={(e: { target: { value: SetStateAction<string> } }) =>
-                  setReview(e.target.value)
-                }
-                borderColor="gray.500"
-              />
-            </HStack>
-
-            <HStack
-              padding={2}
-              width={"min-content"}
-              border={"solid 1px"}
-              borderColor={useColorModeValue("gray.500", "gray.400")}
-              borderRadius={"20px"}
-              bgColor={useColorModeValue("gray.300", "gray.600")}
-            >
-              {[...Array(5)].map((_, i) => (
-                <StarIcon
-                  key={i}
-                  color={
-                    i <= hoverIndex
-                      ? "orange.500"
-                      : i <= starRating - 1
-                      ? "yellow.400"
-                      : "gray.500"
-                  }
-                  onClick={() => handleStarClick(i + 1)}
-                  onMouseEnter={() => setHoverIndex(i)}
-                  onMouseLeave={() => setHoverIndex(-1)}
-                  _hover={{ cursor: "pointer" }}
-                />
-              ))}
-            </HStack>
-            <Stack direction={["column", "row"]} spacing={2}>
-              <Button
-                bgColor="green"
-                variant="solid"
-                onClick={handleSubmitReview}
-                isDisabled={!review.trim() || starRating == 0} // Disable the button if the input is empty or no star rating is selected
-                _hover={{ bg: "green.500" }}
-              >
-                Add review
-              </Button>
-            </Stack>
-            {/* Map over the submitted reviews to display them */}
-          </Stack>
+          <Reviews movie={movie} />
         </ModalBody>
       </ModalContent>
     </Modal>
