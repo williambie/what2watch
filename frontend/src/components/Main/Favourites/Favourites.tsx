@@ -4,7 +4,7 @@ import { GET_FAVOURITE_MOVIES } from "../../../queries/queries";
 import { useQuery } from "@apollo/client";
 
 const Favourites = () => {
-  const { loading, data, refetch } = useQuery(GET_FAVOURITE_MOVIES);
+  const { loading, data } = useQuery(GET_FAVOURITE_MOVIES);
 
   return (
     <>

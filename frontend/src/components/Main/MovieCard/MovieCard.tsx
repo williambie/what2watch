@@ -10,6 +10,8 @@ import { useState } from "react";
 import { Movie } from "../../../types/types";
 import MovieModal from "../MovieModal/MovieModal";
 import UserVoteAverage from "./UserVoteAverage";
+import { useQuery } from '@apollo/client';
+import { CHECK_FAVOURITE } from "../../../queries/queries";
 
 interface Props {
   movie: Movie;
@@ -21,9 +23,17 @@ const MovieCard = ({ movie }: Props) => {
   const bg = useColorModeValue("gray.300", "gray.700");
 
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  const { refetch } = useQuery(CHECK_FAVOURITE, {
+    variables: { movieid: movie.id },
+    skip: true
+  });
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const onOpen = () => {
-    setIsOpen(true);
+    refetch().then(({ data }) => {
+      setIsFavourite(data.checkFavourite);
+      setIsOpen(true);
+    });
   };
 
   const onClose = () => {
@@ -52,7 +62,7 @@ const MovieCard = ({ movie }: Props) => {
       </Card>
 
       {/* The modal is displayed when the card is clicked */}
-      <MovieModal movie={movie} isOpen={isOpen} onClose={onClose} />
+      <MovieModal movie={movie} isOpen={isOpen} onClose={onClose} isFavourite={isFavourite}/>
     </>
   );
 };

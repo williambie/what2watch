@@ -63,43 +63,12 @@ export const resolvers = {
     reviews: async (_, args) => {
       return await Review.find({ movieid: args.movieid });
     },
-    favourites: async (_, args) => {
-      const movies = await Favourite.find({ userid: args.userid });
-      const movieIds = movies.map((movie) => movie.movieid);
-      const fullMovies = await Promise.all(
-        movieIds.map(async (id) => {
-          const movie = await Movie.findOne({ id });
-          const genres = await Genre.find({ id: { $in: movie.genre_ids } });
-          const reviews = await Review.find({ movieid: movie.id });
-          return { ...movie.toObject(), genres, reviews };
-        })
-      );
-      return fullMovies;
-    },
+    checkFavourite: async (_, args) => {
+      const movie = await Movie.findOne({ id: args.movieid });
+      return movie.favourite;
+    }
   },
   Mutation: {
-    addFavourite: async (_, args) => {
-      const favourite = new Favourite({
-        movieid: args.movieid,
-        userid: args.userid,
-      });
-
-      const res = await favourite.save();
-
-      return {
-        id: res.id,
-        ...res._doc,
-      };
-    },
-    deleteFavourite: async (_, args) => {
-      const wasDeleted = (
-        await Favourite.deleteOne({
-          movieid: args.movieid,
-          userid: args.userid,
-        })
-      ).deletedCount;
-      return wasDeleted;
-    },
     addUser: async (_, args) => {
       const maxId = await User.findOne()
         .sort({ id: -1 })

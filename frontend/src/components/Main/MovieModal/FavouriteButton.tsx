@@ -10,13 +10,7 @@ import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Movie } from "../../../types/types";
 import { useMutation } from "@apollo/client";
-import {
-  TOGGLE_FAVOURITE,
-  GET_USER,
-  ADD_FAVOURITE,
-  REMOVE_FAVOURITE,
-} from "../../../queries/queries";
-import { useQuery } from "@apollo/client";
+import { TOGGLE_FAVOURITE } from "../../../queries/queries";
 
 type FavouriteButtonProps = {
   movie: Movie;
@@ -25,15 +19,10 @@ type FavouriteButtonProps = {
 
 // FavouriteButton is a button that toggles between a filled and an empty star
 const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
-  const [toggleFavourite] = useMutation(TOGGLE_FAVOURITE, {
-    variables: { movieid: movie.id },
-  });
-  const { loading, data } = useQuery(GET_USER);
+  const [toggleFavourite] = useMutation(TOGGLE_FAVOURITE);
 
   const [isActive, setIsActive] = useState(isFavourite);
   const [alertMessage, setAlertMessage] = useState("");
-  const [addFavourite] = useMutation(ADD_FAVOURITE);
-  const [removeFavourite] = useMutation(REMOVE_FAVOURITE);
 
   const isLg = useBreakpointValue({
     base: false,
@@ -42,27 +31,18 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
 
   // toggleFavorite toggles the state of the button
   const handleClick = async () => {
-    setIsActive(!isActive);
-    try {
-      if (isActive && data?.user) {
-        setAlertMessage(`"${movie.title}" removed from favourites`);
-        await toggleFavourite();
-        await removeFavourite({
-          variables: { movieid: movie.id, userid: data.user.id },
-        });
-      } else {
-        setAlertMessage(`"${movie.title}" added to favourites`);
-        await toggleFavourite();
-        await addFavourite({
-          variables: { movieid: movie.id, userid: data.user.id },
-        });
-      }
-    } catch (error) {
-      console.error(error);
+    if (isActive) {
+      setAlertMessage(`"${movie.title}" removed from favourites`);
+    } else {
+      setAlertMessage(`"${movie.title}" added to favourites`);
     }
+    setIsActive(!isActive);
+    await toggleFavourite({
+      variables: { movieid: movie.id },
+    });
     setTimeout(() => {
       setAlertMessage("");
-    }, 4000);
+    }, 3000);
   };
 
   return (
@@ -83,7 +63,6 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
           <AlertTitle>{alertMessage}</AlertTitle>
         </Alert>
       )}
-      {!loading && (
         <Button
           borderWidth={2}
           borderColor={isActive ? "gray.800" : "orange"}
@@ -101,7 +80,6 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
             </Text>
           )}
         </Button>
-      )}
     </>
   );
 };
