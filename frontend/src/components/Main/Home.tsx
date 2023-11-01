@@ -1,4 +1,4 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, Flex, HStack } from "@chakra-ui/react";
 import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter";
@@ -35,11 +35,17 @@ function Home() {
   // The main page is displayed
   return (
     <>
-      <HStack paddingLeft={"30px"}>
-        <GenreFilter />
-        <SortingButton />
-        <ResetFilters />
-      </HStack>
+      <Flex direction={["column", "row"]}>
+        <Box padding="2">
+          <GenreFilter />
+        </Box>
+        <Box padding="2">
+          <SortingButton />
+        </Box>
+        <Box padding="2">
+          <ResetFilters />
+        </Box>
+      </Flex>
       <Box padding="5">
         <MovieGrid movies={movies} loading={loading} />
       </Box>
