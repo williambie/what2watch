@@ -14,11 +14,14 @@ export interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  reviews: Review[];
+  favourite: boolean;
 }
 
 export interface Genre {
   id: number;
   name: string;
+  moviesInGenreCount: number;
 }
 
 export interface Review {

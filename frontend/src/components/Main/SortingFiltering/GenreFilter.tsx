@@ -13,7 +13,7 @@ import { GET_GENRES } from "../../../queries/queries";
 import { Genre } from "../../../types/types";
 
 interface Props {
-  onSelectGenre: (genre: number) => void;
+  onSelectGenre: (genre: string | null) => void;
 }
 
 // GenreFilter is a dropdown menu that allows the user to filter movies by genre
@@ -30,7 +30,7 @@ const GenreFilter = ({ onSelectGenre }: Props) => {
         <MenuItem
           marginRight={2}
           onClick={() => {
-            onSelectGenre(0);
+            onSelectGenre(null);
             setSelectedGenreName("Genres");
           }}
         >
@@ -39,16 +39,18 @@ const GenreFilter = ({ onSelectGenre }: Props) => {
         <MenuDivider />
         {!loading &&
           data.genres.map((genre: Genre) => (
+            genre.moviesInGenreCount > 0 && (
             <MenuItem
               key={genre.id}
               marginRight={2}
               onClick={() => {
-                onSelectGenre(genre.id);
+                onSelectGenre(genre.name);
                 setSelectedGenreName(genre.name);
               }}
             >
-              {genre.name}
+              {genre.name} ({genre.moviesInGenreCount})
             </MenuItem>
+            )
           ))}
       </MenuList>
     </Menu>
