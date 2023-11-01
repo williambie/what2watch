@@ -13,6 +13,7 @@ import { Genre } from "../../../types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedGenre } from "../../../redux/searchSlice";
 import { RootState } from "../../../redux/store";
+import { useEffect } from "react";
 
 // GenreFilter is a dropdown menu that allows the user to filter movies by genre
 const GenreFilter = () => {
@@ -26,9 +27,17 @@ const GenreFilter = () => {
     dispatch(setSelectedGenre(genre));
   };
 
-  const { loading, data: genreCountsData } = useQuery(GET_GENRE_COUNTS, {
+  const {
+    loading,
+    data: genreCountsData,
+    refetch,
+  } = useQuery(GET_GENRE_COUNTS, {
     variables: { searchTerm: searchTerm },
   });
+
+  useEffect(() => {
+    refetch({ searchTerm: searchTerm });
+  }, [searchTerm, refetch]);
 
   const genreCounts = genreCountsData?.genreCounts || [];
 
