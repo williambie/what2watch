@@ -1,4 +1,4 @@
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter";
@@ -44,7 +44,7 @@ function Home() {
         <MovieGrid movies={movies} loading={loading} />
       </Box>
       <HStack justifyContent="space-evenly" marginBottom="50px">
-        <Paginator totalPages={totalPages} />
+        <Paginator totalPages={totalPages} movieCount={moviesCount} />
       </HStack>
     </>
   );

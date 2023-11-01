@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import MovieCard from "../MovieCard/MovieCard";
 import { Movie } from "../../../types/types";
 import LoadingCard from "../LoadingCard/LoadingCard";
@@ -16,13 +16,24 @@ const MovieGrid = ({ movies, loading }: Props) => {
       padding="10px"
       spacing={10}
     >
-      {loading
-        ? Array(15)
-            .fill(0)
-            .map((_, idx) => <LoadingCard key={idx} />)
-        : movies.map((movie: Movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
+      {loading ? (
+        Array(15)
+          .fill(0)
+          .map((_, idx) => <LoadingCard key={idx} />)
+      ) : movies.length > 0 ? (
+        movies.map((movie: Movie) => <MovieCard key={movie.id} movie={movie} />)
+      ) : (
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          gridColumn="1 / -1"
+          gridRow="1 / -1"
+        >
+          <Text marginTop={10} fontSize="3xl">
+            No movies found :(
+          </Text>
+        </Flex>
+      )}
     </SimpleGrid>
   );
 };
