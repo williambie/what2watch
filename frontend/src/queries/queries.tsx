@@ -173,6 +173,33 @@ const GET_MOVIES = gql`
   }
 `;
 
+const GET_FAVOURITE_MOVIES = gql`
+  query FavouriteMovies {
+  favouriteMovies {
+    id
+    title
+    poster_path
+    vote_average
+    overview
+    release_date
+    popularity
+    genres {
+      id
+      name
+    }
+    reviews {
+      id
+      content
+      rating
+      timestamp
+      movieid
+      userid
+    }
+    favourite
+  }
+}
+`;
+
 export {
   GET_USER,
   GET_GENRES,
@@ -186,4 +213,5 @@ export {
   CHECK_FAVOURITE,
   GET_FAVOURITES,
   GET_MOVIES,
+  GET_FAVOURITE_MOVIES
 };

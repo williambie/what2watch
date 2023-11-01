@@ -28,11 +28,7 @@ import { Genre, Movie, Review } from "../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import { StarIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation } from "@apollo/client";
-import {
-  GET_USER,
-  ADD_REVIEW,
-  DELETE_REVIEW,
-} from "../../../queries/queries";
+import { GET_USER, ADD_REVIEW, DELETE_REVIEW } from "../../../queries/queries";
 
 interface MovieModalProps {
   movie: Movie;
@@ -48,8 +44,6 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
   const { loading: userLoading, data: userData } = useQuery(GET_USER);
 
   const genreName = movie.genres.map((genre: Genre) => genre.name);
-
-  console.log(movie.favourite)
 
   const [isRefetching, setIsRefetching] = useState(false);
 
@@ -166,17 +160,19 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
             <Box pl={useBreakpointValue({ base: 0, md: 3 })} flexGrow={1}>
               <Flex justifyContent="space-between">
                 {/* Map over the genres to display them as tags */}
-                <Box>
+                <Flex flexWrap="wrap">
                   {genreName.map((genreName, index) => (
-                    <Tag key={index} mr={2}>
+                    <Tag key={index} mr={2} mb={1}>
                       <Text paddingX={1}>{genreName}</Text>
                     </Tag>
                   ))}
+                </Flex>
+                <Box>
+                  <FavouriteButton
+                    movie={movie}
+                    isFavourite={movie.favourite}
+                  />
                 </Box>
-                    <FavouriteButton
-                      movie={movie}
-                      isFavourite={movie.favourite}
-                    />
               </Flex>
 
               <Text fontSize="md" color="gray.500">
@@ -212,57 +208,56 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose }) => {
                 {movie.reviews.length === 0 ? (
                   <Text padding={2}>Be the first to review this movie!</Text>
                 ) : (
-                  movie.reviews.map(
-                    (review: Review, index: number) => (
-                      <Flex
-                        flexDirection={"column"}
-                        key={index}
-                        bg={bg}
-                        p={3}
-                        borderRadius="md"
+                  movie.reviews.map((review: Review, index: number) => (
+                    <Flex
+                      flexDirection={"column"}
+                      key={index}
+                      bg={bg}
+                      p={3}
+                      borderRadius="md"
+                    >
+                      <HStack justifyContent={"space-between"}>
+                        <HStack>
+                          <Avatar size="xs"></Avatar>
+                          {userLoading ? (
+                            <Text>Fetching user...</Text>
+                          ) : (
+                            <Text>{userData.user.username}</Text>
+                          )}
+                        </HStack>
+                        <Text color={textColor}>{review.timestamp}</Text>
+                      </HStack>
+                      <Divider paddingBottom={2} borderColor={borderColor} />
+
+                      <HStack
+                        marginTop={1}
+                        padding={1}
+                        bgColor={bgColor}
+                        width={"min-content"}
+                        borderRadius={"5px"}
                       >
-                        <HStack justifyContent={"space-between"}>
-                          <HStack>
-                            <Avatar size="xs"></Avatar>
-                            {userLoading ? (
-                              <Text>Fetching user...</Text>
-                            ) : (
-                              <Text>{userData.user.username}</Text>
-                            )}
-                          </HStack>
-                          <Text color={textColor}>{review.timestamp}</Text>
-                        </HStack>
-                        <Divider paddingBottom={2} borderColor={borderColor} />
+                        {[...Array(review.rating)].map((_, i) => (
+                          <StarIcon
+                            key={i}
+                            color={"yellow.400"}
+                            fontSize={12}
+                          />
+                        ))}
+                      </HStack>
 
-                        <HStack
-                          marginTop={1}
-                          padding={1}
-                          bgColor={bgColor}
-                          width={"min-content"}
-                          borderRadius={"5px"}
+                      <HStack justifyContent={"space-between"} paddingTop={2}>
+                        <Text>{review.content}</Text>
+                        <Button
+                          cursor="pointer"
+                          size={"xs"}
+                          bg={"red.600"}
+                          onClick={() => handleDeleteReview(review.id)}
                         >
-                          {[...Array(review.rating)].map((_, i) => (
-                            <StarIcon
-                              key={i}
-                              color={"yellow.400"}
-                              fontSize={12}
-                            />
-                          ))}
-                        </HStack>
-
-                        <HStack justifyContent={"space-between"} paddingTop={2}>
-                          <Text>{review.content}</Text>
-                          <Button
-                            cursor="pointer"
-                            size={"xs"}
-                            bg={"red.600"}
-                            onClick={() => handleDeleteReview(review.id)}
-                          >
-                            <DeleteIcon color={"white"} />
-                          </Button>
-                        </HStack>
-                      </Flex>
-                    ),
+                          <DeleteIcon color={"white"} />
+                        </Button>
+                      </HStack>
+                    </Flex>
+                  ),
                   )
                 )}
               </>

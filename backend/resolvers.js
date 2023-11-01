@@ -46,6 +46,10 @@ export const resolvers = {
       const moviesCount = await Movie.countDocuments(query);
       return { movies, moviesCount };
     },
+    favouriteMovies: async () => {
+      const favouriteMovies = await Movie.find({ favourite: true });
+      return favouriteMovies;
+    },
     moviesCount: async () => {
       return await Movie.countDocuments({});
     },
