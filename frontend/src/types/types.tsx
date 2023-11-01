@@ -23,6 +23,7 @@ export interface Genre {
   name: string;
   movies: Movie[];
   moviesInGenreCount: number;
+  count: number;
 }
 
 export interface Review {

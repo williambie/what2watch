@@ -38,11 +38,16 @@ interface MovieModalProps {
 }
 
 // Compontent for modal when clicking on a movie card
-const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose, isFavourite }) => {
+const MovieModal: React.FC<MovieModalProps> = ({
+  movie,
+  isOpen,
+  onClose,
+  isFavourite,
+}) => {
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
   const [hoverIndex, setHoverIndex] = useState(-1);
-  
+
   const { loading: userLoading, data: userData } = useQuery(GET_USER);
 
   const genreName = movie.genres.map((genre: Genre) => genre.name);
@@ -59,7 +64,6 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose, isFavou
   const borderColor = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("gray.100", "gray.600");
   const bg = useColorModeValue("gray.300", "gray.700");
-
 
   const handleStarClick = (rating: number) => {
     setStarRating(rating);
@@ -170,10 +174,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose, isFavou
                   ))}
                 </Flex>
                 <Box>
-                  <FavouriteButton
-                    movie={movie}
-                    isFavourite={isFavourite}
-                  />
+                  <FavouriteButton movie={movie} isFavourite={isFavourite} />
                 </Box>
               </Flex>
 
@@ -259,8 +260,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, isOpen, onClose, isFavou
                         </Button>
                       </HStack>
                     </Flex>
-                  ),
-                  )
+                  ))
                 )}
               </>
             )}

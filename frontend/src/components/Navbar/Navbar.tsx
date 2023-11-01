@@ -4,12 +4,8 @@ import logo from "../../assets/logo.png";
 import ProfileButton from "./ProfileButton";
 import { Link } from "react-router-dom";
 
-interface NavbarProps {
-  onSearchChange: (value: string) => void;
-}
-
 // Navbar is the top bar of the application
-const Navbar = ({ onSearchChange }: NavbarProps) => {
+const Navbar = () => {
   return (
     <HStack px={{ base: 2, lg: "30px" }} py={3}>
       <Link to={"/"}>
@@ -22,7 +18,7 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
           mx="auto"
         ></Image>
       </Link>
-      <SearchBar onSearchChange={onSearchChange} />
+      <SearchBar />
       <ProfileButton />
     </HStack>
   );
