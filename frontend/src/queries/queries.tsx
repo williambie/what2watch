@@ -132,26 +132,44 @@ const GET_FAVOURITES = gql`
 `;
 
 const GET_MOVIES = gql`
-  query getMovies($limit: Int!, $offset: Int!, $sortField: String!, $sortOrder: Int!) {
-    movies(limit: $limit, offset: $offset, sortField: $sortField, sortOrder: $sortOrder) {
-      id
-      title
-      overview
-      poster_path
-      vote_average
-      popularity
-      genres {
-        name
+  query getMovies(
+    $limit: Int!
+    $offset: Int!
+    $sortField: String!
+    $sortOrder: Int!
+    $genre: String
+  ) {
+    movies(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      genre: $genre
+    ) {
+      moviesCount
+      movies {
         id
+        title
+        poster_path
+        vote_average
+        overview
+        release_date
+        popularity
+        favourite
+        genres {
+          id
+          name
+        }
+        reviews {
+          id
+          content
+          rating
+          movieid
+          timestamp
+          userid
+        }
       }
     }
-    moviesCount
-  }
-`;
-
-const GET_MOVIE_COUNT = gql`
-  query getMovieCount {
-    moviesCount
   }
 `;
 
@@ -168,5 +186,4 @@ export {
   CHECK_FAVOURITE,
   GET_FAVOURITES,
   GET_MOVIES,
-  GET_MOVIE_COUNT,
 };

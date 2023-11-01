@@ -31,8 +31,20 @@ export const resolvers = {
       const movie = await Movie.findOne({ id: args.id });
       return movie;
     },
-    movies: async (_, { limit, offset, sortField, sortOrder}) => {
-      return await Movie.find({}).sort({ [sortField]: sortOrder }).limit(limit).skip(offset);
+    movies: async (_, { limit, offset, sortField, sortOrder, genre }) => {
+      let query = {};
+      if (genre) {
+        const genreDoc = await Genre.findOne({ name: genre });
+        if (genreDoc) {
+          query.genre_ids = genreDoc.id;
+        }
+      }
+      const movies = await Movie.find(query)
+        .sort({ [sortField]: sortOrder })
+        .limit(limit)
+        .skip(offset);
+      const moviesCount = await Movie.countDocuments(query);
+      return { movies, moviesCount };
     },
     moviesCount: async () => {
       return await Movie.countDocuments({});
