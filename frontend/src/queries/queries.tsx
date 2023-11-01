@@ -14,6 +14,7 @@ const GET_GENRES = gql`
     genres {
       name
       id
+      moviesInGenreCount
     }
   }
 `;
@@ -25,16 +26,6 @@ const GET_MOVIE_GENRES = gql`
         name
         id
       }
-    }
-  }
-`;
-
-const CHECK_FAVOURITE = gql`
-  query checkFavourite($id: Int!) {
-    movie(id: $id) {
-      favourite
-      id
-      title
     }
   }
 `;
@@ -83,30 +74,9 @@ const DELETE_REVIEW = gql`
   }
 `;
 
-const ADD_FAVOURITE = gql`
-  mutation addFavourite($movieid: Int!, $userid: Int!) {
-    addFavourite(movieid: $movieid, userid: $userid) {
-      movieid
-      userid
-    }
-  }
-`;
-
-const REMOVE_FAVOURITE = gql`
-  mutation Mutation($movieid: Int!, $userid: Int!) {
-    deleteFavourite(movieid: $movieid, userid: $userid)
-  }
-`;
-
 const TOGGLE_FAVOURITE = gql`
   mutation ToggleFavourite($movieid: Int!) {
-    toggleFavourite(movieid: $movieid)
-  }
-`;
-
-const GET_FAVOURITES = gql`
-  query getFavourites($userid: Int!) {
-    favourites(userid: $userid) {
+    toggleFavourite(movieid: $movieid) {
       id
       title
       poster_path
@@ -115,42 +85,94 @@ const GET_FAVOURITES = gql`
       release_date
       popularity
       genres {
-        name
         id
+        name
       }
       reviews {
         id
         content
-        timestamp
         rating
+        timestamp
         movieid
         userid
       }
+      favourite
     }
   }
 `;
 
 const GET_MOVIES = gql`
-  query getMovies($limit: Int!, $offset: Int!, $sortField: String!, $sortOrder: Int!) {
-    movies(limit: $limit, offset: $offset, sortField: $sortField, sortOrder: $sortOrder) {
-      id
-      title
-      overview
-      poster_path
-      vote_average
-      popularity
-      genres {
-        name
+  query getMovies(
+    $limit: Int!
+    $offset: Int!
+    $sortField: String!
+    $sortOrder: Int!
+    $genre: String
+  ) {
+    movies(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      genre: $genre
+    ) {
+      moviesCount
+      movies {
         id
+        title
+        poster_path
+        vote_average
+        overview
+        release_date
+        popularity
+        favourite
+        genres {
+          id
+          name
+        }
+        reviews {
+          id
+          content
+          rating
+          movieid
+          timestamp
+          userid
+        }
       }
     }
-    moviesCount
   }
 `;
 
-const GET_MOVIE_COUNT = gql`
-  query getMovieCount {
-    moviesCount
+const GET_FAVOURITE_MOVIES = gql`
+  query FavouriteMovies {
+    favouriteMovies {
+      id
+      title
+      poster_path
+      vote_average
+      overview
+      release_date
+      popularity
+      genres {
+        id
+        name
+      }
+      reviews {
+        id
+        content
+        rating
+        timestamp
+        movieid
+        userid
+      }
+      favourite
+    }
+  }
+`;
+
+const CHECK_FAVOURITE = gql`
+  query Query($movieid: Int!) {
+    checkFavourite(movieid: $movieid)
   }
 `;
 
@@ -161,11 +183,8 @@ export {
   ADD_REVIEW,
   GET_REVIEWS,
   DELETE_REVIEW,
-  ADD_FAVOURITE,
-  REMOVE_FAVOURITE,
   TOGGLE_FAVOURITE,
+  GET_MOVIES,
+  GET_FAVOURITE_MOVIES,
   CHECK_FAVOURITE,
-  GET_FAVOURITES,
-  GET_MOVIES, 
-  GET_MOVIE_COUNT
 };

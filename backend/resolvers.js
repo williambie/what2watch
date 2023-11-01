@@ -15,9 +15,14 @@ export const resolvers = {
       return await Review.find({ movieid: parent.id });
     },
   },
+  Genre: {
+    moviesInGenreCount: async (parent) => {
+      return await Movie.countDocuments({ genre_ids: parent.id });
+    },
+  },
   Query: {
     genre: async (_, args) => {
-      return await Genre.findById({ id: args.id });
+      return await Genre.findOne({ name: args.name });
     },
     genres: async () => {
       return await Genre.find({});
@@ -26,8 +31,24 @@ export const resolvers = {
       const movie = await Movie.findOne({ id: args.id });
       return movie;
     },
-    movies: async (_, { limit, offset, sortField, sortOrder}) => {
-      return await Movie.find({}).sort({ [sortField]: sortOrder }).limit(limit).skip(offset);
+    movies: async (_, { limit, offset, sortField, sortOrder, genre }) => {
+      let query = {};
+      if (genre) {
+        const genreDoc = await Genre.findOne({ name: genre });
+        if (genreDoc) {
+          query.genre_ids = genreDoc.id;
+        }
+      }
+      const movies = await Movie.find(query)
+        .sort({ [sortField]: sortOrder })
+        .limit(limit)
+        .skip(offset);
+      const moviesCount = await Movie.countDocuments(query);
+      return { movies, moviesCount };
+    },
+    favouriteMovies: async () => {
+      const favouriteMovies = await Movie.find({ favourite: true });
+      return favouriteMovies;
     },
     moviesCount: async () => {
       return await Movie.countDocuments({});
@@ -42,43 +63,12 @@ export const resolvers = {
     reviews: async (_, args) => {
       return await Review.find({ movieid: args.movieid });
     },
-    favourites: async (_, args) => {
-      const movies = await Favourite.find({ userid: args.userid });
-      const movieIds = movies.map((movie) => movie.movieid);
-      const fullMovies = await Promise.all(
-        movieIds.map(async (id) => {
-          const movie = await Movie.findOne({ id });
-          const genres = await Genre.find({ id: { $in: movie.genre_ids } });
-          const reviews = await Review.find({ movieid: movie.id });
-          return { ...movie.toObject(), genres, reviews };
-        })
-      );
-      return fullMovies;
-    },
+    checkFavourite: async (_, args) => {
+      const movie = await Movie.findOne({ id: args.movieid });
+      return movie.favourite;
+    }
   },
   Mutation: {
-    addFavourite: async (_, args) => {
-      const favourite = new Favourite({
-        movieid: args.movieid,
-        userid: args.userid,
-      });
-
-      const res = await favourite.save();
-
-      return {
-        id: res.id,
-        ...res._doc,
-      };
-    },
-    deleteFavourite: async (_, args) => {
-      const wasDeleted = (
-        await Favourite.deleteOne({
-          movieid: args.movieid,
-          userid: args.userid,
-        })
-      ).deletedCount;
-      return wasDeleted;
-    },
     addUser: async (_, args) => {
       const maxId = await User.findOne()
         .sort({ id: -1 })
@@ -120,7 +110,9 @@ export const resolvers = {
       }
       movie.favourite = !movie.favourite;
       await movie.save();
-      return movie.favourite;
+
+      const favouriteMovies = await Movie.find({ favourite: true });
+      return favouriteMovies;
     },
 
     deleteReview: async (_, args) => {
