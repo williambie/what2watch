@@ -110,7 +110,9 @@ export const resolvers = {
       }
       movie.favourite = !movie.favourite;
       await movie.save();
-      return movie.favourite;
+
+      const favouriteMovies = await Movie.find({ favourite: true });
+      return favouriteMovies;
     },
 
     deleteReview: async (_, args) => {

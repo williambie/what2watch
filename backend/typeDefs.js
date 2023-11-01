@@ -56,7 +56,7 @@ export const typeDefs = `#graphql
 
   type Mutation {
     addUser(username: String!): User!
-    toggleFavourite(movieid: Int!): Boolean
+    toggleFavourite(movieid: Int!): [Movie]
     addReview(content: String!, rating: Int!, timestamp: String!, movieid: Int!, userid: Int!): Review!
     deleteReview(id: Int!): Boolean
   }

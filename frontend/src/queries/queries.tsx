@@ -76,7 +76,28 @@ const DELETE_REVIEW = gql`
 
 const TOGGLE_FAVOURITE = gql`
   mutation ToggleFavourite($movieid: Int!) {
-    toggleFavourite(movieid: $movieid)
+    toggleFavourite(movieid: $movieid) {
+      id
+      title
+      poster_path
+      vote_average
+      overview
+      release_date
+      popularity
+      genres {
+        id
+        name
+      }
+      reviews {
+        id
+        content
+        rating
+        timestamp
+        movieid
+        userid
+      }
+      favourite
+    }
   }
 `;
 
