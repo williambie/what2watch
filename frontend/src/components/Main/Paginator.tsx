@@ -6,18 +6,21 @@ import { RootState } from "../../redux/store";
 
 interface PaginatorProps {
   totalPages: number;
+  movieCount: number;
 }
 
-const Paginator = ({ totalPages }: PaginatorProps) => {
+const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
   const { page } = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
+
+  if (totalPages === 0) return null;
 
   const handlePageChange = (page: number) => {
     dispatch(setPage(page));
   };
   const moviesPerPage = 15;
   const start = (page - 1) * moviesPerPage + 1;
-  const end = Math.min(start + moviesPerPage - 1, totalPages * moviesPerPage);
+  const end = Math.min(start + moviesPerPage - 1, movieCount);
 
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -119,7 +122,7 @@ const Paginator = ({ totalPages }: PaginatorProps) => {
         </Button>
       </HStack>
 
-      <Text>{`Showing ${start}-${end} of ${totalPages * moviesPerPage}`}</Text>
+      <Text>{`Showing ${start}-${end} of ${movieCount}`}</Text>
     </VStack>
   );
 };
