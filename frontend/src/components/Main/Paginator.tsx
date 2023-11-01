@@ -1,4 +1,4 @@
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../../redux/searchSlice";
@@ -15,6 +15,9 @@ const Paginator = ({ totalPages }: PaginatorProps) => {
   const handlePageChange = (page: number) => {
     dispatch(setPage(page));
   };
+  const moviesPerPage = 15;
+  const start = (page - 1) * moviesPerPage + 1;
+  const end = Math.min(start + moviesPerPage - 1, totalPages * moviesPerPage);
 
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -57,63 +60,67 @@ const Paginator = ({ totalPages }: PaginatorProps) => {
 
   // The paginator is displayed
   return (
-    <HStack spacing={2} justify="center">
-      <Button
-        isDisabled={page === 1}
-        onClick={() => handlePageChange(page - 1)}
-        size={["md", "lg"]}
-      >
-        <ChevronLeftIcon />
-      </Button>
+    <VStack spacing={2} align="center">
+      <HStack spacing={2} justify="center">
+        <Button
+          isDisabled={page === 1}
+          onClick={() => handlePageChange(page - 1)}
+          size={["md", "lg"]}
+        >
+          <ChevronLeftIcon />
+        </Button>
 
-      <Box display={["none", "none", "flex"]}>
-        <HStack spacing={2}>
-          {getPageNumbers().map((pageNum, index) => (
-            <Button
-              key={index}
-              colorScheme={pageNum === page ? "blue" : undefined}
-              onClick={() =>
-                typeof pageNum === "number" && handlePageChange(pageNum)
-              }
-              isDisabled={pageNum === "..."}
-              size="lg"
-            >
-              {pageNum}
-            </Button>
-          ))}
-        </HStack>
-      </Box>
+        <Box display={["none", "none", "flex"]}>
+          <HStack spacing={2}>
+            {getPageNumbers().map((pageNum, index) => (
+              <Button
+                key={index}
+                colorScheme={pageNum === page ? "blue" : undefined}
+                onClick={() =>
+                  typeof pageNum === "number" && handlePageChange(pageNum)
+                }
+                isDisabled={pageNum === "..."}
+                size="lg"
+              >
+                {pageNum}
+              </Button>
+            ))}
+          </HStack>
+        </Box>
 
-      <Box display={["flex", "flex", "none"]} flexDirection="row">
-        <HStack spacing={1}>
-          {page > 2 && <Button onClick={() => setPage(1)}>1</Button>}
-          {page > 1 && (
-            <Button onClick={() => handlePageChange(page - 1)}>
-              {page - 1}
-            </Button>
-          )}
-          <Button colorScheme="blue">{page}</Button>
-          {page < totalPages && (
-            <Button onClick={() => handlePageChange(page + 1)}>
-              {page + 1}
-            </Button>
-          )}
-          {page < totalPages - 1 && (
-            <Button onClick={() => handlePageChange(totalPages)}>
-              {totalPages}
-            </Button>
-          )}
-        </HStack>
-      </Box>
+        <Box display={["flex", "flex", "none"]} flexDirection="row">
+          <HStack spacing={1}>
+            {page > 2 && <Button onClick={() => handlePageChange(1)}>1</Button>}
+            {page > 1 && (
+              <Button onClick={() => handlePageChange(page - 1)}>
+                {page - 1}
+              </Button>
+            )}
+            <Button colorScheme="blue">{page}</Button>
+            {page < totalPages && (
+              <Button onClick={() => handlePageChange(page + 1)}>
+                {page + 1}
+              </Button>
+            )}
+            {page < totalPages - 1 && (
+              <Button onClick={() => handlePageChange(totalPages)}>
+                {totalPages}
+              </Button>
+            )}
+          </HStack>
+        </Box>
 
-      <Button
-        isDisabled={page === totalPages}
-        onClick={() => handlePageChange(page + 1)}
-        size={["md", "lg"]}
-      >
-        <ChevronRightIcon />
-      </Button>
-    </HStack>
+        <Button
+          isDisabled={page === totalPages}
+          onClick={() => handlePageChange(page + 1)}
+          size={["md", "lg"]}
+        >
+          <ChevronRightIcon />
+        </Button>
+      </HStack>
+
+      <Text>{`Showing ${start}-${end} of ${totalPages * moviesPerPage}`}</Text>
+    </VStack>
   );
 };
 
