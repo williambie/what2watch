@@ -30,9 +30,21 @@ const searchSlice = createSlice({
       state.selectedGenre = action.payload;
       state.page = 1;
     },
+    resetFilter: (state) => {
+      state.searchTerm = "";
+      state.page = 1;
+      state.selectedGenre = null;
+      state.sorting.sortBy = "popularity";
+      state.sorting.sortOrder = -1;
+    },
   },
 });
 
-export const { setSearchTerm, setPage, setSorting, setSelectedGenre } =
-  searchSlice.actions;
+export const {
+  setSearchTerm,
+  setPage,
+  setSorting,
+  setSelectedGenre,
+  resetFilter,
+} = searchSlice.actions;
 export default searchSlice.reducer;
