@@ -1,4 +1,4 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, Button, HStack } from "@chakra-ui/react";
 import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter";
@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_MOVIES } from "../../queries/queries";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import ResetFilters from "./SortingFiltering/ResetFilters";
 
 // Home is the main page of the application
 function Home() {
@@ -37,6 +38,7 @@ function Home() {
       <HStack paddingLeft={"30px"}>
         <GenreFilter />
         <SortingButton />
+        <ResetFilters />
       </HStack>
       <Box padding="5">
         <MovieGrid movies={movies} loading={loading} />
