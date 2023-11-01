@@ -19,6 +19,8 @@ export interface Movie {
 export interface Genre {
   id: number;
   name: string;
+  movies: Movie[];
+  moviesInGenreCount: number;
 }
 
 export interface Review {
