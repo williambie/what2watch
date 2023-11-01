@@ -15,9 +15,14 @@ export const resolvers = {
       return await Review.find({ movieid: parent.id });
     },
   },
+  Genre: {
+    moviesInGenreCount: async (parent) => {
+      return await Movie.countDocuments({ genre_ids: parent.id });
+    },
+  },
   Query: {
     genre: async (_, args) => {
-      return await Genre.findById({ id: args.id });
+      return await Genre.findOne({ name: args.name });
     },
     genres: async () => {
       return await Genre.find({});

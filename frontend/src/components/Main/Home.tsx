@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 import { GET_MOVIES, GET_MOVIE_COUNT } from "../../queries/queries";
 
 export interface MovieQuery {
-  genre: number | null;
+  genre: string | null;
   sortBy: string;
   sortOrder: number;
 }

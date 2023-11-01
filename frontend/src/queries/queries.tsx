@@ -14,6 +14,7 @@ const GET_GENRES = gql`
     genres {
       name
       id
+      moviesInGenreCount
     }
   }
 `;
@@ -166,6 +167,6 @@ export {
   TOGGLE_FAVOURITE,
   CHECK_FAVOURITE,
   GET_FAVOURITES,
-  GET_MOVIES, 
-  GET_MOVIE_COUNT
+  GET_MOVIES,
+  GET_MOVIE_COUNT,
 };

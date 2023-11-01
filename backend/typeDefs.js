@@ -16,6 +16,7 @@ export const typeDefs = `#graphql
     id: Int
     name: String
     movies: [Movie!]
+    moviesInGenreCount: Int!
   }
   type User {
     id: Int!
@@ -36,7 +37,7 @@ export const typeDefs = `#graphql
   }
 
   type Query {
-    genre(id: Int!): Genre
+    genre(name: String!): Genre
     genres: [Genre]
     movie(id: Int!): Movie
     movies(limit: Int, offset: Int, sortField: String, sortOrder: Int): [Movie]
