@@ -1,4 +1,4 @@
-import { Heading, Box, Text, Button, useMediaQuery } from "@chakra-ui/react";
+import { Heading, Box, Text, useMediaQuery } from "@chakra-ui/react";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import { GET_FAVOURITE_MOVIES } from "../../../queries/queries";
 import { useQuery } from "@apollo/client";
