@@ -14,7 +14,7 @@ function Main() {
     (state: RootState) => state.search,
   );
 
-  const pageSize = 15;
+  const pageSize = 20;
   const { loading, data } = useQuery(GET_MOVIES, {
     variables: {
       limit: pageSize,

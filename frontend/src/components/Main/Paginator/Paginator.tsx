@@ -18,7 +18,7 @@ const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
   const handlePageChange = (page: number) => {
     dispatch(setPage(page));
   };
-  const moviesPerPage = 15;
+  const moviesPerPage = 20;
   const start = (page - 1) * moviesPerPage + 1;
   const end = Math.min(start + moviesPerPage - 1, movieCount);
 

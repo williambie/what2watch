@@ -17,7 +17,7 @@ const MovieGrid = ({ movies, loading }: Props) => {
       spacing={10}
     >
       {loading ? (
-        Array(15)
+        Array(20)
           .fill(0)
           .map((_, idx) => <LoadingCard key={idx} />)
       ) : movies.length > 0 ? (
