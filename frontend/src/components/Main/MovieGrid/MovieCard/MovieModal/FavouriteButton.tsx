@@ -26,6 +26,7 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
     refetchQueries: [{ query: GET_FAVOURITE_MOVIES }],
   });
 
+  // State to keep track of whether the button is active or not
   const [isActive, setIsActive] = useState(isFavourite);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -50,6 +51,8 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
     }, 3000);
   };
 
+  // Display a filled star if the button is active
+  // else display an empty star
   return (
     <>
       {alertMessage && (

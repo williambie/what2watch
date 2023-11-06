@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SearchState } from "../types/reduxTypes";
 
+// Initial state
 const initialState: SearchState = {
   searchTerm: "",
   page: 1,
@@ -11,6 +12,7 @@ const initialState: SearchState = {
   selectedGenre: "Genres",
 };
 
+// Slice with reducers and actions for search and filter functionality
 const searchSlice = createSlice({
   name: "search",
   initialState,

@@ -35,12 +35,14 @@ const GenreFilter = () => {
     variables: { searchTerm: searchTerm },
   });
 
+  // The genre counts are refetched when the search term changes
   useEffect(() => {
     refetch({ searchTerm: searchTerm });
   }, [searchTerm, refetch]);
 
   const genreCounts = genreCountsData?.genreCounts || [];
 
+  // The dropdown menu is displayed on the main page
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>

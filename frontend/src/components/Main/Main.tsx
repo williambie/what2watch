@@ -9,11 +9,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ResetFilters from "./SortingFiltering/ResetFilters";
 
+// Main is the main page of the application
 function Main() {
   const { searchTerm, page, sorting, selectedGenre } = useSelector(
     (state: RootState) => state.search,
   );
 
+  // The movies are fetched from the database using the GraphQL query
   const pageSize = 20;
   const { loading, data } = useQuery(GET_MOVIES, {
     variables: {

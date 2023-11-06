@@ -8,6 +8,8 @@ import { debounce } from "lodash";
 const SearchInput = () => {
   const dispatch = useDispatch();
 
+  // The search term is updated when the user types in the search bar
+  // The search term is debounced to avoid making too many requests
   const debouncedSearch = debounce((value: string) => {
     dispatch(setSearchTerm(value));
   }, 750);
@@ -16,6 +18,7 @@ const SearchInput = () => {
     debouncedSearch(e.target.value);
   };
 
+  // The dropdown menu is displayed on the main page
   return (
     <InputGroup size="lg">
       <InputLeftElement children={<SearchIcon />} />

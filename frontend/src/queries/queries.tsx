@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+// GET_USER is a GraphQL query that fetches the user with id 1
 const GET_USER = gql`
   query getUser {
     user(id: 1) {
@@ -9,6 +10,7 @@ const GET_USER = gql`
   }
 `;
 
+// GET_REVIEWS is a GraphQL query that fetches the reviews for a movie with the given id
 const GET_REVIEWS = gql`
   query Reviews($id: Int!) {
     movie(id: $id) {
@@ -23,6 +25,7 @@ const GET_REVIEWS = gql`
   }
 `;
 
+// ADD_REVIEW is a GraphQL mutation that adds a review to the database
 const ADD_REVIEW = gql`
   mutation AddReview(
     $content: String!
@@ -47,12 +50,14 @@ const ADD_REVIEW = gql`
   }
 `;
 
+// DELETE_REVIEW is a GraphQL mutation that deletes a review from the database
 const DELETE_REVIEW = gql`
   mutation deleteReview($id: Int!) {
     deleteReview(id: $id)
   }
 `;
 
+// TOGGLE_FAVOURITE is a GraphQL mutation that toggles the favourite status of a movie
 const TOGGLE_FAVOURITE = gql`
   mutation ToggleFavourite($movieid: Int!) {
     toggleFavourite(movieid: $movieid) {
@@ -80,6 +85,7 @@ const TOGGLE_FAVOURITE = gql`
   }
 `;
 
+// GET_MOVIES is a GraphQL query that fetches movies from the database
 const GET_MOVIES = gql`
   query getMovies(
     $limit: Int!
@@ -129,6 +135,7 @@ const GET_MOVIES = gql`
   }
 `;
 
+// GET_FAVOURITE_MOVIES is a GraphQL query that fetches the user's favourite movies
 const GET_FAVOURITE_MOVIES = gql`
   query FavouriteMovies {
     favouriteMovies {
@@ -161,12 +168,14 @@ const GET_FAVOURITE_MOVIES = gql`
   }
 `;
 
+// CHECK_FAVOURITE is a GraphQL query that checks if a movie is in the user's favourites
 const CHECK_FAVOURITE = gql`
   query Query($movieid: Int!) {
     checkFavourite(movieid: $movieid)
   }
 `;
 
+// GET_GENRE_COUNTS is a GraphQL query that fetches the number of movies in each genre
 const GET_GENRE_COUNTS = gql`
   query GetGenreCounts($searchTerm: String) {
     genreCounts(searchTerm: $searchTerm) {

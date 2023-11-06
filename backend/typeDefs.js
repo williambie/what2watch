@@ -1,3 +1,4 @@
+// Define the GraphQL schema using the GraphQL schema language
 export const typeDefs = `#graphql
   type Movie {
     id: Int!
@@ -50,6 +51,7 @@ export const typeDefs = `#graphql
     userid: Int!
   }
 
+  # The "Query" type is the root of all GraphQL queries
   type Query {
     genre(name: String!): Genre
     genres: [Genre]
@@ -64,6 +66,7 @@ export const typeDefs = `#graphql
     checkFavourite(movieid: Int!): Boolean
   }
 
+  # The "Mutation" type is the root of all GraphQL mutations
   type Mutation {
     addUser(username: String!): User!
     toggleFavourite(movieid: Int!): [Movie]

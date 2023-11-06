@@ -8,7 +8,7 @@ interface Props {
   loading: boolean;
 }
 
-// MovieGrid is a grid that displays all movies
+// MovieGrid is a grid that displays all movies in a grid format using the MovieCard component
 const MovieGrid = ({ movies, loading }: Props) => {
   return (
     <SimpleGrid
