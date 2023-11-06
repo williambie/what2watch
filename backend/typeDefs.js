@@ -50,7 +50,6 @@ export const typeDefs = `#graphql
     userid: Int!
   }
 
-
   type Query {
     genre(name: String!): Genre
     genres: [Genre]
@@ -60,11 +59,9 @@ export const typeDefs = `#graphql
     favouriteMovies: [Movie]
     moviesCount: Int
     user(id: Int!): User
-    users: [User]
     reviews(movieid: Int!): [Review]
     favourites(userid: Int!): [Movie]
     checkFavourite(movieid: Int!): Boolean
-    searchMovies(searchTerm: String!): [Movie]
   }
 
   type Mutation {
