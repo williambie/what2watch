@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import searchReducer from "./searchSlice";
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
 };
 

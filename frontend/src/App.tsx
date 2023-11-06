@@ -6,7 +6,6 @@ import Favourites from "./components/Main/Favourites/Favourites";
 
 // App is the main component of the application
 function App() {
-
   // The main page is displayed
   return (
     <>

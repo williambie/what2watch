@@ -6,7 +6,7 @@ import theme from "./theme.ts";
 import { BrowserRouter } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
-import { store, persistor } from './redux/store';
+import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 const client = new ApolloClient({
