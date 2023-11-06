@@ -7,11 +7,11 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Movie } from "../../../types/types";
-import MovieModal from "../MovieModal/MovieModal";
-import UserVoteAverage from "./UserVoteAverage";
+import { Movie } from "../../../../types/types";
+import MovieModal from "./MovieModal/MovieModal";
+import UserVoteAverage from "./UserVoteAverage/UserVoteAverage";
 import { useQuery } from "@apollo/client";
-import { CHECK_FAVOURITE } from "../../../queries/queries";
+import { CHECK_FAVOURITE } from "../../../../queries/queries";
 
 interface Props {
   movie: Movie;

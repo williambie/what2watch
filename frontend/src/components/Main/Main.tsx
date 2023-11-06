@@ -1,6 +1,6 @@
 import { Box, Flex, HStack } from "@chakra-ui/react";
 import MovieGrid from "./MovieGrid/MovieGrid";
-import Paginator from "./Paginator";
+import Paginator from "./Paginator/Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter";
 import SortingButton from "./SortingFiltering/SortingButton";
 import { useQuery } from "@apollo/client";
@@ -9,8 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ResetFilters from "./SortingFiltering/ResetFilters";
 
-// Home is the main page of the application
-function Home() {
+function Main() {
   const { searchTerm, page, sorting, selectedGenre } = useSelector(
     (state: RootState) => state.search,
   );
@@ -56,4 +55,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Main;

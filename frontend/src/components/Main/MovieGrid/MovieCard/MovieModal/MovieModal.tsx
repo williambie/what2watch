@@ -15,10 +15,10 @@ import {
   useBreakpointValue,
   Heading,
 } from "@chakra-ui/react";
-import UserVoteAverage from "../MovieCard/UserVoteAverage";
-import { Genre, Movie } from "../../../types/types";
+import UserVoteAverage from "../UserVoteAverage/UserVoteAverage";
+import { Genre, Movie } from "../../../../../types/types";
 import FavouriteButton from "./FavouriteButton";
-import Reviews from "../Reviews/Reviews";
+import Reviews from "./Reviews/Reviews";
 
 interface MovieModalProps {
   movie: Movie;

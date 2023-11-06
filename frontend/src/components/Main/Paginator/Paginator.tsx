@@ -1,8 +1,8 @@
 import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "../../redux/searchSlice";
-import { RootState } from "../../redux/store";
+import { setPage } from "../../../redux/searchSlice";
+import { RootState } from "../../../redux/store";
 
 interface PaginatorProps {
   totalPages: number;

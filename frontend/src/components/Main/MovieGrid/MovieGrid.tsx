@@ -1,7 +1,7 @@
 import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import MovieCard from "../MovieCard/MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 import { Movie } from "../../../types/types";
-import LoadingCard from "../LoadingCard/LoadingCard";
+import LoadingCard from "./LoadingCard/LoadingCard";
 
 interface Props {
   movies: Movie[];

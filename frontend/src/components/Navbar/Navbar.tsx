@@ -1,7 +1,7 @@
 import { HStack, Image } from "@chakra-ui/react";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar/SearchBar";
 import logo from "../../assets/logo.png";
-import ProfileButton from "./ProfileButton";
+import ProfileButton from "./ProfileButton/ProfileButton";
 import { Link } from "react-router-dom";
 
 // Navbar is the top bar of the application
