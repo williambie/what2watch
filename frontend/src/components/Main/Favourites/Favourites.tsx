@@ -2,7 +2,6 @@ import { Heading, Box, Text, Button, useMediaQuery } from "@chakra-ui/react";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import { GET_FAVOURITE_MOVIES } from "../../../queries/queries";
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
 
 const Favourites = () => {
   const { loading, data } = useQuery(GET_FAVOURITE_MOVIES);
