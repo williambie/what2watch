@@ -19,6 +19,7 @@ import { useQuery } from "@apollo/client";
 export const ProfileButton = () => {
   const { loading, data } = useQuery(GET_USER);
 
+  // The dropdown menu is displayed on the navbar
   return (
     <Menu>
       <MenuButton as={Button} width="auto" height="48px" borderRadius={20}>

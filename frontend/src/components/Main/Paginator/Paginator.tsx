@@ -9,12 +9,15 @@ interface PaginatorProps {
   movieCount: number;
 }
 
+// Component that displays the paginator and the number of movies shown on the page
+// The paginator is only displayed if there are more than 20 movies
 const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
   const { page } = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
 
   if (totalPages === 0) return null;
 
+  // The page is changed when the user clicks on the paginator buttons
   const handlePageChange = (page: number) => {
     dispatch(setPage(page));
   };
@@ -22,6 +25,7 @@ const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
   const start = (page - 1) * moviesPerPage + 1;
   const end = Math.min(start + moviesPerPage - 1, movieCount);
 
+  // The page numbers are calculated
   const getPageNumbers = () => {
     const pageNumbers = [];
     const numPagesToShow = 5;

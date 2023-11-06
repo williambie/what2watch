@@ -26,26 +26,35 @@ interface ReviewProps {
   movie: Movie;
 }
 
+// Reviews component is used to display the reviews for a movie
+// It also allows the user to add a review for a movie and delete their own reviews
 const Reviews: React.FC<ReviewProps> = ({ movie }) => {
+  // State to keep track of the index of the star that is being hovered over
   const [hoverIndex, setHoverIndex] = useState(-1);
   const { loading: userLoading, data: userData } = useQuery(GET_USER);
 
+  // State to keep track of whether the reviews are being refetched
   const [isRefetching, setIsRefetching] = useState(false);
+  // Mutation to add and delte a review
   const [addReview] = useMutation(ADD_REVIEW);
   const [deleteReview] = useMutation(DELETE_REVIEW);
 
+  // State to keep track of the review content and star rating
   const [review, setReview] = useState<string>("");
   const [starRating, setStarRating] = useState<number>(0);
 
+  // Chakra UI color mode values
   const textColor = useColorModeValue("gray.600", "gray.400");
   const borderColor = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("gray.100", "gray.600");
   const bg = useColorModeValue("gray.300", "gray.700");
 
+  // Query to get the reviews for a movie
   const { loading: reviewsLoading, data: reviewsData } = useQuery(GET_REVIEWS, {
     variables: { id: movie.id },
   });
 
+  // Function to handle clicking on a star
   const handleStarClick = (rating: number) => {
     setStarRating(rating);
   };
@@ -58,6 +67,7 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
 
     setIsRefetching(true);
 
+    // Get the current date and time
     const now = new Date();
     const options = {
       year: "numeric" as const,
@@ -124,6 +134,9 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
     }
   };
 
+  // Display a spinner if the reviews are being refetched
+  // Display a message if there are no reviews for the movie
+  // else display the reviews for the movie
   return (
     <Stack
       spacing={4}
@@ -202,7 +215,7 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
         <Avatar size="sm"></Avatar>
         <Input
           placeholder="Write your review here..."
-          value={review} // Ensure the input's value is tied to the 'review' state
+          value={review}
           onChange={(e: { target: { value: SetStateAction<string> } }) =>
             setReview(e.target.value)
           }

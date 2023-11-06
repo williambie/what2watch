@@ -5,6 +5,7 @@ import Review from "./models/review.js";
 
 export const resolvers = {
   Movie: {
+    // This resolver is called when the Movie type is queried for the field "genres" and "reviews"
     genres: async (parent) => {
       const genreIds = parent.genre_ids;
       const genres = await Genre.find({ id: { $in: genreIds } });
@@ -15,11 +16,13 @@ export const resolvers = {
     },
   },
   Genre: {
+    // This resolver is called when the Genre type is queried for the field "movies"
     moviesInGenreCount: async (parent) => {
       return await Movie.countDocuments({ genre_ids: parent.id });
     },
   },
   Query: {
+    // Query resolvers are called when the query is executed for the field in question (e.g. "movies")
     genre: async (_, args) => {
       return await Genre.findOne({ name: args.name });
     },
@@ -30,10 +33,13 @@ export const resolvers = {
       const movie = await Movie.findOne({ id: args.id });
       return movie;
     },
-    movies: async (_, { limit, offset, sortField, sortOrder, genre, searchTerm }) => {
+    movies: async (
+      _,
+      { limit, offset, sortField, sortOrder, genre, searchTerm }
+    ) => {
       let query = {};
       if (searchTerm) {
-        query = { title: { $regex: searchTerm, $options: 'i' } };
+        query = { title: { $regex: searchTerm, $options: "i" } };
       }
       if (genre) {
         const genreDoc = await Genre.findOne({ name: genre });
@@ -51,7 +57,7 @@ export const resolvers = {
     genreCounts: async (_, { searchTerm }) => {
       let query = {};
       if (searchTerm) {
-        query.title = { $regex: searchTerm, $options: 'i' };
+        query.title = { $regex: searchTerm, $options: "i" };
       }
       const movies = await Movie.find(query);
       const genreCounts = {};
@@ -64,7 +70,9 @@ export const resolvers = {
           }
         }
       }
-      const genres = await Genre.find({ id: { $in: Object.keys(genreCounts) } });
+      const genres = await Genre.find({
+        id: { $in: Object.keys(genreCounts) },
+      });
       return genres.map((genre) => ({
         name: genre.name,
         id: genre.id,
@@ -91,6 +99,7 @@ export const resolvers = {
     },
   },
   Mutation: {
+    // Mutation resolvers are called when the mutation is executed for the field in question (e.g. "addMovie")
     addUser: async (_, args) => {
       const maxId = await User.findOne()
         .sort({ id: -1 })

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema for movie
 const movieSchema = new mongoose.Schema({
   adult: Boolean,
   backdrop_path: String,

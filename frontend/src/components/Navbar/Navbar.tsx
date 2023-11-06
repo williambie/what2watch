@@ -8,6 +8,7 @@ import ProfileButton from "./ProfileButton/ProfileButton";
 const Navbar = () => {
   const location = useLocation();
 
+  // The navbar is displayed
   return (
     <HStack px={{ base: 2, lg: "30px" }} py={3}>
       <Link to={"/"}>

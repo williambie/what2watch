@@ -46,11 +46,13 @@ const MovieModal: React.FC<MovieModalProps> = ({
     year: "numeric",
   });
 
+  // Chakra UI color mode values
   const trackColor = useColorModeValue("#f1f1f1", "#bfbfbf");
   const thumbColor = useColorModeValue("#888", "#707070");
   const thumbHoverColor = useColorModeValue("#555", "#4d4d4d");
 
-  // Return the modal
+  // Return the modal component to display the movie details when the user clicks on a movie card
+  // The modal displays the movie poster, title, genres, release date, vote average, overview, cast and reviews
   return (
     <Modal
       isOpen={isOpen}

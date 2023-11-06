@@ -6,9 +6,14 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+// LoadingCard component is used to display a loading card when the user is waiting for the movies to load
+// Using chakra ui's Skeleton component to display a loading card
+
 const LoadingCard = () => {
   const bg = useColorModeValue("gray.300", "gray.700");
 
+  // Display a loading card with a skeleton animation
+  // in the same format as the MovieCard component but with no data
   return (
     <Card
       bg={bg}

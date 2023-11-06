@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "@chakra-ui/react";
 import { resetFilter } from "../../../redux/searchSlice";
 
+// ResetFilters is a button that resets the filters
 const ResetFilters = () => {
   const dispatch = useDispatch();
 
