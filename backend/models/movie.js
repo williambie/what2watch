@@ -17,6 +17,7 @@ const movieSchema = new mongoose.Schema({
   vote_count: Number,
   reviews: Array,
   favourite: { type: Boolean, required: true, default: false },
+  cast: Array,
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
