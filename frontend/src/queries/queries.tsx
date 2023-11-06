@@ -139,6 +139,11 @@ const GET_MOVIES = gql`
           timestamp
           userid
         }
+        cast {
+          name
+          character
+          profile_path
+        }
       }
     }
   }
@@ -165,6 +170,11 @@ const GET_FAVOURITE_MOVIES = gql`
         timestamp
         movieid
         userid
+      }
+      cast {
+        name
+        character
+        profile_path
       }
       favourite
     }

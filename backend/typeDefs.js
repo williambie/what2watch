@@ -10,7 +10,15 @@ export const typeDefs = `#graphql
     genres: [Genre!]
     reviews: [Review!]
     favourite: Boolean!
+    cast: [Cast!]
   }
+
+  type Cast {
+    name: String
+    character: String
+    profile_path: String
+  }
+
   type MovieResults {
     movies: [Movie!]
     moviesCount: Int!

@@ -16,6 +16,13 @@ export interface Movie {
   vote_count: number;
   reviews: Review[];
   favourite: boolean;
+  cast: Cast[];
+}
+
+export interface Cast {
+  name: string;
+  character: string;
+  profile_path: string;
 }
 
 export interface Genre {

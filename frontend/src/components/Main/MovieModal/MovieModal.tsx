@@ -13,6 +13,7 @@ import {
   Divider,
   useColorModeValue,
   useBreakpointValue,
+  Heading,
 } from "@chakra-ui/react";
 import UserVoteAverage from "../MovieCard/UserVoteAverage";
 import { Genre, Movie } from "../../../types/types";
@@ -94,7 +95,52 @@ const MovieModal: React.FC<MovieModalProps> = ({
               </Flex>
             </Box>
           </Flex>
-
+          <Divider py={2} borderColor={useColorModeValue("black", "white")} />
+          {/* display cast */}
+          <Heading mt={4} fontSize={"2xl"}>
+            Cast
+          </Heading>
+          <Box mt={6} mb={3}>
+            <Flex overflowX="auto" my={4}>
+              {movie.cast.map((cast, index) => (
+                <Box
+                  key={index}
+                  flex="none"
+                  mx={2}
+                  textAlign="center"
+                  mb={3}
+                  minWidth="120px" // Ensure each box has a minimum width.
+                  maxWidth="120px" // Ensure text doesn't overflow the max width.
+                >
+                  {cast.profile_path ? (
+                    <Image
+                      src={poster_base_url + cast.profile_path}
+                      alt={cast.name}
+                      boxSize="100px"
+                      objectFit="cover"
+                      borderRadius="full"
+                      mx="auto"
+                    />
+                  ) : (
+                    <Image
+                      borderRadius={"full"}
+                      src="https://placehold.co/100x100/000000/FFFFFF?text=No+Image"
+                    />
+                  )}
+                  <Text mt={2} fontSize="sm">
+                    {cast.name}
+                  </Text>
+                  <Text
+                    fontSize="sm"
+                    color="gray.500"
+                    style={{ wordBreak: "break-word" }}
+                  >
+                    as {cast.character}
+                  </Text>
+                </Box>
+              ))}
+            </Flex>
+          </Box>
           <Divider py={2} borderColor={useColorModeValue("black", "white")} />
           <Reviews movie={movie} />
         </ModalBody>
