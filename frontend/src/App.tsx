@@ -9,18 +9,11 @@ function App() {
   // The main page is displayed
   return (
     <>
-      <Grid
-        templateAreas={{
-          base: `"nav" "main"`,
-        }}
-        templateColumns={{
-          base: "1fr",
-        }}
-      >
-        <GridItem area="nav" maxW="100vw">
+      <Grid>
+        <GridItem>
           <Navbar />
         </GridItem>
-        <GridItem area="main" maxW="100vw">
+        <GridItem>
           <Routes>
             <Route path="/" element={<Main />}></Route>
             <Route path="/favourites" element={<Favourites />}></Route>
