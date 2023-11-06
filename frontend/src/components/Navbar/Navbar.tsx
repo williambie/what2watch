@@ -1,11 +1,13 @@
-import { HStack, Image } from "@chakra-ui/react";
-import SearchBar from "./SearchBar";
+import { Button, HStack, Image, Spacer } from "@chakra-ui/react";
+import { Link, useLocation } from "react-router-dom";
+import SearchBar from "./SearchBar/SearchBar";
 import logo from "../../assets/logo.png";
-import ProfileButton from "./ProfileButton";
-import { Link } from "react-router-dom";
+import ProfileButton from "./ProfileButton/ProfileButton";
 
 // Navbar is the top bar of the application
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <HStack px={{ base: 2, lg: "30px" }} py={3}>
       <Link to={"/"}>
@@ -16,9 +18,18 @@ const Navbar = () => {
           border="white solid 1px"
           height="auto"
           mx="auto"
-        ></Image>
+        />
       </Link>
-      <SearchBar />
+      {location.pathname === "/favourites" ? (
+        <Link to="/" style={{ textDecoration: "none", marginRight: "auto" }}>
+          <Button ml={2} colorScheme="blue" size="md">
+            Home
+          </Button>
+        </Link>
+      ) : (
+        <SearchBar />
+      )}
+      <Spacer />
       <ProfileButton />
     </HStack>
   );

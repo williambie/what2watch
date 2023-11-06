@@ -15,10 +15,10 @@ import {
   useBreakpointValue,
   Heading,
 } from "@chakra-ui/react";
-import UserVoteAverage from "../MovieCard/UserVoteAverage";
-import { Genre, Movie } from "../../../types/types";
+import UserVoteAverage from "../UserVoteAverage/UserVoteAverage";
+import { Genre, Movie } from "../../../../../types/types";
 import FavouriteButton from "./FavouriteButton";
-import Reviews from "../Reviews/Reviews";
+import Reviews from "./Reviews/Reviews";
 
 interface MovieModalProps {
   movie: Movie;
@@ -45,6 +45,10 @@ const MovieModal: React.FC<MovieModalProps> = ({
     month: "long",
     year: "numeric",
   });
+
+  const trackColor = useColorModeValue("#f1f1f1", "#bfbfbf");
+  const thumbColor = useColorModeValue("#888", "#707070");
+  const thumbHoverColor = useColorModeValue("#555", "#4d4d4d");
 
   // Return the modal
   return (
@@ -101,7 +105,26 @@ const MovieModal: React.FC<MovieModalProps> = ({
             Cast
           </Heading>
           <Box mt={6} mb={3}>
-            <Flex overflowX="auto" my={4}>
+            <Flex
+              overflowX="auto"
+              my={4}
+              css={{
+                "&::-webkit-scrollbar": {
+                  width: "10px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  background: trackColor,
+                  borderRadius: "10px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  background: thumbColor,
+                  borderRadius: "10px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  background: thumbHoverColor,
+                },
+              }}
+            >
               {movie.cast.map((cast, index) => (
                 <Box
                   key={index}

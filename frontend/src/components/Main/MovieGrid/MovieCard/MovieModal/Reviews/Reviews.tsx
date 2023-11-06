@@ -18,8 +18,8 @@ import {
   DELETE_REVIEW,
   GET_USER,
   GET_REVIEWS,
-} from "../../../queries/queries";
-import { Movie, Review } from "../../../types/types";
+} from "../../../../../../queries/queries";
+import { Movie, Review } from "../../../../../../types/types";
 import { useQuery, useMutation } from "@apollo/client";
 
 interface ReviewProps {

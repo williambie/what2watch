@@ -1,7 +1,7 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
-import { setSearchTerm } from "../../redux/searchSlice";
+import { setSearchTerm } from "../../../redux/searchSlice";
 import { debounce } from "lodash";
 
 // SearchInput is the search bar that allows the user to search for movies

@@ -1,7 +1,7 @@
 import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import MovieCard from "../MovieCard/MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 import { Movie } from "../../../types/types";
-import LoadingCard from "../LoadingCard/LoadingCard";
+import LoadingCard from "./LoadingCard/LoadingCard";
 
 interface Props {
   movies: Movie[];
@@ -17,7 +17,7 @@ const MovieGrid = ({ movies, loading }: Props) => {
       spacing={10}
     >
       {loading ? (
-        Array(15)
+        Array(20)
           .fill(0)
           .map((_, idx) => <LoadingCard key={idx} />)
       ) : movies.length > 0 ? (

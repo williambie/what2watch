@@ -9,26 +9,6 @@ const GET_USER = gql`
   }
 `;
 
-const GET_GENRES = gql`
-  query getGenres {
-    genres {
-      name
-      id
-    }
-  }
-`;
-
-const GET_MOVIE_GENRES = gql`
-  query getMovieGenres($id: Int!) {
-    movie(id: $id) {
-      genres {
-        name
-        id
-      }
-    }
-  }
-`;
-
 const GET_REVIEWS = gql`
   query Reviews($id: Int!) {
     movie(id: $id) {
@@ -187,33 +167,6 @@ const CHECK_FAVOURITE = gql`
   }
 `;
 
-const SEARCH_MOVIES = gql`
-  query SearchMovies($searchTerm: String!, $limit: Int!, $offset: Int!) {
-    searchMovies(searchTerm: $searchTerm, limit: $limit, offset: $offset) {
-      id
-      title
-      poster_path
-      vote_average
-      overview
-      release_date
-      popularity
-      genres {
-        id
-        name
-      }
-      reviews {
-        id
-        content
-        rating
-        timestamp
-        movieid
-        userid
-      }
-      favourite
-    }
-  }
-`;
-
 const GET_GENRE_COUNTS = gql`
   query GetGenreCounts($searchTerm: String) {
     genreCounts(searchTerm: $searchTerm) {
@@ -226,8 +179,6 @@ const GET_GENRE_COUNTS = gql`
 
 export {
   GET_USER,
-  GET_GENRES,
-  GET_MOVIE_GENRES,
   ADD_REVIEW,
   GET_REVIEWS,
   DELETE_REVIEW,
@@ -235,6 +186,5 @@ export {
   GET_MOVIES,
   GET_FAVOURITE_MOVIES,
   CHECK_FAVOURITE,
-  SEARCH_MOVIES,
   GET_GENRE_COUNTS,
 };
