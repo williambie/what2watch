@@ -4,8 +4,7 @@ import { typeDefs } from "./typeDefs.js";
 import { resolvers } from "./resolvers.js";
 import mongoose from "mongoose";
 
-const MONGODB =
-  "mongodb+srv://what2watch:what2watch@what2watch.ylfc8dh.mongodb.net/?retryWrites=true&w=majority";
+const MONGODB = `mongodb+srv://what2watch:what2watch@what2watch.ylfc8dh.mongodb.net/?retryWrites=true&w=majority`;
 
 const server = new ApolloServer({
   typeDefs,
