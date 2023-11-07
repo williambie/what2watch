@@ -8,12 +8,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_BACKEND_URL,
+  uri: "http://it2810-45.idi.ntnu.no:4000",
   cache: new InMemoryCache(),
 });
 
