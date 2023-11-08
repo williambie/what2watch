@@ -51,7 +51,6 @@ const MovieCard = ({ movie }: Props) => {
   return (
     <>
       <Card
-        as={"button"} // Make it semantically a button if it's clickable
         bg={bg}
         borderRadius={10}
         overflow="hidden"
