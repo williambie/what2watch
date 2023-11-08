@@ -19,6 +19,7 @@ import UserVoteAverage from "../UserVoteAverage/UserVoteAverage";
 import { Genre, Movie } from "../../../../../types/types";
 import FavouriteButton from "./FavouriteButton";
 import Reviews from "./Reviews/Reviews";
+import { useEffect, useRef } from "react";
 
 interface MovieModalProps {
   movie: Movie;
@@ -34,6 +35,8 @@ const MovieModal: React.FC<MovieModalProps> = ({
   onClose,
   isFavourite,
 }) => {
+  const initialFocusRef = useRef<HTMLButtonElement>(null);
+
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
   const imageUrl = poster_base_url + movie.poster_path;
 
@@ -51,20 +54,37 @@ const MovieModal: React.FC<MovieModalProps> = ({
   const thumbColor = useColorModeValue("#888", "#707070");
   const thumbHoverColor = useColorModeValue("#555", "#4d4d4d");
 
+  useEffect(() => {
+    if (isOpen && initialFocusRef.current) {
+      initialFocusRef.current.focus();
+    }
+  }, [isOpen]);
+
   // Return the modal component to display the movie details when the user clicks on a movie card
   // The modal displays the movie poster, title, genres, release date, vote average, overview, cast and reviews
   return (
     <Modal
+      initialFocusRef={initialFocusRef}
       isOpen={isOpen}
       onClose={() => {
         onClose();
       }}
+      aria-modal="true"
       size={["full", "lg", "xl", "5xl"]}
     >
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader fontSize={"2xl"}>{movie.title}</ModalHeader>
-        <ModalCloseButton />
+      <ModalContent
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-header"
+      >
+        <ModalHeader fontSize={"2xl"} id="modal-header">
+          {movie.title}
+        </ModalHeader>
+        <ModalCloseButton
+          ref={initialFocusRef}
+          aria-label="Close movie details"
+        />
         <ModalBody paddingBottom={6} paddingTop={0}>
           <Flex direction={useBreakpointValue({ base: "column", md: "row" })}>
             <Image
@@ -85,11 +105,23 @@ const MovieModal: React.FC<MovieModalProps> = ({
                   ))}
                 </Flex>
                 <Box>
-                  <FavouriteButton movie={movie} isFavourite={isFavourite} />
+                  <FavouriteButton
+                    movie={movie}
+                    isFavourite={isFavourite}
+                    aria-label={
+                      isFavourite
+                        ? "Remove from favourites"
+                        : "Add to favourites"
+                    }
+                  />
                 </Box>
               </Flex>
 
-              <Text fontSize="md" color="gray.500">
+              <Text
+                fontSize="md"
+                color="gray.400"
+                aria-label="Show release date details"
+              >
                 Release Date: {formattedDate}
               </Text>
               <Text py={2}>
@@ -106,7 +138,13 @@ const MovieModal: React.FC<MovieModalProps> = ({
           <Heading mt={4} fontSize={"2xl"}>
             Cast
           </Heading>
-          <Box mt={6} mb={3}>
+          <Box
+            mt={6}
+            mb={3}
+            role="region"
+            aria-labelledby="cast-heading"
+            tabIndex={0}
+          >
             <Flex
               overflowX="auto"
               my={4}
@@ -134,8 +172,11 @@ const MovieModal: React.FC<MovieModalProps> = ({
                   mx={2}
                   textAlign="center"
                   mb={3}
-                  minWidth="120px" // Ensure each box has a minimum width.
-                  maxWidth="120px" // Ensure text doesn't overflow the max width.
+                  minWidth="120px"
+                  maxWidth="120px"
+                  role="region"
+                  aria-label="Cast Display"
+                  tabIndex={0}
                 >
                   {cast.profile_path ? (
                     <Image
@@ -150,6 +191,7 @@ const MovieModal: React.FC<MovieModalProps> = ({
                     <Image
                       borderRadius={"full"}
                       src="https://placehold.co/100x100/000000/FFFFFF?text=No+Image"
+                      alt={cast.name}
                     />
                   )}
                   <Text mt={2} fontSize="sm">
@@ -157,7 +199,7 @@ const MovieModal: React.FC<MovieModalProps> = ({
                   </Text>
                   <Text
                     fontSize="sm"
-                    color="gray.500"
+                    color="gray.400"
                     style={{ wordBreak: "break-word" }}
                   >
                     as {cast.character}

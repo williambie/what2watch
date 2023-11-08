@@ -19,6 +19,7 @@ const Navbar = () => {
           border="white solid 1px"
           height="auto"
           mx="auto"
+          alt="logo"
         />
       </Link>
       {location.pathname === "/favourites" ? (

@@ -59,6 +59,13 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
     setStarRating(rating);
   };
 
+  const handleStarKeyDown = (event: { key: string }, rating: number) => {
+    if (event.key === "Enter" || event.key === " ") {
+      // ' ' is the Spacebar key
+      handleStarClick(rating);
+    }
+  };
+
   // Function to handle submitting a review
   const handleSubmitReview = async () => {
     if (review.trim() === "") {
@@ -242,8 +249,11 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
                 : "gray.500"
             }
             onClick={() => handleStarClick(i + 1)}
+            onKeyDown={(e) => handleStarKeyDown(e, i + 1)}
             onMouseEnter={() => setHoverIndex(i)}
             onMouseLeave={() => setHoverIndex(-1)}
+            tabIndex={0}
+            aria-label={`${i + 1} star rating`}
             _hover={{ cursor: "pointer" }}
           />
         ))}
@@ -255,6 +265,7 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
           onClick={handleSubmitReview}
           isDisabled={!review.trim() || starRating == 0} // Disable the button if the input is empty or no star rating is selected
           _hover={{ bg: "green.500" }}
+          aria-label={`Submit review for ${movie.title}`}
         >
           Add review
         </Button>

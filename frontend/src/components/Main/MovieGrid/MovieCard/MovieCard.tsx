@@ -40,19 +40,30 @@ const MovieCard = ({ movie }: Props) => {
     setIsOpen(false);
   };
 
+  const handleKeyDown = (event: { key: string }) => {
+    // Check if the Enter key or Spacebar was pressed
+    if (event.key === "Enter" || event.key === " ") {
+      onOpen();
+    }
+  };
+
   // The card is displayed on the main page and is clickable
   return (
     <>
       <Card
+        as={"button"} // Make it semantically a button if it's clickable
         bg={bg}
         borderRadius={10}
         overflow="hidden"
         onClick={onOpen}
+        onKeyDown={handleKeyDown}
         position="relative"
         _hover={{ cursor: "pointer", transform: "scale(1.05)" }}
         transition="transform 0.2s ease-in-out"
+        tabIndex={0}
+        aria-label={movie.title}
       >
-        <Image src={imageUrl} alt={movie.title} />
+        <Image src={imageUrl} alt={`Poster of the movie ${movie.title}`} />
         <CardBody>
           <HStack justifyContent="space-between" flex={1}>
             <Heading fontSize={{ base: "md", md: "lg" }}>{movie.title}</Heading>

@@ -7,7 +7,11 @@ const ColorModeSwitch = () => {
   // The color mode switch is displayed on the navbar
   return (
     <HStack>
-      <Switch isChecked={colorMode === "dark"} onChange={toggleColorMode} />
+      <Switch
+        isChecked={colorMode === "dark"}
+        onChange={toggleColorMode}
+        aria-label={`Switch to ${colorMode === "dark" ? "light" : "dark"} mode`} // Adds an accessible label
+      />
       <Text>{`${colorMode.charAt(0).toUpperCase()}${colorMode.slice(
         1,
       )} Mode`}</Text>
