@@ -3,8 +3,9 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./typeDefs.js";
 import { resolvers } from "./resolvers.js";
 import mongoose from "mongoose";
+import { CONNECTION_STRING } from "@.env";
 
-const MONGODB = `mongodb+srv://what2watch:what2watch@what2watch.ylfc8dh.mongodb.net/?retryWrites=true&w=majority`;
+const MONGODB = CONNECTION_STRING;
 
 const server = new ApolloServer({
   typeDefs,

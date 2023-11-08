@@ -73,6 +73,7 @@ const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
           isDisabled={page === 1}
           onClick={() => handlePageChange(page - 1)}
           size={["md", "lg"]}
+          aria-label="previous page"
         >
           <ChevronLeftIcon />
         </Button>
@@ -121,12 +122,13 @@ const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
           isDisabled={page === totalPages}
           onClick={() => handlePageChange(page + 1)}
           size={["md", "lg"]}
+          aria-label="next-page"
         >
           <ChevronRightIcon />
         </Button>
       </HStack>
 
-      <Text>{`Showing ${start}-${end} of ${movieCount}`}</Text>
+      <Text>{`Showing ${start} to ${end} of ${movieCount}`}</Text>
     </VStack>
   );
 };

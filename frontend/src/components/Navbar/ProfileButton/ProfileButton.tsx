@@ -24,7 +24,7 @@ export const ProfileButton = () => {
     <Menu>
       <MenuButton as={Button} width="auto" height="48px" borderRadius={20}>
         <HStack justifyContent={"space-evenly"}>
-          <Avatar size="sm"></Avatar>
+          <Avatar size="sm" aria-label="User avatar"></Avatar>
           <Show above="lg">
             {loading ? (
               <Text paddingX={1}>Loading...</Text>
@@ -32,15 +32,15 @@ export const ProfileButton = () => {
               <Text paddingX={1}>{data.user.username}</Text>
             )}
           </Show>
-          <ChevronDownIcon />
+          <ChevronDownIcon aria-hidden="true" />
         </HStack>
       </MenuButton>
-      <MenuList>
-        <Link to={"/favourites"}>
-          <MenuItem>My Favourites</MenuItem>
-        </Link>
-        <MenuItem _hover={{ cursor: "auto" }}>
-          <ColorModeSwitch />
+      <MenuList role="menu">
+        <MenuItem as={Link} to={"/favourites"} role="menuitem">
+          My Favourites
+        </MenuItem>
+        <MenuItem _hover={{ cursor: "auto" }} as={"label"}>
+          <ColorModeSwitch aria-label="Toggle color mode" />
         </MenuItem>
       </MenuList>
     </Menu>
