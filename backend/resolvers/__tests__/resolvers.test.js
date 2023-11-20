@@ -80,3 +80,17 @@ test('toggleFavourite toggles the favourite field of a movie', async () => {
   expect(updatedMovie.title).toBe('Test Movie')
   expect(updatedMovie.favourite).toBe(true)
 })
+
+test('genres returns all genres', async () => {
+  const genre1 = new Genre({ name: 'Genre 1', id: 1 })
+  await genre1.save()
+  const genre2 = new Genre({ name: 'Genre 2', id: 2 })
+  await genre2.save()
+
+  const result = await resolvers.Query.genres()
+  expect(result).toHaveLength(2)
+  expect(result).toEqual(expect.arrayContaining([
+    expect.objectContaining({ name: 'Genre 1', id: 1 }),
+    expect.objectContaining({ name: 'Genre 2', id: 2 })
+  ]))
+})
