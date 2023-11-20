@@ -9,12 +9,14 @@ import Genre from "../../models/genre.js";
 
 let mongoServer
 
+//Create a new in-memory database before each test is run
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
   await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 });
 
+// Clear all test data after every test.
 afterAll(async () => {
   await mongoose.disconnect()
   await mongoServer.stop()
@@ -25,7 +27,6 @@ test('addUser creates a new user', async () => {
   const result = await resolvers.Mutation.addUser(null, { username })
   expect(result.username).toBe(username)
 
-  // Verify that the user was saved to the database
   const savedUser = await User.findOne({ username })
   expect(savedUser).not.toBeNull()
   expect(savedUser.username).toBe(username)
@@ -43,7 +44,6 @@ test('addReview creates a new review', async () => {
   expect(result.content).toBe(reviewData.content)
   expect(result.rating).toBe(reviewData.rating)
 
-  // Verify that the review was saved to the database
   const savedReview = await Review.findOne({ id: result.id })
   expect(savedReview).not.toBeNull()
   expect(savedReview.content).toBe(reviewData.content)
