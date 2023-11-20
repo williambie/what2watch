@@ -1,7 +1,7 @@
-import Movie from "./models/movie.js";
-import Genre from "./models/genre.js";
-import User from "./models/user.js";
-import Review from "./models/review.js";
+import Movie from "../models/movie.js";
+import Genre from "../models/genre.js";
+import User from "../models/user.js";
+import Review from "../models/review.js";
 
 export const resolvers = {
   Movie: {
