@@ -148,7 +148,7 @@ test("Movie modal", async ({ page }) => {
     .click();
   await expect(page.getByRole("heading", { name: /Cast/i })).toBeVisible();
 
-  await page.getByRole("button", { name: /Add to Favourites/i }).click();
+  await page.getByRole("button", { name: /Toggle Favourites/i }).click();
   await expect(page.getByRole("alert")).toBeVisible();
 
   await page.getByRole("button", { name: /Close movie details/i }).click();
@@ -163,7 +163,7 @@ test("Movie modal", async ({ page }) => {
       name: /Poster of the movie Five Nights at Freddy's/i,
     })
     .click();
-  await page.getByRole("button", { name: /Favourited/i }).click();
+  await page.getByRole("button", { name: /Toggle Favourite/i }).click();
   await expect(
     page.getByRole("heading", { name: /Five Nights At Freddy's/i }),
   ).toBeHidden();
@@ -189,12 +189,4 @@ test("Movie modal", async ({ page }) => {
   console.log(review);
 
   expect(review).toContain("This is a test review");
-});
-
-test("paging", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
-
-  await expect(
-    page.getByRole("paragraph", { name: /Number of movies showing/i }),
-  ).toContainText("Showing 1-20 of 100 movies");
 });

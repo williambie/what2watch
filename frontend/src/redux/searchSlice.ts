@@ -27,6 +27,7 @@ const searchSlice = createSlice({
     },
     setSorting: (state, action) => {
       state.sorting = action.payload;
+      state.page = 1;
     },
     setSelectedGenre: (state, action: PayloadAction<string | null>) => {
       state.selectedGenre = action.payload;

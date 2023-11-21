@@ -20,6 +20,7 @@ const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
   // The page is changed when the user clicks on the paginator buttons
   const handlePageChange = (page: number) => {
     dispatch(setPage(page));
+    window.scrollTo(0, 0);
   };
   const moviesPerPage = 20;
   const start = (page - 1) * moviesPerPage + 1;
