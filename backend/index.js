@@ -1,11 +1,13 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { typeDefs } from "./typeDefs.js";
-import { resolvers } from "./resolvers.js";
+import { typeDefs } from "./types/typeDefs.js";
+import { resolvers } from "./resolvers/resolvers.js";
 import mongoose from "mongoose";
-import { CONNECTION_STRING } from "@.env";
+import dotenv from 'dotenv'
 
-const MONGODB = CONNECTION_STRING;
+dotenv.config()
+
+const MONGODB = process.env.CONNECTION_STRING;
 
 const server = new ApolloServer({
   typeDefs,

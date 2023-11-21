@@ -1,20 +1,26 @@
 {
   "name": "backend",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "What2Watch 2.0 Server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "start": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Team 45 // NTNU IT2810 2023 Autumn",
   "license": "ISC",
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.9.5",
     "graphql": "^16.8.1",
-    "mongoose": "^7.6.3",
-    "nodemon": "^3.0.1"
+    "mongodb": "^6.3.0",
+    "mongodb-memory-server": "^9.1.1",
+    "mongoose": "^7.6.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1",
+    "vitest": "^0.34.6"
   }
 }

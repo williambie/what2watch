@@ -8,12 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { Movie } from "../../../../../types/types";
+import { Movie } from "../../../../../../types/types";
 import { useMutation } from "@apollo/client";
 import {
   TOGGLE_FAVOURITE,
   GET_FAVOURITE_MOVIES,
-} from "../../../../../queries/queries";
+} from "../../../../../../queries/queries";
 
 type FavouriteButtonProps = {
   movie: Movie;
