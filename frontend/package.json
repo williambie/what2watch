@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Team 45 // NTNU IT2810 2023 Autumn",
+  "description": "What2Watch 2.0 Frontend",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
