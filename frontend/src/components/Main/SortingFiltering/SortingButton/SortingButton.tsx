@@ -1,8 +1,8 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { setSorting } from "../../../redux/searchSlice";
-import { RootState } from "../../../redux/store";
+import { setSorting } from "../../../../redux/searchSlice";
+import { RootState } from "../../../../redux/store";
 
 // SortingButton is a dropdown menu that allows the user to sort movies by popularity, user score or title
 const SortingButton = () => {

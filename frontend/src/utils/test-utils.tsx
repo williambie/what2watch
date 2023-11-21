@@ -32,15 +32,6 @@ function customRender(
       },
     }),
     initialRoutes = ["/"],
-    user = {
-      data: {
-        user: {
-          username: "Martha",
-          id: 1,
-          __typename: "User",
-        },
-      },
-    },
     ...options
   } = {},
 ) {

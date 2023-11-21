@@ -32,7 +32,7 @@ export const ProfileButton = () => {
               <Text paddingX={1}>{data.user.username}</Text>
             )}
           </Show>
-          <ChevronDownIcon aria-hidden="true" />
+          <ChevronDownIcon aria-label="Chevron Down Icon" aria-hidden="true" />
         </HStack>
       </MenuButton>
       <MenuList role="menu">

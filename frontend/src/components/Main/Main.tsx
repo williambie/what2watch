@@ -1,13 +1,13 @@
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Text } from "@chakra-ui/react";
 import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator/Paginator";
-import GenreFilter from "./SortingFiltering/GenreFilter";
-import SortingButton from "./SortingFiltering/SortingButton";
+import GenreFilter from "./SortingFiltering/GenreFilter/GenreFilter";
+import SortingButton from "./SortingFiltering/SortingButton/SortingButton";
 import { useQuery } from "@apollo/client";
 import { GET_MOVIES } from "../../queries/queries";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import ResetFilters from "./SortingFiltering/ResetFilters";
+import ResetFilters from "./SortingFiltering/ResetFilters/ResetFilters";
 
 // Main is the main page of the application
 function Main() {
@@ -48,10 +48,16 @@ function Main() {
         </Box>
       </Flex>
       <Box padding="5">
-        <MovieGrid movies={movies} loading={loading} />
+        {movies.length > 0 ? (
+          <MovieGrid movies={movies} loading={loading} />
+        ) : (
+          <Text>Error connecting to database</Text>
+        )}
       </Box>
       <HStack justifyContent="space-evenly" marginBottom="50px">
-        <Paginator totalPages={totalPages} movieCount={moviesCount} />
+        {movies.length > 0 && (
+          <Paginator totalPages={totalPages} movieCount={moviesCount} />
+        )}
       </HStack>
     </>
   );
