@@ -128,7 +128,7 @@ const Paginator = ({ totalPages, movieCount }: PaginatorProps) => {
         </Button>
       </HStack>
 
-      <Text>{`Showing ${start} to ${end} of ${movieCount}`}</Text>
+      <Text aria-label="Number of movies showing">{`Showing ${start} to ${end} of ${movieCount}`}</Text>
     </VStack>
   );
 };

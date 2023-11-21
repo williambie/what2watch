@@ -208,6 +208,7 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
                     size={"xs"}
                     bg={"red.600"}
                     onClick={() => handleDeleteReview(review.id)}
+                    aria-label="Delete review"
                   >
                     <DeleteIcon color={"white"} />
                   </Button>

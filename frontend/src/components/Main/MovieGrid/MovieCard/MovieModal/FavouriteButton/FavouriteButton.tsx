@@ -79,6 +79,7 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
         variant="solid"
         onClick={handleClick}
         paddingX={2}
+        aria-label="Toggle Favourite"
         _hover={{ bg: isActive ? "orange.400" : "gray.700" }}
       >
         {isActive ? <AiFillHeart /> : <AiOutlineHeart />}
