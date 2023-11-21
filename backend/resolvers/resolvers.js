@@ -55,28 +55,32 @@ export const resolvers = {
       return { movies, moviesCount };
     },
     genreCounts: async (_, { searchTerm }) => {
-      let query = {};
+      let matchStage = {};
       if (searchTerm) {
-        query.title = { $regex: searchTerm, $options: "i" };
+        matchStage = { title: { $regex: searchTerm, $options: "i" } };
       }
-      const movies = await Movie.find(query);
-      const genreCounts = {};
-      for (const movie of movies) {
-        for (const genreId of movie.genre_ids) {
-          if (genreCounts[genreId]) {
-            genreCounts[genreId]++;
-          } else {
-            genreCounts[genreId] = 1;
-          }
-        }
-      }
-      const genres = await Genre.find({
-        id: { $in: Object.keys(genreCounts) },
-      });
-      return genres.map((genre) => ({
-        name: genre.name,
-        id: genre.id,
-        count: genreCounts[genre.id],
+
+      const genreCounts = await Movie.aggregate([
+        { $match: matchStage },
+        { $unwind: "$genre_ids" },
+        { $group: { _id: "$genre_ids", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        {
+          $lookup: {
+            from: "genres", // Replace with your Genre collection name if different
+            localField: "_id",
+            foreignField: "id",
+            as: "genre_info",
+          },
+        },
+        { $unwind: "$genre_info" },
+        { $project: { count: 1, id: "$_id", name: "$genre_info.name" } },
+      ]);
+
+      return genreCounts.map((gc) => ({
+        count: gc.count,
+        id: gc.id,
+        name: gc.name,
       }));
     },
     favouriteMovies: async () => {

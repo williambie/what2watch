@@ -153,7 +153,7 @@ test("Close movie modal button", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Cast/i })).toBeHidden();
 });
 
-test("Add movie to favourites", async ({ page }) => {
+test("Add and remove movie from favourites", async ({ page }) => {
   await page.goto("http://localhost:5173/project2");
   await page
     .getByRole("img", {
@@ -174,9 +174,16 @@ test("Add movie to favourites", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: /Five Nights At Freddy's/i }),
   ).toBeVisible();
+
+  await page
+    .getByRole("img", {
+      name: /Poster of the movie Five Nights at Freddy's/i,
+    })
+    .click();
+  await page.getByRole("button", { name: /Toggle Favourite/i }).click();
 });
 
-test("Add a review to a movie", async ({ page }) => {
+test("Add and remove a review to a movie", async ({ page }) => {
   await page.goto("http://localhost:5173/project2");
   await page
     .getByRole("img", {
@@ -203,17 +210,7 @@ test("Add a review to a movie", async ({ page }) => {
     .locator('svg[aria-label="1 star rating"]')
     .count();
   expect(starRating).toBe(1);
-});
 
-test("Delete a review from a movie", async ({ page }) => {
-  await page.goto("http://localhost:5173/project2");
-  await page
-    .getByRole("img", {
-      name: /Poster of the movie Five Nights at Freddy's/i,
-    })
-    .click();
-
-  // Assuming that the review has been added before running this test
   const reviewSelector = `text="This is a test review"`;
   await expect(page.locator(reviewSelector)).toBeVisible();
 

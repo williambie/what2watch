@@ -8,11 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 import { useQuery } from "@apollo/client";
-import { GET_GENRE_COUNTS } from "../../../../queries/queries";
-import { Genre } from "../../../../types/types";
+import { GET_GENRE_COUNTS } from "../../../queries/queries";
+import { Genre } from "../../../types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedGenre } from "../../../../redux/searchSlice";
-import { RootState } from "../../../../redux/store";
+import { setSelectedGenre } from "../../../redux/searchSlice";
+import { RootState } from "../../../redux/store";
 import { useEffect } from "react";
 
 // GenreFilter is a dropdown menu that allows the user to filter movies by genre
@@ -60,17 +60,20 @@ const GenreFilter = () => {
         </MenuItem>
         <MenuDivider />
         {!loading &&
-          genreCounts.map((genre: Genre) => (
-            <MenuItem
-              key={genre.id}
-              marginRight={2}
-              onClick={() => {
-                handleGenreChange(genre.name);
-              }}
-            >
-              {genre.name} ({genre.count})
-            </MenuItem>
-          ))}
+          genreCounts.map(
+            (genre: Genre) =>
+              genre.count > 0 && (
+                <MenuItem
+                  key={genre.id}
+                  marginRight={2}
+                  onClick={() => {
+                    handleGenreChange(genre.name);
+                  }}
+                >
+                  {genre.name} ({genre.count})
+                </MenuItem>
+              ),
+          )}
       </MenuList>
     </Menu>
   );
