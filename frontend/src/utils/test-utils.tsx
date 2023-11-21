@@ -7,6 +7,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import searchReducer from "../redux/searchSlice";
 import { RootState } from "../redux/store";
+import { Dispatch, AnyAction } from 'redux';
+
+export const spyMiddleware = () => (next: Dispatch<AnyAction>) => (action: AnyAction) => {
+  spyMiddleware.actions.push(action);
+  return next(action);
+};
+
+spyMiddleware.actions = [] as AnyAction[];
 
 function customRender(
   ui: React.ReactElement,
@@ -30,6 +38,7 @@ function customRender(
       reducer: {
         search: searchReducer,
       },
+      middleware: getDefaultMiddleware => getDefaultMiddleware().concat(spyMiddleware),
     }),
     initialRoutes = ["/"],
     ...options
@@ -40,8 +49,8 @@ function customRender(
     cache: new InMemoryCache(),
   });
 
-  return rtlRender(ui, {
-    wrapper: ({ children }) => (
+  function Wrapper({ children }: { children?: React.ReactNode }) {
+    return (
       <ChakraProvider>
         <ApolloProvider client={client}>
           <Provider store={store}>
@@ -51,9 +60,13 @@ function customRender(
           </Provider>
         </ApolloProvider>
       </ChakraProvider>
-    ),
-    ...options,
-  });
+    );
+  }
+
+  return {
+    ...rtlRender(ui, { wrapper: Wrapper, ...options }),
+    store,
+  };
 }
 
 export * from "@testing-library/react";

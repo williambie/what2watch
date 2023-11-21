@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import UserVoteAverage from "../UserVoteAverage/UserVoteAverage";
 import { Genre, Movie } from "../../../../../types/types";
-import FavouriteButton from "./FavouriteButton";
+import FavouriteButton from "./FavouriteButton/FavouriteButton";
 import Reviews from "./Reviews/Reviews";
 import { useEffect, useRef } from "react";
 
