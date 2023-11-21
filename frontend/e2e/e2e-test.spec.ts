@@ -194,9 +194,7 @@ test("Movie modal", async ({ page }) => {
 test("paging", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
 
-  const initialText = "Showing 1 to 20 of 2000";
-  const paragraph = page.locator(`p:has-text("${initialText}")`);
-
-  const paragraphExists = await paragraph.isVisible();
-  expect(paragraphExists).toBe(true);
+  await expect(
+    page.getByRole("paragraph", { name: /Number of movies showing/i }),
+  ).toContainText("Showing 1-20 of 100 movies");
 });
