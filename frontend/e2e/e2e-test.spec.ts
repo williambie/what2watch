@@ -1,14 +1,14 @@
 import { test, expect } from "@playwright/test";
 
-test("Har correct URL", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+test("Has correct URL", async ({ page }) => {
+  await page.goto("http://localhost:5173/project2");
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2/");
+  await expect(page).toHaveURL("http://localhost:5173/project2");
 });
 
 test("Check profile avatar", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
 
   await page.getByRole("button", { name: /User Avatar/i }).click();
   const bodyText = await page.textContent("body");
@@ -18,7 +18,7 @@ test("Check profile avatar", async ({ page }) => {
 });
 
 test("Toggle dark mode", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
 
   await page.getByRole("button", { name: /User Avatar/i }).click();
 
@@ -30,24 +30,24 @@ test("Toggle dark mode", async ({ page }) => {
 });
 
 test("Check navigation to favourites and back", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
 
   await page.getByRole("button", { name: /User Avatar/i }).click();
 
   await page.getByRole("menuitem", { name: /My Favourites/i }).click();
 
-  expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2/favourites");
+  expect(page).toHaveURL("http://localhost:5173/project2/favourites");
 
   await expect(
     page.getByRole("heading", { name: /My Favourite Movies/i }),
   ).toBeVisible();
 
   await page.getByRole("button", { name: /Home/i }).click();
-  await expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2");
+  await expect(page).toHaveURL("http://localhost:5173/project2");
 });
 
 test("Genre filter", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
 
   await expect(
     page.getByRole("heading", { name: /Five Nights at Freddy's/i }),
@@ -87,7 +87,7 @@ test("Genre filter", async ({ page }) => {
 });
 
 test("Sorting button", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
 
   await page.getByRole("button", { name: /Order by:/i }).click();
 
@@ -115,7 +115,7 @@ test("Sorting button", async ({ page }) => {
 });
 
 test("Reset Filter button", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
   await page.getByRole("button", { name: /Order by:/i }).click();
   await page.getByRole("menuitem", { name: "Title (A-Z)" }).click();
   await page.getByRole("button", { name: /Genres/i }).click();
@@ -129,7 +129,7 @@ test("Reset Filter button", async ({ page }) => {
 });
 
 test("Search bar", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://localhost:5173/project2");
   await page.getByRole("textbox", { name: "Search movies..." }).fill("Saw");
   await expect(page.getByRole("heading", { name: /Saw X/i })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Jigsaw/i })).toBeVisible();
@@ -139,54 +139,86 @@ test("Search bar", async ({ page }) => {
   ).toBeHidden();
 });
 
-test("Movie modal", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+test("Close movie modal button", async ({ page }) => {
+  await page.goto("http://localhost:5173/project2");
   await page
     .getByRole("img", {
       name: /Poster of the movie Five Nights at Freddy's/i,
     })
     .click();
+
   await expect(page.getByRole("heading", { name: /Cast/i })).toBeVisible();
 
-  await page.getByRole("button", { name: /Toggle Favourites/i }).click();
+  await page.getByRole("button", { name: /Close movie details/i }).click();
+  await expect(page.getByRole("heading", { name: /Cast/i })).toBeHidden();
+});
+
+test("Add movie to favourites", async ({ page }) => {
+  await page.goto("http://localhost:5173/project2");
+  await page
+    .getByRole("img", {
+      name: /Poster of the movie Five Nights at Freddy's/i,
+    })
+    .click();
+
+  await expect(page.getByRole("heading", { name: /Cast/i })).toBeVisible();
+
+  await page.getByRole("button", { name: /Toggle Favourite/i }).click();
   await expect(page.getByRole("alert")).toBeVisible();
 
   await page.getByRole("button", { name: /Close movie details/i }).click();
   await page.getByRole("button", { name: /User Avatar/i }).click();
   await page.getByRole("menuitem", { name: /My Favourites/i }).click();
-  expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2/favourites");
+  expect(page).toHaveURL("http://localhost:5173/project2/favourites");
+
   await expect(
     page.getByRole("heading", { name: /Five Nights At Freddy's/i }),
   ).toBeVisible();
-  await page
-    .getByRole("img", {
-      name: /Poster of the movie Five Nights at Freddy's/i,
-    })
-    .click();
-  await page.getByRole("button", { name: /Toggle Favourite/i }).click();
-  await expect(
-    page.getByRole("heading", { name: /Five Nights At Freddy's/i }),
-  ).toBeHidden();
+});
 
-  await page.getByRole("img", { name: /logo/i }).click();
-  expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2");
-
+test("Add a review to a movie", async ({ page }) => {
+  await page.goto("http://localhost:5173/project2");
   await page
     .getByRole("img", {
       name: /Poster of the movie Five Nights at Freddy's/i,
     })
     .click();
 
+  await page.fill(
+    'input[placeholder="Write your review here..."]',
+    "This is a test review",
+  );
+  await page.click('svg[aria-label="1 star rating"]');
+
+  await page.click(
+    `button[aria-label="Submit review for Five Nights at Freddy's"]`,
+  );
+
+  const reviewText = await page.textContent(
+    'p:has-text("This is a test review")',
+  );
+  expect(reviewText).toContain("This is a test review");
+
+  const starRating = await page
+    .locator('svg[aria-label="1 star rating"]')
+    .count();
+  expect(starRating).toBe(1);
+});
+
+test("Delete a review from a movie", async ({ page }) => {
+  await page.goto("http://localhost:5173/project2");
   await page
-    .getByRole("textbox", { name: "Write your review here..." })
-    .fill("This is a test review");
-  await page.getByLabel("4 star rating").click();
-  await page
-    .getByRole("button", { name: /Submit review for Five Nights at Freddy's/i })
+    .getByRole("img", {
+      name: /Poster of the movie Five Nights at Freddy's/i,
+    })
     .click();
 
-  const review = await page.textContent("body");
-  console.log(review);
+  // Assuming that the review has been added before running this test
+  const reviewSelector = `text="This is a test review"`;
+  await expect(page.locator(reviewSelector)).toBeVisible();
 
-  expect(review).toContain("This is a test review");
+  const deleteButtonSelector = `${reviewSelector} >> xpath=..//button[@aria-label="Delete review"]`;
+  await page.click(deleteButtonSelector);
+
+  await expect(page.locator(reviewSelector)).not.toBeVisible();
 });
