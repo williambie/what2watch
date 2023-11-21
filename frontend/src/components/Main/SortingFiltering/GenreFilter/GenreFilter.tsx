@@ -9,12 +9,10 @@ import {
 import { BsChevronDown } from "react-icons/bs";
 import { useQuery } from "@apollo/client";
 import { GET_GENRE_COUNTS } from "../../../../queries/queries";
-import { GET_GENRE_COUNTS } from "../../../../queries/queries";
 import { Genre } from "../../../../types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedGenre } from "../../../../redux/searchSlice";
 import { RootState } from "../../../../redux/store";
-import { useEffect } from "react";
 import { useEffect } from "react";
 
 // GenreFilter is a dropdown menu that allows the user to filter movies by genre
@@ -36,13 +34,6 @@ const GenreFilter = () => {
   } = useQuery(GET_GENRE_COUNTS, {
     variables: { searchTerm: searchTerm },
   });
-  const {
-    loading,
-    data: genreCountsData,
-    refetch,
-  } = useQuery(GET_GENRE_COUNTS, {
-    variables: { searchTerm: searchTerm },
-  });
 
   // The genre counts are refetched when the search term changes
   useEffect(() => {
@@ -52,7 +43,6 @@ const GenreFilter = () => {
     refetch({ searchTerm: searchTerm });
   }, [searchTerm, refetch]);
 
-  const genreCounts = genreCountsData?.genreCounts || [];
   const genreCounts = genreCountsData?.genreCounts || [];
 
   // The dropdown menu is displayed on the main page
