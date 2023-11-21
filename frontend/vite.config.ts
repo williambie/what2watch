@@ -10,5 +10,6 @@ export default defineConfig({
   base: "/project2",
   test: {
     globals: true,
+    environment: 'node',
   }
 });
