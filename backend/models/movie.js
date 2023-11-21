@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const movieSchema = new mongoose.Schema({
   adult: Boolean,
   backdrop_path: String,
-  genre_ids: Array,
+  genre_ids: [{ type: Number, index: true }],
   id: Number,
   original_language: String,
   original_title: String,
@@ -12,7 +12,7 @@ const movieSchema = new mongoose.Schema({
   popularity: Number,
   poster_path: String,
   release_date: String,
-  title: String,
+  title: { type: String, index: true },
   video: Boolean,
   vote_average: Number,
   vote_count: Number,
