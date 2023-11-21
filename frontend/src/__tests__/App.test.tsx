@@ -10,7 +10,7 @@ test("renders Navbar", async () => {
   // Wait for any asynchronous operations to complete
   await waitFor(() => {
     // Add any additional assertions here if needed
-    const navbarElement = screen.getByPlaceholderText('Search movies...');
+    const navbarElement = screen.getByPlaceholderText("Search movies...");
     expect(navbarElement).toBeInTheDocument();
   });
 });

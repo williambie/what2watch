@@ -1,9 +1,11 @@
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 
-window.matchMedia = window.matchMedia || function() {
-  return {
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
       matches: false,
-      addListener: function() {},
-      removeListener: function() {}
+      addListener: function () {},
+      removeListener: function () {},
+    };
   };
-};
