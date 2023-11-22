@@ -6,21 +6,21 @@ What2Watch 2.0 er en applikasjon utviklet i forbindelse med prosjektarbeid 2 i f
 
 Applikasjonen kan sjekkes ut på følgende URL (NB! Dette krever at du er på NTNU nett/VPN):
 
-    https://it2810-45.idi.ntnu.no/project2
+> https://it2810-45.idi.ntnu.no/project2
 
 Eventuelt kan repoet kan klones med:
 
-    git clone https://gitlab.stud.idi.ntnu.no/it2810-h23/Team-45/prosjekt-2.git
+`git clone https://gitlab.stud.idi.ntnu.no/it2810-h23/Team-45/prosjekt-2.git`
 
 Da kan frontend kjøres lokalt, med kobling til backend som kjører på VM (NB! Dette krever at du er på NTNU nett/VPN):
 
-    cd frontend
-    npm install
-    npm run dev
+`cd frontend`   
+`npm install`   
+`npm run dev`   
 
 Prosjektet vil da kjøres lokalt på:
 
-    http://localhost:5173/project2
+> http://localhost:5173/project2
 
 ## Tilgjengelighet og bærekraft
 

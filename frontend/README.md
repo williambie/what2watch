@@ -159,7 +159,7 @@ Brukergrensesnittet er laget med tredjeparts rammeverket Chakra UI. Dette er et 
 
 ### Komponenttesting
 
-Komponenttestingene er skrevet med Vitest og @testing-library. Alle komponentene testes i forskjellig grad i totalt 47 tester fordelt på 18 filer. Testfilene er lagt i mapper med navn __tests__ på samme sted som filene de tester. For å kjøre alle testene brukes kommandoen "npm run test". Disse testene utgjør en testdekningsgrad på 90%. For å sjekke dekningsgraden kan en bruke kommandoen "npm run coverage". (NB! Begge disse kommandoene må kjøres i "frontend")
+Komponenttestingene er skrevet med Vitest og @testing-library. Alle komponentene testes i forskjellig grad i totalt 47 tester fordelt på 18 filer. Testfilene er lagt i mapper med navn __tests__ på samme sted som filene de tester. For å kjøre alle testene brukes kommandoen  `npm run test` . Disse testene utgjør en testdekningsgrad på 90%. For å sjekke dekningsgraden kan en bruke kommandoen   `npm run coverage`  . (NB! Begge disse kommandoene må kjøres i "frontend")
 
 ![Testdekningsgrad](./docs/unittest.png)
 
