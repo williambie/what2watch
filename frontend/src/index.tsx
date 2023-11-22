@@ -10,8 +10,7 @@ import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 const client = new ApolloClient({
-  // uri: "http://it2810-45.idi.ntnu.no:4000",
-  uri: "http://localhost:4000",
+  uri: "http://it2810-45.idi.ntnu.no:4000",
   cache: new InMemoryCache(),
 });
 

@@ -21,9 +21,17 @@ const SearchInput = () => {
 
   // The search term is updated when the user types in the search bar
   // The search term is debounced to avoid making too many requests
+  const search = (value: string) => {
+    dispatch(setSearchTerm(value));
+  };
+
+  const debouncedSearchFunction = debounce(search, 750);
+
   const debouncedSearch = useCallback(
-    debounce((value: string) => dispatch(setSearchTerm(value)), 750),
-    [dispatch],
+    (value: string) => {
+      debouncedSearchFunction(value);
+    },
+    [debouncedSearchFunction],
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
