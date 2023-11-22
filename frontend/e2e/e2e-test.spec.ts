@@ -8,7 +8,7 @@ test("Has correct URL", async ({ page }) => {
 
 // Check that profile avatar is visible and that the correct text is displayed when the avatar is clicked
 test("Check profile avatar", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
 
   await page.getByRole("button", { name: /User Avatar/i }).click();
   const bodyText = await page.textContent("body");
@@ -19,7 +19,7 @@ test("Check profile avatar", async ({ page }) => {
 
 // Check that dark mode is toggled when the checkbox is clicked
 test("Toggle dark mode", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
 
   await page.getByRole("button", { name: /User Avatar/i }).click();
 
@@ -32,7 +32,7 @@ test("Toggle dark mode", async ({ page }) => {
 
 // Check the navigation to favourites and back
 test("Check navigation to favourites and back", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
 
   await page.getByRole("button", { name: /User Avatar/i }).click();
 
@@ -45,12 +45,12 @@ test("Check navigation to favourites and back", async ({ page }) => {
   ).toBeVisible();
 
   await page.getByRole("button", { name: /Home/i }).click();
-  await expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2/");
+  await expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2");
 });
 
 // Check that genres are visible and that the correct text is displayed when the genres button is clicked
 test("Genre filter", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
 
   await expect(
     page.getByRole("heading", { name: /Five Nights at Freddy's/i }),
@@ -91,7 +91,7 @@ test("Genre filter", async ({ page }) => {
 
 // Tests the sorting button and the different sorting options
 test("Sorting button", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
 
   await page.getByRole("button", { name: /Order by:/i }).click();
 
@@ -120,7 +120,7 @@ test("Sorting button", async ({ page }) => {
 
 // Tests the reset filter button
 test("Reset Filter button", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
   await page.getByRole("button", { name: /Order by:/i }).click();
   await page.getByRole("menuitem", { name: "Title (A-Z)" }).click();
   await page.getByRole("button", { name: /Genres/i }).click();
@@ -135,7 +135,7 @@ test("Reset Filter button", async ({ page }) => {
 
 // Tests that the search bar works
 test("Search bar", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
   await page.getByRole("textbox", { name: "Search movies..." }).fill("Saw");
   await expect(page.getByRole("heading", { name: /Saw X/i })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Jigsaw/i })).toBeVisible();
@@ -147,7 +147,7 @@ test("Search bar", async ({ page }) => {
 
 // Tests that a modal can ble opened and closed
 test("Close movie modal button", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
   await page
     .getByRole("img", {
       name: /Poster of the movie Five Nights at Freddy's/i,
@@ -162,7 +162,7 @@ test("Close movie modal button", async ({ page }) => {
 
 // Tests that a movie can be added and removed from favourites
 test("Add and remove movie from favourites", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
   await page
     .getByRole("img", {
       name: /Poster of the movie Five Nights at Freddy's/i,
@@ -193,7 +193,7 @@ test("Add and remove movie from favourites", async ({ page }) => {
 
 // Tests that a review can be added and removed
 test("Add and remove a review to a movie", async ({ page }) => {
-  await page.goto("http://it2810-45.idi.ntnu.no/project2/");
+  await page.goto("http://it2810-45.idi.ntnu.no/project2");
   await page
     .getByRole("img", {
       name: /Poster of the movie Five Nights at Freddy's/i,
