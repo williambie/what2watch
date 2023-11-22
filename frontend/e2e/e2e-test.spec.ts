@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 
+// Tests that the app is running and that the correct URL is loaded when the app is started
 test("Has correct URL", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
-
-  // Expect a title "to contain" a substring.
   await expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2/");
 });
 
+// Check that profile avatar is visible and that the correct text is displayed when the avatar is clicked
 test("Check profile avatar", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
 
@@ -17,6 +17,7 @@ test("Check profile avatar", async ({ page }) => {
   expect(bodyText).toContain("Dark Mode");
 });
 
+// Check that dark mode is toggled when the checkbox is clicked
 test("Toggle dark mode", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
 
@@ -29,6 +30,7 @@ test("Toggle dark mode", async ({ page }) => {
   expect(isChecked).toBe(true);
 });
 
+// Check the navigation to favourites and back
 test("Check navigation to favourites and back", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
 
@@ -46,6 +48,7 @@ test("Check navigation to favourites and back", async ({ page }) => {
   await expect(page).toHaveURL("http://it2810-45.idi.ntnu.no/project2/");
 });
 
+// Check that genres are visible and that the correct text is displayed when the genres button is clicked
 test("Genre filter", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
 
@@ -86,6 +89,7 @@ test("Genre filter", async ({ page }) => {
   ).toBeHidden();
 });
 
+// Tests the sorting button and the different sorting options
 test("Sorting button", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
 
@@ -114,6 +118,7 @@ test("Sorting button", async ({ page }) => {
   ).toBeVisible();
 });
 
+// Tests the reset filter button
 test("Reset Filter button", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
   await page.getByRole("button", { name: /Order by:/i }).click();
@@ -128,6 +133,7 @@ test("Reset Filter button", async ({ page }) => {
   ).toBeVisible();
 });
 
+// Tests that the search bar works
 test("Search bar", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
   await page.getByRole("textbox", { name: "Search movies..." }).fill("Saw");
@@ -139,6 +145,7 @@ test("Search bar", async ({ page }) => {
   ).toBeHidden();
 });
 
+// Tests that a modal can ble opened and closed
 test("Close movie modal button", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
   await page
@@ -153,6 +160,7 @@ test("Close movie modal button", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Cast/i })).toBeHidden();
 });
 
+// Tests that a movie can be added and removed from favourites
 test("Add and remove movie from favourites", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
   await page
@@ -183,6 +191,7 @@ test("Add and remove movie from favourites", async ({ page }) => {
   await page.getByRole("button", { name: /Toggle Favourite/i }).click();
 });
 
+// Tests that a review can be added and removed
 test("Add and remove a review to a movie", async ({ page }) => {
   await page.goto("http://it2810-45.idi.ntnu.no/project2/");
   await page

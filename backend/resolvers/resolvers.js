@@ -22,17 +22,20 @@ export const resolvers = {
     },
   },
   Query: {
-    // Query resolvers are called when the query is executed for the field in question (e.g. "movies")
+    // Query resolvers are called when the query is executed for the field in question
+    // genre is a single genre object, genres is an array of genre objects
     genre: async (_, args) => {
       return await Genre.findOne({ name: args.name });
     },
     genres: async () => {
       return await Genre.find({});
     },
+    // movie is a single movie object
     movie: async (_, args) => {
       const movie = await Movie.findOne({ id: args.id });
       return movie;
     },
+    // movies is an array of movie objects, moviesCount is the total number of movies matching the query (without limit and offset)
     movies: async (
       _,
       { limit, offset, sortField, sortOrder, genre, searchTerm }
@@ -54,6 +57,7 @@ export const resolvers = {
       const moviesCount = await Movie.countDocuments(query);
       return { movies, moviesCount };
     },
+    // genreCounts is an array of objects with the fields "count", "id" and "name" (e.g. [{count: 10, id: 28, name: "Action"}])
     genreCounts: async (_, { searchTerm }) => {
       let matchStage = {};
       if (searchTerm) {
@@ -67,7 +71,7 @@ export const resolvers = {
         { $sort: { count: -1 } },
         {
           $lookup: {
-            from: "genres", // Replace with your Genre collection name if different
+            from: "genres",
             localField: "_id",
             foreignField: "id",
             as: "genre_info",
@@ -83,20 +87,25 @@ export const resolvers = {
         name: gc.name,
       }));
     },
+    // favouriteMovies is an array of movie objects
     favouriteMovies: async () => {
       const favouriteMovies = await Movie.find({ favourite: true });
       return favouriteMovies;
     },
+    // moviesCount is the total number of movies in the database
     moviesCount: async () => {
       return await Movie.countDocuments({});
     },
+    // user is a single user object
     user: async (_, args) => {
       const user = await User.findOne({ id: args.id });
       return user;
     },
+    // reviews is an array of review objects
     reviews: async (_, args) => {
       return await Review.find({ movieid: args.movieid });
     },
+    // checkFavourite is a boolean value indicating whether the movie is a favourite
     checkFavourite: async (_, args) => {
       const movie = await Movie.findOne({ id: args.movieid });
       return movie.favourite;
