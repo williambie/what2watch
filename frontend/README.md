@@ -165,4 +165,4 @@ Komponenttestingene er skrevet med Vitest og @testing-library. Alle komponentene
 
 ### End-to-end
 
-Det er også lagt til automatisk ende-til-ende testing med Playwright. Dette kan kjøres med kommandoen ...
+Det er også lagt til automatisk ende-til-ende testing med Playwright. Dette kan kjøres med kommandoen npx playwright test, evt npx playwright test --ui for å få en visuell fremstilling av testene. (NB! Disse kommandoene må kjøres i frontend). Disse testene er lagt i mappen **e2e**. Det er også mulig å kjøre kommanden npx playwright show-report for å få en rapport over testene. Det er lagd 11 tester som skal teste hovedfunksjonaliteten til applikasjonen.
