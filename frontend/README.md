@@ -4,7 +4,7 @@ Frontend er bygget med Vite. Dette er et rammeverk som bruker React med TypeScri
 
 ## Chakra UI
 
-Brukergrensesnittet er laget med tredjeparts rammeverket Chakra UI. Dette er et rammeverk som kommer med ferdiglagde React komponenter. Disse komponentene kan enkelt tilpasses med bruk av inline css kommander. Dette gjør at Chakra UI eliminerer behovet for css filer, og gir likevell fine og brukervennlige komponenter. Det er også enkelt å impletere dark/light mode ved hjelp av Chakra UI. Dette har vi gjort, og brukeren kan endre til sin preferanse i profilknappen. 
+Brukergrensesnittet er laget med tredjeparts rammeverket Chakra UI. Dette er et rammeverk som kommer med ferdiglagde React komponenter. Disse komponentene kan enkelt tilpasses med bruk av inline css kommander. Dette gjør at Chakra UI eliminerer behovet for css filer, og gir likevell fine og brukervennlige komponenter. Det er også enkelt å impletere dark/light mode ved hjelp av Chakra UI. Dette har vi gjort, og brukeren kan endre til sin preferanse i profilknappen.
 
 ## Struktur
 
@@ -159,7 +159,7 @@ Brukergrensesnittet er laget med tredjeparts rammeverket Chakra UI. Dette er et 
 
 ### Komponenttesting
 
-Komponenttestingene er skrevet med Vitest og @testing-library. Alle komponentene testes i forskjellig grad i totalt 47 tester fordelt på 18 filer. Testfilene er lagt i mapper med navn __tests__ på samme sted som filene de tester. For å kjøre alle testene brukes kommandoen  `npm run test` . Disse testene utgjør en testdekningsgrad på 90%. For å sjekke dekningsgraden kan en bruke kommandoen   `npm run coverage`  . (NB! Begge disse kommandoene må kjøres i "frontend")
+Komponenttestingene er skrevet med Vitest og @testing-library. Alle komponentene testes i forskjellig grad i totalt 47 tester fordelt på 18 filer. Testfilene er lagt i mapper med navn **tests** på samme sted som filene de tester. For å kjøre alle testene brukes kommandoen `npm run test` . Disse testene utgjør en testdekningsgrad på 90%. For å sjekke dekningsgraden kan en bruke kommandoen `npm run coverage` . (NB! Begge disse kommandoene må kjøres i "frontend")
 
 ![Testdekningsgrad](./docs/unittest.png)
 

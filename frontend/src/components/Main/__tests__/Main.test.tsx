@@ -10,7 +10,9 @@ describe("Main", () => {
 
   it("renders the Genre filter button", async () => {
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: /Genres/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /Genres/i }),
+      ).toBeInTheDocument();
     });
   });
 

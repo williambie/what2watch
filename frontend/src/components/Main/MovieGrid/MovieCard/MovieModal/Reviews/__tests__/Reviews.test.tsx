@@ -1,14 +1,7 @@
-import {
-  render,
-  waitFor,
-  screen,
-} from "../../../../../../../utils/test-utils";
+import { render, waitFor, screen } from "../../../../../../../utils/test-utils";
 import { MockedProvider } from "@apollo/client/testing";
 import Reviews from "../Reviews";
-import {
-  GET_USER,
-  GET_REVIEWS,
-} from "../../../../../../../queries/queries";
+import { GET_USER, GET_REVIEWS } from "../../../../../../../queries/queries";
 import { Movie } from "../../../../../../../types/types";
 
 const mockMovie: Movie = {

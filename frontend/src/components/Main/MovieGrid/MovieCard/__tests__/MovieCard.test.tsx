@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "../../../../../utils/test-utils";
+import { render, screen } from "../../../../../utils/test-utils";
 import MovieCard from "../MovieCard";
 import { MockedProvider } from "@apollo/client/testing";
 import { CHECK_FAVOURITE } from "../../../../../queries/queries";
@@ -7,16 +7,16 @@ import { Movie } from "../../../../../types/types";
 const mockMovie: Movie = {
   genres: [],
   adult: false,
-  backdrop_path: '/test.jpg',
+  backdrop_path: "/test.jpg",
   genre_ids: [1],
   id: 1,
-  original_language: 'en',
-  original_title: 'Test Movie',
-  overview: 'Test overview',
+  original_language: "en",
+  original_title: "Test Movie",
+  overview: "Test overview",
   popularity: 10,
-  poster_path: '/test.jpg',
-  release_date: '2022-01-01',
-  title: 'Test Movie',
+  poster_path: "/test.jpg",
+  release_date: "2022-01-01",
+  title: "Test Movie",
   video: false,
   vote_average: 8,
   vote_count: 100,
@@ -46,7 +46,9 @@ describe("MovieCard", () => {
     );
 
     expect(screen.getByText(mockMovie.title)).toBeInTheDocument();
-    expect(screen.getByAltText(`Poster of the movie ${mockMovie.title}`)).toHaveAttribute(
+    expect(
+      screen.getByAltText(`Poster of the movie ${mockMovie.title}`),
+    ).toHaveAttribute(
       "src",
       `https://image.tmdb.org/t/p/w500${mockMovie.poster_path}`,
     );
