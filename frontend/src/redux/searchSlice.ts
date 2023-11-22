@@ -34,7 +34,6 @@ const searchSlice = createSlice({
       state.page = 1;
     },
     resetFilter: (state) => {
-      state.searchTerm = "";
       state.page = 1;
       state.selectedGenre = null;
       state.sorting.sortBy = "popularity";
