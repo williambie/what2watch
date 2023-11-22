@@ -3,12 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import Favourites from "./components/Main/Favourites/Favourites";
+import AlertComponent from "./components/Main/AlertComponent/AlertComponent";
 
 // App is the main component of the application
 function App() {
   // The main page is displayed
   return (
     <>
+      <AlertComponent />
       <Grid>
         <GridItem>
           <Navbar />

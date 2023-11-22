@@ -21,6 +21,11 @@ import {
 } from "../../../../../../queries/queries";
 import { Movie, Review } from "../../../../../../types/types";
 import { useQuery, useMutation } from "@apollo/client";
+import { useDispatch } from "react-redux";
+import {
+  setAlertMessage,
+  clearAlertMessage,
+} from "../../../../../../redux/alertSlice";
 
 interface ReviewProps {
   movie: Movie;
@@ -48,6 +53,8 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
   const borderColor = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("gray.100", "gray.600");
   const bg = useColorModeValue("gray.300", "gray.700");
+
+  const dispatch = useDispatch();
 
   // Query to get the reviews for a movie
   const { loading: reviewsLoading, data: reviewsData } = useQuery(GET_REVIEWS, {
@@ -103,6 +110,17 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
         ],
       });
 
+      // Display a success message
+      dispatch(
+        setAlertMessage({
+          message: `Thank you for reviewing this movie!`,
+          status: "info",
+        }),
+      );
+      setTimeout(() => {
+        dispatch(clearAlertMessage());
+      }, 3000);
+
       // Reset the form state
       setReview("");
       setStarRating(0);
@@ -116,6 +134,7 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
 
   // Function to handle deleting a review
   const handleDeleteReview = async (id: number) => {
+    // Refetch the reviews
     setIsRefetching(true);
 
     try {
@@ -132,7 +151,11 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
         ],
       });
 
-      // Refetch the reviews
+      // Display a success message
+      dispatch(setAlertMessage({ message: `Deleted review`, status: "error" }));
+      setTimeout(() => {
+        dispatch(clearAlertMessage());
+      }, 3000);
     } catch (error) {
       console.log(error);
     } finally {
