@@ -1,21 +1,39 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+} from "@chakra-ui/react";
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 import { setSearchTerm } from "../../../redux/searchSlice";
 import { debounce } from "lodash";
+import { useCallback, useEffect, useState } from "react";
 
 // SearchInput is the search bar that allows the user to search for movies
 const SearchInput = () => {
   const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    dispatch(setSearchTerm(""));
+  }, [dispatch]);
 
   // The search term is updated when the user types in the search bar
   // The search term is debounced to avoid making too many requests
-  const debouncedSearch = debounce((value: string) => {
-    dispatch(setSearchTerm(value));
-  }, 750);
+  const debouncedSearch = useCallback(
+    debounce((value: string) => dispatch(setSearchTerm(value)), 750),
+    [dispatch],
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
     debouncedSearch(e.target.value);
+  };
+
+  const handleClearInput = () => {
+    setInputValue("");
+    dispatch(setSearchTerm(""));
   };
 
   // The dropdown menu is displayed on the main page
@@ -27,7 +45,9 @@ const SearchInput = () => {
         placeholder="Search movies..."
         variant="filled"
         onChange={handleInputChange}
+        value={inputValue}
       />
+      <InputRightElement children={<CloseIcon onClick={handleClearInput} />} />
     </InputGroup>
   );
 };
