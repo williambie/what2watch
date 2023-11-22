@@ -1,11 +1,4 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Button,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Button, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Movie } from "../../../../../../types/types";
@@ -14,6 +7,11 @@ import {
   TOGGLE_FAVOURITE,
   GET_FAVOURITE_MOVIES,
 } from "../../../../../../queries/queries";
+import { useDispatch } from "react-redux";
+import {
+  setAlertMessage,
+  clearAlertMessage,
+} from "../../../../../../redux/alertSlice";
 
 type FavouriteButtonProps = {
   movie: Movie;
@@ -25,10 +23,10 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
   const [toggleFavourite] = useMutation(TOGGLE_FAVOURITE, {
     refetchQueries: [{ query: GET_FAVOURITE_MOVIES }],
   });
+  const dispatch = useDispatch();
 
   // State to keep track of whether the button is active or not
   const [isActive, setIsActive] = useState(isFavourite);
-  const [alertMessage, setAlertMessage] = useState("");
 
   const isLg = useBreakpointValue({
     base: false,
@@ -36,18 +34,29 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
   });
 
   // toggleFavorite toggles the state of the button
+  // also sets the alert message
   const handleClick = async () => {
     if (isActive) {
-      setAlertMessage(`"${movie.title}" removed from favourites`);
+      dispatch(
+        setAlertMessage({
+          message: `"${movie.title}" removed from favourites`,
+          status: "error",
+        }),
+      );
     } else {
-      setAlertMessage(`"${movie.title}" added to favourites`);
+      dispatch(
+        setAlertMessage({
+          message: `"${movie.title}" added to favourites`,
+          status: "success",
+        }),
+      );
     }
     setIsActive(!isActive);
     await toggleFavourite({
       variables: { movieid: movie.id },
     });
     setTimeout(() => {
-      setAlertMessage("");
+      dispatch(clearAlertMessage());
     }, 3000);
   };
 
@@ -55,22 +64,6 @@ const FavouriteButton = ({ movie, isFavourite }: FavouriteButtonProps) => {
   // else display an empty star
   return (
     <>
-      {alertMessage && (
-        <Alert
-          status={isActive ? "success" : "error"}
-          variant={"solid"}
-          mb={4}
-          borderRadius="md"
-          position="fixed"
-          top={0}
-          left={0}
-          width="100%"
-          zIndex={9999}
-        >
-          <AlertIcon />
-          <AlertTitle>{alertMessage}</AlertTitle>
-        </Alert>
-      )}
       <Button
         borderWidth={2}
         borderColor={isActive ? "gray.800" : "orange"}

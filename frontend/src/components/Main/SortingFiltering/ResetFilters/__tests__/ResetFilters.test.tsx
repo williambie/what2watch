@@ -1,4 +1,9 @@
-import { render, screen, fireEvent, spyMiddleware } from "../../../../../utils/test-utils";
+import {
+  render,
+  screen,
+  fireEvent,
+  spyMiddleware,
+} from "../../../../../utils/test-utils";
 import ResetFilters from "../ResetFilters";
 import { resetFilter } from "../../../../../redux/searchSlice";
 

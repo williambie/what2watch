@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import searchReducer from "./searchSlice";
+import alertReducer from "./alertSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 
@@ -16,6 +17,7 @@ const persistedReducer = persistReducer(persistConfig, searchReducer);
 export const store = configureStore({
   reducer: {
     search: persistedReducer,
+    alert: alertReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

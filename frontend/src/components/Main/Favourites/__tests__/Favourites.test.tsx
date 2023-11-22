@@ -21,7 +21,7 @@ describe("Favourites", () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Favourites />
-      </MockedProvider>
+      </MockedProvider>,
     );
   });
 
@@ -29,7 +29,7 @@ describe("Favourites", () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Favourites />
-      </MockedProvider>
+      </MockedProvider>,
     );
 
     expect(screen.getByText("My Favourite Movies")).toBeInTheDocument();

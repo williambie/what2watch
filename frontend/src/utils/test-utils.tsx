@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { render as rtlRender } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -6,39 +7,27 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import searchReducer from "../redux/searchSlice";
-import { RootState } from "../redux/store";
-import { Dispatch, AnyAction } from 'redux';
+import { Dispatch, AnyAction } from "redux";
+import alertReducer from "../redux/alertSlice";
 
-export const spyMiddleware = () => (next: Dispatch<AnyAction>) => (action: AnyAction) => {
-  spyMiddleware.actions.push(action);
-  return next(action);
-};
+export const spyMiddleware =
+  () => (next: Dispatch<AnyAction>) => (action: AnyAction) => {
+    spyMiddleware.actions.push(action);
+    return next(action);
+  };
 
 spyMiddleware.actions = [] as AnyAction[];
 
 function customRender(
   ui: React.ReactElement,
   {
-    initialState: RootState = {
-      search: {
-        searchTerm: "",
-        page: 1,
-        sorting: {
-          sortBy: "popularity",
-          sortOrder: -1,
-        },
-        selectedGenre: "Genres",
-        _persist: {
-          version: -1,
-          rehydrated: true,
-        },
-      },
-    } as RootState,
     store = configureStore({
       reducer: {
         search: searchReducer,
+        alert: alertReducer,
       },
-      middleware: getDefaultMiddleware => getDefaultMiddleware().concat(spyMiddleware),
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(spyMiddleware),
     }),
     initialRoutes = ["/"],
     ...options

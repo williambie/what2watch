@@ -1,4 +1,10 @@
-import { render, fireEvent, screen, act, waitFor } from "../../../../../utils/test-utils";
+import {
+  render,
+  fireEvent,
+  screen,
+  act,
+  waitFor,
+} from "../../../../../utils/test-utils";
 import GenreFilter from "../GenreFilter";
 
 describe("GenreFilter", () => {
