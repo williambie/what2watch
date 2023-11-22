@@ -186,15 +186,6 @@ const GET_GENRE_COUNTS = gql`
   }
 `;
 
-const GET_GENRES = gql`
-  query GetGenres {
-    genres {
-      id
-      name
-    }
-  }
-`;
-
 export {
   GET_USER,
   ADD_REVIEW,
@@ -205,5 +196,4 @@ export {
   GET_FAVOURITE_MOVIES,
   CHECK_FAVOURITE,
   GET_GENRE_COUNTS,
-  GET_GENRES,
 };
