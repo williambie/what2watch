@@ -39,9 +39,6 @@ const GenreFilter = () => {
   useEffect(() => {
     refetch({ searchTerm: searchTerm });
   }, [searchTerm, refetch]);
-  useEffect(() => {
-    refetch({ searchTerm: searchTerm });
-  }, [searchTerm, refetch]);
 
   const genreCounts = genreCountsData?.genreCounts || [];
 
@@ -63,20 +60,17 @@ const GenreFilter = () => {
         </MenuItem>
         <MenuDivider />
         {!loading &&
-          genreCounts.map(
-            (genre: Genre) =>
-              genre.count > 0 && (
-                <MenuItem
-                  key={genre.id}
-                  marginRight={2}
-                  onClick={() => {
-                    handleGenreChange(genre.name);
-                  }}
-                >
-                  {genre.name} ({genre.count})
-                </MenuItem>
-              ),
-          )}
+          genreCounts.map((genre: Genre) => (
+            <MenuItem
+              key={genre.id}
+              marginRight={2}
+              onClick={() => {
+                handleGenreChange(genre.name);
+              }}
+            >
+              {genre.name} ({genre.count})
+            </MenuItem>
+          ))}
       </MenuList>
     </Menu>
   );
