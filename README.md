@@ -22,23 +22,13 @@ Prosjektet vil da kjøres lokalt på:
 
     http://localhost:5173/project2
 
-## Frontend
+## Tilgjengelighet og bærekraft
 
-- Applikasjonen er opprettet med rammeverket Vite (https://vitejs.dev/), som bygger på React og TypeScript
-- React Router brukes for å navigere rundt på siden
-- Komponentbiblioteket Chakra UI brukes for å designe siden. Chakra er kjent for å følge WAI ARIA standard for universell utforming
-- Redux brukes for Global State Mangement
-- For å kommunisere med backend brukes det Apollo Client
-- Prettier og ESLint brukes for kodekontroll og -formatering
+## Beslutninger
 
-## Backend
+Gruppen har valgt å la applikasjonen ha en utforming som gir følelsen av å være logget inn som en bruker. Likvell er det ingen funksjonalitet for å logge inn, eller lage egen bruker i frontend. Dette ble gjort bevisst, da applikasjonen gir mening å bli brukt som en logget inn bruker. Det har også gjort at vi har utviklet applikasjonen med en tanke i bakhodet om at applikasjonen i framtiden skal kunne videreutvikles til å være en siden med flere brukere, registrering og innlogging. Dette gjør bruk av siden merkelig, da det ser ut som alle anmeldelsene kommer fra samme person, og "alle" har samme favorittfilmer. Likevell føler vi dette er et godt valg, da siden føles mer naturlig. I tillegg har det gjort utviklingsprossesen bedre, da utvikling av applikasjon som brukes av flere brukere ofte krever dynamiske løsninger og smidige beslutninger.
 
-- Prosjektet lagrer dataen i en MongoDB database, og bruker mongoose for å koble den til server
-- Serveren kjører med Apollo Server
-
-## Funksjonelle krav
-
-> Løsningen skal presentere søk i liste, lagt opp til håndtering av store resultatsett.
+<!-- > Løsningen skal presentere søk i liste, lagt opp til håndtering av store resultatsett.
 
 Denne applikasjonen løser dette ved å vise en grid med et gitt antall filmer fra katalogen. Nederst på siden finner brukeren en paginator for dynamisk lasting av filmer. Løsningen vi har valgt presenterer mange filmer til brukeren først, noe som gjør det enklere å finne en film som brukeren er interessert i.
 
@@ -60,4 +50,4 @@ Siden er laget med et minimalistisk design, med mørke farger og hvit skrift. De
 
 > Løsningen skal demonstrere aspekter ved web accessibility og bærekraftig utvikling
 
-Universell utforming og bærekraftig utvikling er gjennomført ved å bruke gode kodepraksiser. Det kan ses i hvordan prosjektet er strukturert og komponenter er navngitt. Videre har Aria-labels blitt brukt for å gi tilgjengelig tekst på ikoner og regioner på siden. Dette gjør at skjermlesere og tastaturnavigasjon blir mulig og enklere. Videre finnes det en knapp for "Dark mode" slik at brukeren kan tilpasse kontrasten for god synlighet. Viktigst av alt er endringer slik som mer åpenbar hjem-knapp, intuitiv plassering av knapper i nav-bar og kontrast i tekstfelt oppdatert fra første prosjekt. Det kan også nevnes at bruken av Chakra UI, som er et komponentbibliotek, fører til bedre kodepraksis i seg selv.
+Universell utforming og bærekraftig utvikling er gjennomført ved å bruke gode kodepraksiser. Det kan ses i hvordan prosjektet er strukturert og komponenter er navngitt. Videre har Aria-labels blitt brukt for å gi tilgjengelig tekst på ikoner og regioner på siden. Dette gjør at skjermlesere og tastaturnavigasjon blir mulig og enklere. Videre finnes det en knapp for "Dark mode" slik at brukeren kan tilpasse kontrasten for god synlighet. Viktigst av alt er endringer slik som mer åpenbar hjem-knapp, intuitiv plassering av knapper i nav-bar og kontrast i tekstfelt oppdatert fra første prosjekt. Det kan også nevnes at bruken av Chakra UI, som er et komponentbibliotek, fører til bedre kodepraksis i seg selv. -->
