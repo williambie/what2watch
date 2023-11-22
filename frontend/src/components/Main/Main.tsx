@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, SimpleGrid, Heading } from "@chakra-ui/react";
 import MovieGrid from "./MovieGrid/MovieGrid";
 import Paginator from "./Paginator/Paginator";
 import GenreFilter from "./SortingFiltering/GenreFilter/GenreFilter";
@@ -8,6 +8,7 @@ import { GET_MOVIES } from "../../queries/queries";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ResetFilters from "./SortingFiltering/ResetFilters/ResetFilters";
+import LoadingCard from "./MovieGrid/LoadingCard/LoadingCard";
 
 // Main is the main page of the application
 function Main() {
@@ -49,9 +50,17 @@ function Main() {
       </Flex>
       <Box padding="5">
         {movies.length > 0 ? (
-          <MovieGrid movies={movies} loading={loading} />
+          <MovieGrid movies={movies} />
+        ) : loading ? (
+          <SimpleGrid columns={[2, null, 3, 4]} spacing="40px">
+            {Array.from({ length: 20 }).map((_, index) => (
+              <LoadingCard key={index} />
+            ))}
+          </SimpleGrid>
+        ) : movies.length > 0 ? (
+          <MovieGrid movies={movies} />
         ) : (
-          <Text>Error connecting to database</Text>
+          <Heading>No movies match your search :(</Heading>
         )}
       </Box>
       <HStack justifyContent="space-evenly" marginBottom="50px">

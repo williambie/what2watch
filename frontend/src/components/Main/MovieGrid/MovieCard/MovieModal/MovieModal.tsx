@@ -108,11 +108,7 @@ const MovieModal: React.FC<MovieModalProps> = ({
                   <FavouriteButton
                     movie={movie}
                     isFavourite={isFavourite}
-                    aria-label={
-                      isFavourite
-                        ? "Remove from favourites"
-                        : "Add to favourites"
-                    }
+                    aria-label={"Toggle Favourite"}
                   />
                 </Box>
               </Flex>

@@ -225,12 +225,13 @@ const Reviews: React.FC<ReviewProps> = ({ movie }) => {
                 </HStack>
 
                 <HStack justifyContent={"space-between"} paddingTop={2}>
-                  <Text>{review.content}</Text>
+                  <Text aria-label="Review Content">{review.content}</Text>
                   <Button
                     cursor="pointer"
                     size={"xs"}
                     bg={"red.600"}
                     onClick={() => handleDeleteReview(review.id)}
+                    aria-label="Delete review"
                   >
                     <DeleteIcon color={"white"} />
                   </Button>

@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 
 const Favourites = () => {
   // Get favourite movies from the cache and display them in a grid format using the MovieGrid component
-  const { loading, data } = useQuery(GET_FAVOURITE_MOVIES);
+  const { data } = useQuery(GET_FAVOURITE_MOVIES);
   const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
 
   // If there are no favourite movies, display a message to the user to add some favourite movies
@@ -23,7 +23,7 @@ const Favourites = () => {
             You have no favourite movies, why don't you add some?
           </Text>
         ) : (
-          <MovieGrid movies={data?.favouriteMovies || []} loading={loading} />
+          <MovieGrid movies={data?.favouriteMovies || []} />
         )}
       </Box>
     </>

@@ -1,4 +1,3 @@
-// ProfileButton.test.tsx
 import { render, screen, fireEvent } from "../../../../utils/test-utils";
 import ProfileButton from "../ProfileButton";
 import { MockedProvider } from "@apollo/client/testing";
