@@ -2,6 +2,8 @@
 
 What2Watch 2.0 is an application developed as part of project work 2 in the course IT2810 Web Development at NTNU in Autumn 2023. The project aimed to present a large amount of data. The idea behind this application is to provide movie recommendations to a user who wants to watch a movie but struggles to decide what to watch. The user also has the option to bookmark movies they want to watch and provide reviews for movies they have seen.
 
+![Image of website](/frontend/public/docs.png)
+
 ## Installation and Usage
 
 The application can be accessed at the following URL (Note: This requires being on the NTNU network/VPN):
