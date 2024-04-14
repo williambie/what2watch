@@ -1,21 +1,21 @@
 # Backend
 
-Backenden er laget i JavaScript, med bruk av Apollo Server og mongoose.
+The backend is built in JavaScript, using Apollo Server and mongoose.
 
-## Datagrunnlag
+## Data Foundation
 
-Dataene er hentet fra [The Movie Database (TMDB)](https://www.themoviedb.org/) sitt API. Herifra hentes det filmer, filmsjangre og skuespillere. For denne applikasjonen har vi valgt å hente 2000 filmer, med tilhørende kategorier og skuespillere.
+The data is retrieved from [The Movie Database (TMDB)](https://www.themoviedb.org/) API. From here, movies, genres, and actors are fetched. For this application, we have chosen to fetch 2000 movies, along with their respective categories and actors.
 
 ## Database
 
-Dataene lagres i database fra [MongoDB](https://www.mongodb.com/). I databasen har vi 4 tabeller:
+The data is stored in a database from [MongoDB](https://www.mongodb.com/). In the database, we have 4 tables:
 
-- **movies:** Her ligger alle filmene, med tilhørende skuespillere.
-- **reviews:** Her ligger filmanmeldeldsene
-- **users:** Dette er en database som har oversikt over brukere. I øyeblikket er det bare en ferdiglaget bruker som ligger inne.
-- **genres:** Her ligger alle kategoriene. De har sin egen tabell, da det matcher oppsettet til datagrunnlaget.
+- **movies:** This table contains all the movies, along with their associated actors.
+- **reviews:** Movie reviews are stored here.
+- **users:** This database keeps track of users. Currently, there is only one pre-made user in it.
+- **genres:** This table contains all the categories. They have their own table to match the structure of the data foundation.
 
-## Struktur
+## Structure
 
 ```
 |-- backend
@@ -36,20 +36,20 @@ Dataene lagres i database fra [MongoDB](https://www.mongodb.com/). I databasen h
 |   |-- vite.config.ts
 ```
 
-## Avhengigheter
+## Dependencies
 
-- **@apollo/server**: Serverimplementering for Apollo GraphQL.
-- **graphql**: Et spørringspråk for API-er og en kjøretid for å utføre disse spørringene.
-- **mongodb**: Den offisielle MongoDB-driveren for Node.js.
-- **mongodb-memory-server**: En MongoDB-minneserver for testing uten behov for en faktisk MongoDB-server.
-- **mongoose**: Et elegant verktøy for objektmodellering i MongoDB.
+- **@apollo/server**: Server implementation for Apollo GraphQL.
+- **graphql**: A query language for APIs and a runtime for executing these queries.
+- **mongodb**: The official MongoDB driver for Node.js.
+- **mongodb-memory-server**: A MongoDB memory server for testing without the need for an actual MongoDB server.
+- **mongoose**: A MongoDB object modeling tool.
 
-## Utvikleravhengigheter
+## Developer Dependencies
 
-- **dotenv**: Laster miljøvariabler fra en .env-fil.
-- **nodemon**: Overvåker endringer i filer og starter serveren på nytt automatisk.
-- **vitest**: En testløper for Vite-prosjekter.
+- **dotenv**: Loads environment variables from a .env file.
+- **nodemon**: Monitors changes in files and automatically restarts the server.
+- **vitest**: A test runner for Vite projects.
 
 ## Testing
 
-Testing i backend er gjort med Vitest. I Backend tester vi resolvers, som brukes for å hente data fra databasen. MongoMemoryServer brukes for å lage en "falsk" database, som brukes for å teste om resolverne henter data på riktig måte. Til sammen er det 6 tester som tester flere av resolverne.
+Testing in the backend is done with Vitest. In the backend, we test resolvers, which are used to fetch data from the database. MongoMemoryServer is used to create a "fake" database, which is used to test if the resolvers fetch data correctly. In total, there are 6 tests that test several of the resolvers.

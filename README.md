@@ -1,39 +1,39 @@
 # What2Watch 2.0
 
-What2Watch 2.0 er en applikasjon utviklet i forbindelse med prosjektarbeid 2 i faget IT2810 Webutvikling på NTNU Høsten 2023. Prosjektet gikk ut på å presentere en stor mengde data. Ideen bak denne applikasjonen er å gi filmforslag til en bruker som ønsker å se film, men sliter med å bestemme seg for hva hen vil se. Brukeren får også mulighet til å favoritt-merke filmer hen ønsker å se, og gi anmeldelser på filmer hen har sett.
+What2Watch 2.0 is an application developed as part of project work 2 in the course IT2810 Web Development at NTNU in Autumn 2023. The project aimed to present a large amount of data. The idea behind this application is to provide movie recommendations to a user who wants to watch a movie but struggles to decide what to watch. The user also has the option to bookmark movies they want to watch and provide reviews for movies they have seen.
 
-## Installering og bruk
+## Installation and Usage
 
-Applikasjonen kan sjekkes ut på følgende URL (NB! Dette krever at du er på NTNU nett/VPN):
+The application can be accessed at the following URL (Note: This requires being on the NTNU network/VPN):
 
 > http://it2810-45.idi.ntnu.no/project2
 
-Eventuelt kan repoet kan klones med:
+Alternatively, the repository can be cloned with:
 
 `git clone https://gitlab.stud.idi.ntnu.no/it2810-h23/Team-45/prosjekt-2.git`
 
-Da kan frontend kjøres lokalt, med kobling til backend som kjører på VM (NB! Dette krever at du er på NTNU nett/VPN):
+Then, the frontend can be run locally with a connection to the backend running on a VM (Note: This requires being on the NTNU network/VPN):
 
 `cd frontend`  
 `npm install`  
 `npm run dev`
 
-Prosjektet vil da kjøres lokalt på:
+The project will then run locally at:
 
 > http://localhost:5173/project2
 
-## Tilgjengelighet og bærekraft
+## Accessibility and Sustainability
 
-Dette prosjektet benytter seg av Chakra UI og React. Chakra UI er et populært React-komponentbibliotek av flere grunner. Det er enkelt å bruke, det er enkelt å tilpasse, og det er tilgjengelig. Chakra UI er utviklet med tanke på tilgjengelighet, og har derfor innebygde funksjoner som gjør det enkelt å lage tilgjengelige nettsider. Chakra UI overholder WAI-ARIA retningslinjer, noe som sikrer tilgjengelighet på tvers av komponentene.
+This project utilizes Chakra UI and React. Chakra UI is a popular React component library for several reasons. It is easy to use, easy to customize, and accessible. Chakra UI is developed with accessibility in mind and therefore has built-in features that make it easy to create accessible websites. Chakra UI complies with WAI-ARIA guidelines, ensuring accessibility across components.
 
-Ved bruk av React og Chakra UI benytter vi også i stor grad gjenbruk av kode i form av komponenter. Dette gjør at vi kan skrive kode som er mer gjenbrukbar, og dermed mer bærekraftig. Som et åpen kildekode-prosjekt, er Chakra UI avhengig av et fellesskap av bidragsytere. Dette samfunnsdrevne aspektet fremmer deling av kunnskap og ressurser, som er en nøkkelkomponent i bærekraftig teknologiutvikling.
+By using React and Chakra UI, we also heavily utilize code reuse in the form of components. This allows us to write code that is more reusable and therefore more sustainable. As an open-source project, Chakra UI relies on a community of contributors. This community-driven aspect promotes the sharing of knowledge and resources, which is a key component in sustainable technology development.
 
-Vi har også et fokus på å gjøre så få kall til backend som mulig, dette gjør vi blant annet gjennom dynamisk lasting. Dette gjør at vi kan redusere belastningen på serveren, og dermed redusere energiforbruket. Samtidig som vi reduserer energiforbruket, gjør vi også brukeropplevelsen og tilgjengeligheten bedre ved å redusere ventetiden.
+We also focus on making as few calls to the backend as possible, which we achieve through dynamic loading. This allows us to reduce the load on the server, thereby reducing energy consumption. While reducing energy consumption, we also improve user experience and accessibility by reducing waiting time.
 
-Vi har også valgt å vise detaljer om en film gjennom en modal, i stedet for å navigere til en ny side. Dette gjør at brukeren slipper å vente på at en ny side skal lastes inn, og kan dermed bruke mindre tid på å finne en film å se. Dette gjør også at vi reduserer antall kall til backend, siden alt lastes inn ved ett kall. Dette gjør at vi reduserer energiforbruket, og dermed gjør applikasjonen mer bærekraftig.
+We have also chosen to display details about a movie through a modal instead of navigating to a new page. This eliminates the need for the user to wait for a new page to load, allowing them to spend less time finding a movie to watch. This also reduces the number of calls to the backend since everything is loaded with one call. This reduces energy consumption, making the application more sustainable.
 
-Vi bruker også dark mode som default på nettsiden. Dette gjør at vi reduserer energiforbruket til brukeren, og dermed gjør nettsiden mer bærekraftig. Dette gjør vi ved å bruke Chakra UI sitt innebygde dark mode, som gjør at vi kan bytte mellom dark mode og light mode med ett tastetrykk.
+We also use dark mode as the default on the website. This reduces energy consumption for the user, making the website more sustainable. We do this by using Chakra UI's built-in dark mode, which allows us to switch between dark mode and light mode with one click.
 
-## Beslutninger
+## Decisions
 
-Gruppen har valgt å la applikasjonen ha en utforming som gir følelsen av å være logget inn som en bruker. Likvell er det ingen funksjonalitet for å logge inn, eller lage egen bruker i frontend. Dette ble gjort bevisst, da applikasjonen gir mening å bli brukt som en logget inn bruker. Det har også gjort at vi har utviklet applikasjonen med en tanke i bakhodet om at applikasjonen i framtiden skal kunne videreutvikles til å være en siden med flere brukere, registrering og innlogging. Dette gjør bruk av siden merkelig, da det ser ut som alle anmeldelsene kommer fra samme person, og "alle" har samme favorittfilmer. Likevell føler vi dette er et godt valg, da siden føles mer naturlig. I tillegg har det gjort utviklingsprossesen bedre, da utvikling av applikasjon som brukes av flere brukere ofte krever dynamiske løsninger og smidige beslutninger.
+We have chosen to design the application to give the feeling of being logged in as a user. However, there is no functionality to log in or create a user in the frontend. This was done intentionally, as the application makes sense to be used as a logged-in user. It has also allowed us to develop the application with the idea in mind that it could be further developed into a site with multiple users, registration, and login in the future. This makes the use of the site strange, as it looks like all the reviews come from the same person, and "everyone" has the same favorite movies. Nevertheless, we feel this is a good choice as the site feels more natural. Additionally, it has improved the development process, as the development of an application used by multiple users often requires dynamic solutions and agile decision-making.
